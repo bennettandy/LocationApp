@@ -13,7 +13,7 @@ import uk.co.avsoftware.location.interactor.LocationPermissionEnabledInteractor
 import javax.inject.Inject
 
 @HiltViewModel
-internal class LocationPermissionViewModel @Inject constructor(
+class LocationPermissionViewModel @Inject constructor(
     private val locationPermissionInteractor: LocationPermissionEnabledInteractor,
     private val isGPSEnabledInteractor: IsGPSEnabledInteractor,
     savedStateHandle: SavedStateHandle,
