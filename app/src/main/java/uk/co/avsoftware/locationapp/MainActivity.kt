@@ -12,10 +12,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import dagger.hilt.android.AndroidEntryPoint
+import uk.co.avsoftware.location_presentation.viewmodel.LocationPermissionAction
 import uk.co.avsoftware.location_presentation.viewmodel.LocationPermissionViewModel
 import uk.co.avsoftware.locationapp.ui.theme.LocationAppTheme
 
@@ -35,6 +37,7 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize()
                         .background(MaterialTheme.colorScheme.onSurface, shape = RectangleShape)
                 ) {
+                    val state = locationViewModel.uiState.collectAsState()
 
                     Scaffold(
                         modifier = Modifier
@@ -42,11 +45,15 @@ class MainActivity : ComponentActivity() {
                         content = { padding ->
                             Text(modifier = Modifier
                                 .padding(padding),
-                            text = "hello")
+                            text = "hello GPS: ${state.value.gpsIsActive}")
                             }
                     )
                 }
             }
         }
+
+        // trigger viewmodel
+        locationViewModel.receiveAction(LocationPermissionAction.RefreshCurrentPermissions)
+
     }
 }
