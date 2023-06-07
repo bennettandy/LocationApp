@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import uk.co.avsoftware.locationapp.BuildConfig
 import javax.inject.Named
 
 
@@ -13,5 +14,5 @@ class ApplicationModule {
 
     @Provides
     @Named("App ID")
-    fun provideApplicationId(): String = "uk.co.avsoftware.locationapp" // fixme: BuildConfig.APPLICATION_ID
+    fun provideApplicationId(): String = BuildConfig.APPLICATION_ID
 }
