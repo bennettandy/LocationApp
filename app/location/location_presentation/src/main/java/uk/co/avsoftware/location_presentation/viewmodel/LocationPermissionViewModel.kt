@@ -6,19 +6,19 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
+import uk.co.avsoftware.core.annotation.ApplicationId
 import uk.co.avsoftware.core.extensions.Reducer
 import uk.co.avsoftware.core.mvi.AbstractMviViewModel
 import uk.co.avsoftware.location.interactor.IsGPSEnabledInteractor
 import uk.co.avsoftware.location.interactor.LocationPermissionEnabledInteractor
 import javax.inject.Inject
-import javax.inject.Named
 
 @HiltViewModel
 class LocationPermissionViewModel @Inject constructor(
     private val locationPermissionInteractor: LocationPermissionEnabledInteractor,
     private val isGPSEnabledInteractor: IsGPSEnabledInteractor,
     savedStateHandle: SavedStateHandle,
-    @Named("App ID") applicationId: String
+    @ApplicationId applicationId: String
 ) : AbstractMviViewModel<LocationPermissionAction, LocationPermissionViewState, LocationPermissionCommand>(
     LocationPermissionViewState.default,
     savedStateHandle = savedStateHandle,

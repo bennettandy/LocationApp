@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Location App</string>
     <string name="title_activity_main">MainActivity</string>
+
+    <string name="location_spike_location_required_dialog_title">Location Permissions Required</string>
+    <string name="location_spike_fine_location_required_dialog_title">Fine Location Permission is Required</string>
+    <string name="location_fine_location_required_dialog_message">Fine location required message</string>
 </resources>
