@@ -1,4 +1,4 @@
-package uk.co.avsoftware.location_presentation.di
+package uk.co.avsoftware.locationpresentation.di
 
 import android.content.Context
 import android.content.pm.PackageManager
@@ -12,9 +12,9 @@ import uk.co.avsoftware.core.annotation.ApplicationId
 import uk.co.avsoftware.location.interactor.GetLastLocationInteractor
 import uk.co.avsoftware.location.interactor.IsGPSEnabledInteractor
 import uk.co.avsoftware.location.interactor.LocationPermissionEnabledInteractor
-import uk.co.avsoftware.location_domain.interactor.GetCurrentLocationInteractor
-import uk.co.avsoftware.location_domain.interactor.GetGrantedPermissionsInteractor
-import uk.co.avsoftware.location_domain.repository.LocationEventsRepository
+import uk.co.avsoftware.locationdomain.interactor.GetCurrentLocationInteractor
+import uk.co.avsoftware.locationdomain.interactor.GetGrantedPermissionsInteractor
+import uk.co.avsoftware.locationdomain.repository.LocationEventsRepository
 
 @Module
 @InstallIn(SingletonComponent::class)

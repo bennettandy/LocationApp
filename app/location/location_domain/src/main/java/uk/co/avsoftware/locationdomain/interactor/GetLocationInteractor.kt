@@ -4,7 +4,7 @@ import android.Manifest
 import android.location.Location
 import androidx.annotation.RequiresPermission
 import kotlinx.coroutines.flow.first
-import uk.co.avsoftware.location_domain.repository.LocationEventsRepository
+import uk.co.avsoftware.locationdomain.repository.LocationEventsRepository
 
 class GetLocationInteractor(
     private val deviceLocationRepository: LocationEventsRepository

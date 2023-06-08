@@ -1,4 +1,4 @@
-package uk.co.avsoftware.location_presentation.components
+package uk.co.avsoftware.locationpresentation.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,15 +14,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import uk.co.avsoftware.location_presentation.viewmodel.LocationPermissionViewState
+import uk.co.avsoftware.locationpresentation.viewmodel.LocationPermissionViewState
 
 @Composable
 fun LocationPermissionStatusBar(
     viewState: LocationPermissionViewState,
     modifier: Modifier = Modifier,
     permissionsClicked: () -> Unit = {},
-    gpsSettingsClicked: () -> Unit = {},
-    ){
+    gpsSettingsClicked: () -> Unit = {}
+) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -34,7 +34,7 @@ fun LocationPermissionStatusBar(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun LocationStatusChipRow(viewState: LocationPermissionViewState, modifier: Modifier = Modifier){
+private fun LocationStatusChipRow(viewState: LocationPermissionViewState, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -54,7 +54,8 @@ private fun LocationStatusChipRow(viewState: LocationPermissionViewState, modifi
                     style = MaterialTheme.typography.bodyMedium,
                     text = "Fine Location"
                 )
-            })
+            }
+        )
 
         ElevatedFilterChip(selected = viewState.gpsIsActive, onClick = { /*TODO*/ }, label = {
             Text(
@@ -71,11 +72,11 @@ private fun LocationPermissionButtonRow(
     modifier: Modifier = Modifier,
     permissionsClicked: () -> Unit,
     gpsSettingsClicked: () -> Unit
-){
+) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
-    ){
+    ) {
         OutlinedButton(onClick = permissionsClicked) {
             Text(
                 style = MaterialTheme.typography.bodyMedium,

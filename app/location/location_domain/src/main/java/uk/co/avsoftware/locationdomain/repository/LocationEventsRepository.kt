@@ -1,4 +1,4 @@
-package uk.co.avsoftware.location_domain.repository
+package uk.co.avsoftware.locationdomain.repository
 
 import android.Manifest
 import android.location.Location

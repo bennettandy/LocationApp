@@ -1,4 +1,4 @@
-package uk.co.avsoftware.location_presentation.viewmodel
+package uk.co.avsoftware.locationpresentation.viewmodel
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

@@ -1,8 +1,7 @@
-package uk.co.avsoftware.location_presentation
+package uk.co.avsoftware.locationdomain
 
+import junit.framework.TestCase.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).

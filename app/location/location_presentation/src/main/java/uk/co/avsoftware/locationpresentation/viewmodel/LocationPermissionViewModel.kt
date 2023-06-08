@@ -1,4 +1,4 @@
-package uk.co.avsoftware.location_presentation.viewmodel
+package uk.co.avsoftware.locationpresentation.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope

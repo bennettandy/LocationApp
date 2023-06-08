@@ -1,11 +1,11 @@
 package uk.co.avsoftware.location.interactor
 
-import uk.co.avsoftware.location_domain.interactor.GetGrantedPermissionsInteractor
+import uk.co.avsoftware.locationdomain.interactor.GetGrantedPermissionsInteractor
 
 class LocationPermissionEnabledInteractor(
     private val permissionsGrantedInteractor: GetGrantedPermissionsInteractor,
     private val applicationId: String
-    ) {
+) {
     fun coarseLocationEnabled(): Boolean =
         checkPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION)
 

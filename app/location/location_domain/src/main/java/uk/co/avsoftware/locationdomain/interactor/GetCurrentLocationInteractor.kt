@@ -1,10 +1,10 @@
-package uk.co.avsoftware.location_domain.interactor
+package uk.co.avsoftware.locationdomain.interactor
 
 import android.Manifest
 import android.location.Location
 import androidx.annotation.RequiresPermission
 import kotlinx.coroutines.flow.first
-import uk.co.avsoftware.location_domain.repository.LocationEventsRepository
+import uk.co.avsoftware.locationdomain.repository.LocationEventsRepository
 
 class GetCurrentLocationInteractor(
     private val locationEventsRepository: LocationEventsRepository

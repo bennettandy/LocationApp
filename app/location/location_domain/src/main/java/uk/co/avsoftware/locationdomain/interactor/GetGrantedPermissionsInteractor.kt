@@ -1,4 +1,4 @@
-package uk.co.avsoftware.location_domain.interactor
+package uk.co.avsoftware.locationdomain.interactor
 
 import android.content.pm.PackageManager
 
@@ -17,7 +17,7 @@ class GetGrantedPermissionsInteractor(private val packageManager: PackageManager
                 applicationId
             ) == PackageManager.PERMISSION_GRANTED
         }.also {
-            //Arbor.d("MAP $it")
+            // Arbor.d("MAP $it")
         }
     }
 }

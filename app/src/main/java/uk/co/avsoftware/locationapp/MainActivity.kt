@@ -44,12 +44,12 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import uk.co.avsoftware.location_presentation.components.LocationPermissionStatusBar
-import uk.co.avsoftware.location_presentation.viewmodel.LocationPermissionAction
-import uk.co.avsoftware.location_presentation.viewmodel.LocationPermissionEvent
-import uk.co.avsoftware.location_presentation.viewmodel.LocationPermissionViewModel
-import uk.co.avsoftware.location_presentation.viewmodel.LocationPermissionViewState
 import uk.co.avsoftware.locationapp.ui.theme.LocationAppTheme
+import uk.co.avsoftware.locationpresentation.components.LocationPermissionStatusBar
+import uk.co.avsoftware.locationpresentation.viewmodel.LocationPermissionAction
+import uk.co.avsoftware.locationpresentation.viewmodel.LocationPermissionEvent
+import uk.co.avsoftware.locationpresentation.viewmodel.LocationPermissionViewModel
+import uk.co.avsoftware.locationpresentation.viewmodel.LocationPermissionViewState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @AndroidEntryPoint
