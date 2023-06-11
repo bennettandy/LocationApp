@@ -10,46 +10,32 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import uk.co.avsoftware.locationapp.screens.Body
+import uk.co.avsoftware.locationapp.screens.BottomBar
 import uk.co.avsoftware.locationapp.ui.theme.LocationAppTheme
 import uk.co.avsoftware.locationpresentation.components.LocationPermissionStatusBar
 import uk.co.avsoftware.locationpresentation.viewmodel.LocationPermissionAction
 import uk.co.avsoftware.locationpresentation.viewmodel.LocationPermissionEvent
 import uk.co.avsoftware.locationpresentation.viewmodel.LocationPermissionViewModel
-import uk.co.avsoftware.locationpresentation.viewmodel.LocationPermissionViewState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @AndroidEntryPoint
@@ -125,79 +111,7 @@ class MainActivity : ComponentActivity() {
         }
     )
 
-    @Composable
-    fun TopBar(onMenuClicked: () -> Unit) {
-        // TopAppBar Composable
-        TopAppBar(
-            // Provide Title
-            title = {
-                Text(text = "Scaffold||GFG", color = Color.White)
-            },
-            // Provide the navigation Icon (Icon on the left to toggle drawer)
-            navigationIcon = {
-                Icon(
-                    imageVector = Icons.Default.Menu,
-                    contentDescription = "Menu",
-
-                    // When clicked trigger onClick
-                    // Callback to trigger drawer open
-                    modifier = Modifier.clickable(onClick = onMenuClicked),
-                    tint = Color.White
-                )
-            },
-            // background color of topAppBar
-            colors = TopAppBarDefaults.smallTopAppBarColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            )
-        )
-    }
-
-    @Composable
-    fun BottomBar() {
-        // BottomAppBar Composable
-        BottomAppBar(
-            containerColor = BottomAppBarDefaults.containerColor
-        ) {
-            Text(text = "Bottom App Bar", color = Color.White)
-        }
-    }
-
-    @Composable
-    fun Drawer() {
-        // Column Composable
-        Column(
-            Modifier
-                .background(Color.White)
-                .fillMaxSize()
-        ) {
-            // Repeat is a loop which
-            // takes count as argument
-            repeat(5) { item ->
-                Text(
-                    text = "Item number $item",
-                    modifier = Modifier.padding(8.dp),
-                    color = Color.Black
-                )
-            }
-        }
-    }
-
-    @Composable
-    fun Body(state: State<LocationPermissionViewState>) {
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-        ) {
-            Text(
-                text = "Body Content, ${state.value}",
-                color = MaterialTheme.colorScheme.onBackground
-            )
-        }
-    }
-
+    @OptIn(ExperimentalMaterial3Api::class)
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
     fun ScaffoldExample(viewModel: LocationPermissionViewModel) {
@@ -228,17 +142,13 @@ class MainActivity : ComponentActivity() {
                         coroutineScope.launch {
                             navigateToGPSSettings()
                         }
+                    },
+                    navigateToPermissionsClicked = {
+                        coroutineScope.launch {
+                            navigateToLocationPermissions()
+                        }
                     }
                 )
-//                TopBar(
-//                    // When menu is clicked open the
-//                    // drawer in coroutine scope
-//                    onMenuClicked = {
-// //                        coroutineScope.launch {
-// //                            // to close use -> scaffoldState.drawerState.close()
-// //                            scaffoldState.drawerState.open()
-// //                        }
-//                    })
             },
 
             // pass the bottomBar
@@ -250,12 +160,6 @@ class MainActivity : ComponentActivity() {
             content = {
                 Body(state)
             },
-
-            // pass the drawer
-            // no drawer - see ModalNavigationDrawer
-//            drawerContent = {
-//                Drawer()
-//            },
 
             floatingActionButton = {
                 // Create a floating action button in

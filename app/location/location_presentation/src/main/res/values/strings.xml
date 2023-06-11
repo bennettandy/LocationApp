@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="location_chip_coarse">Coarse</string>
+    <string name="location_chip_fine">Precise</string>
+    <string name="location_chip_gps">GPS</string>
+
+    <string name="location_permission_status_fine_required">Fine location permission is required</string>
+    <string name="location_permission_status_coarse_required">Coarse location permission is required</string>
+    <string name="location_permission_status_gps_required">GPS Location must be enabled</string>
+    <string name="location_permission_status_success">Location services available</string>
+
+    <string name="location_event_title">Location event</string>
+</resources>
