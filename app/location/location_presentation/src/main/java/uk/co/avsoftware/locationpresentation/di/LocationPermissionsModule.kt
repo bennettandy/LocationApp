@@ -41,9 +41,6 @@ internal class LocationPermissionsModule {
     fun getPermissionsGrantedInteractor(packageManager: PackageManager) = GetGrantedPermissionsInteractor(packageManager)
 
     @Provides
-    fun provideLocationEventsRepository(locationManager: LocationManager) = LocationEventsRepository(locationManager)
-
-    @Provides
     fun provideGetLastLocationInteractor(locationManager: LocationManager) = GetLastLocationInteractor(locationManager)
 
     @Provides

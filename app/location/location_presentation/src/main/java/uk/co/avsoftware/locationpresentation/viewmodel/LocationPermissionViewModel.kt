@@ -11,12 +11,14 @@ import uk.co.avsoftware.core.extensions.Reducer
 import uk.co.avsoftware.core.mvi.AbstractMviViewModel
 import uk.co.avsoftware.location.interactor.IsGPSEnabledInteractor
 import uk.co.avsoftware.location.interactor.LocationPermissionEnabledInteractor
+import uk.co.avsoftware.locationdomain.repository.LocationEventsRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class LocationPermissionViewModel @Inject constructor(
     private val locationPermissionInteractor: LocationPermissionEnabledInteractor,
     private val isGPSEnabledInteractor: IsGPSEnabledInteractor,
+    private val locationEventsRepository: LocationEventsRepository,
     savedStateHandle: SavedStateHandle,
     @ApplicationId applicationId: String
 ) : AbstractMviViewModel<LocationPermissionAction, LocationPermissionViewState, LocationPermissionCommand>(
@@ -50,6 +52,10 @@ class LocationPermissionViewModel @Inject constructor(
                 ).then(
                     LocationPermissionCommand.HandleDeniedPermissions(action.permissions)
                 )
+
+                is LocationPermissionAction.ToggleLocationListening -> state.copy(
+                    locationToggleState = action.listening
+                ).only()
             }
         }
 

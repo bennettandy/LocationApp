@@ -16,6 +16,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -129,14 +130,14 @@ private fun LocationStatusChipRow(
                 )
             })
 
-        OutlinedButton(
+        TextButton(
             onClick = navigateToPermissionsClicked,
             shape = CircleShape,
-            border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
         ) {
-            Icon(
-                painter = painterResource(id = R.drawable.baseline_adb_24),
-                contentDescription = null
+            Text(
+                style = MaterialTheme.typography.bodySmall,
+                text = stringResource(id = R.string.location_chip_debug)
             )
         }
     }

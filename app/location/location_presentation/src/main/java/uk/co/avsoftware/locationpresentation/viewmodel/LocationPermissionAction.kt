@@ -9,4 +9,6 @@ sealed interface LocationPermissionAction : MviAction {
     object RequestPermissionClicked : LocationPermissionAction
     data class ProcessPermissionResponse(val permissions: Map<String, Boolean>) :
         LocationPermissionAction
+
+    data class ToggleLocationListening(val listening: Boolean) : LocationPermissionAction
 }

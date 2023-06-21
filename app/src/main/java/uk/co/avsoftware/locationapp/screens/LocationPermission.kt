@@ -13,7 +13,10 @@ import uk.co.avsoftware.locationpresentation.components.LocationEventDisplay
 import uk.co.avsoftware.locationpresentation.viewmodel.LocationPermissionViewState
 
 @Composable
-fun Body(state: State<LocationPermissionViewState>) {
+fun Body(
+    state: LocationPermissionViewState,
+    locationToggled: (Boolean) -> Unit
+) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -21,6 +24,6 @@ fun Body(state: State<LocationPermissionViewState>) {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        LocationEventDisplay(state)
+        LocationEventDisplay(state, locationToggled = locationToggled)
     }
 }

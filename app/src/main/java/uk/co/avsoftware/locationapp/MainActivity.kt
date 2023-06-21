@@ -123,6 +123,13 @@ class MainActivity : ComponentActivity() {
         // background thread without blocking main thread
         val coroutineScope = rememberCoroutineScope()
 
+        val locationToggled: (Boolean)-> Unit = {
+            toggleState ->
+            coroutineScope.launch {
+                viewModel.receiveAction(LocationPermissionAction.ToggleLocationListening(toggleState))
+            }
+        }
+
         // Scaffold Composable
         Scaffold(
 
@@ -158,7 +165,7 @@ class MainActivity : ComponentActivity() {
             // Pass the body in
             // content parameter
             content = {
-                Body(state)
+                Body(state.value, locationToggled = locationToggled)
             },
 
             floatingActionButton = {
