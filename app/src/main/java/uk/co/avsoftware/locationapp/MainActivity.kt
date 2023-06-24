@@ -25,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,17 +63,24 @@ class MainActivity : ComponentActivity() {
         val locationPermissionRequest = registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
         ) { permissions: Map<String, Boolean> ->
-            locationViewModel.receiveAction(LocationPermissionAction.ProcessPermissionResponse(permissions))
+            locationViewModel.receiveAction(
+                LocationPermissionAction.ProcessPermissionResponse(
+                    permissions
+                )
+            )
         }
 
         lifecycleScope.launch {
             locationViewModel.viewEvents.collect() { event ->
                 when (event) {
-                    is LocationPermissionEvent.ObtainPermissions -> locationPermissionRequest.launch(event.permissions.toTypedArray())
+                    is LocationPermissionEvent.ObtainPermissions -> locationPermissionRequest.launch(
+                        event.permissions.toTypedArray()
+                    )
                     // when permission is denied we have to send the user to settings via dialog
                     is LocationPermissionEvent.CoarsePermissionDenied -> showLocationNavigationDialog(
                         getString(R.string.location_spike_location_required_dialog_title)
                     )
+
                     is LocationPermissionEvent.FinePermissionDenied -> showLocationNavigationDialog(
                         getString(R.string.location_spike_fine_location_required_dialog_title)
                     )
@@ -86,6 +94,7 @@ class MainActivity : ComponentActivity() {
         // trigger viewmodel refresh
         locationViewModel.receiveAction(LocationPermissionAction.RefreshCurrentPermissions)
     }
+
     private fun showLocationNavigationDialog(title: String) =
         MaterialAlertDialogBuilder(this)
             .setTitle(title)
@@ -123,8 +132,7 @@ class MainActivity : ComponentActivity() {
         // background thread without blocking main thread
         val coroutineScope = rememberCoroutineScope()
 
-        val locationToggled: (Boolean)-> Unit = {
-            toggleState ->
+        val locationToggled: (Boolean) -> Unit = { toggleState ->
             coroutineScope.launch {
                 viewModel.receiveAction(LocationPermissionAction.ToggleLocationListening(toggleState))
             }
@@ -172,7 +180,7 @@ class MainActivity : ComponentActivity() {
                 // Create a floating action button in
                 // floatingActionButton parameter of scaffold
                 FloatingActionButton(
-
+                    modifier = Modifier.testTag("Floating Button"),
                     onClick = {
                         // When clicked open Snackbar
                         coroutineScope.launch {
