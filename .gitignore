@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+app/location/build/intermediates/ktLint/reporterProviders.bin
+app/location/build/intermediates/ktLint/reporters.bin
