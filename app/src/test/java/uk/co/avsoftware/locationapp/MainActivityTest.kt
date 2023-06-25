@@ -1,23 +1,13 @@
 package uk.co.avsoftware.locationapp
 
-import android.R
-import android.app.Activity
-import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.performClick
 import androidx.test.core.app.ActivityScenario
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowLog
 import uk.co.avsoftware.locationapp.screens.BottomBar
@@ -35,7 +25,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun clickingButton_shouldChangeResultsViewText() {
+    fun `simple composable test`() {
         // Arrange or setup
         composeTestRule.setContent {
             BottomBar()
@@ -45,7 +35,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun `when I test, then it works`() {
+    fun `activity composable test`() {
 
         ActivityScenario.launch(MainActivity::class.java)
             .use { scenario ->
@@ -59,9 +49,5 @@ class MainActivityTest {
 
                 }
             }
-
-        // An alternative to ActivityScenario is to use AndroidComposeTestRule
-        // val composeTestRule = createAndroidComposeRule<MainActivity>()
-        // See: https://developer.android.com/reference/kotlin/androidx/compose/ui/test/junit4/AndroidComposeTestRule
     }
 }
