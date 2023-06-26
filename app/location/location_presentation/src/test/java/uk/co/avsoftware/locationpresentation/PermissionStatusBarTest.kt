@@ -1,6 +1,5 @@
 package uk.co.avsoftware.locationpresentation
 
-import android.content.Context
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
@@ -30,21 +29,89 @@ class PermissionStatusBarTest {
     }
 
     @Test
-    fun `simple composable test`() {
-        val context: Context = InstrumentationRegistry.getInstrumentation().targetContext
-        val statusBarNode = composeTestRule.onNodeWithTag("status_row")
-        val locationPermissionRequiredString = context.getString(R.string.location_permission_status_coarse_required)
-
-        composeTestRule.setContent {
-            LocationPermissionStatusBar(viewState = LocationPermissionViewState.default)
+    fun `no permissions and no gps show course required`() {
+        InstrumentationRegistry.getInstrumentation().targetContext.apply {
+            testMappingToMessage(
+                viewState = LocationPermissionViewState.default.copy(
+                    fineLocationGranted = false,
+                    coarseLocationGranted = false,
+                    gpsIsActive = false
+                ),
+                expectedMessage = getString(R.string.location_permission_status_coarse_required)
+            )
         }
+    }
 
-        statusBarNode.apply {
-            assertIsDisplayed()
-            onChild().apply {
-                assertIsDisplayed()
-                assertTextEquals(locationPermissionRequiredString)
-            }
+    @Test
+    fun `coarse permission and gps show fine required`() {
+        InstrumentationRegistry.getInstrumentation().targetContext.apply {
+            testMappingToMessage(
+                viewState = LocationPermissionViewState.default.copy(
+                    fineLocationGranted = false,
+                    coarseLocationGranted = true,
+                    gpsIsActive = true
+                ),
+                expectedMessage = getString(R.string.location_permission_status_fine_required)
+            )
+        }
+    }
+
+    @Test
+    fun `coarse permission and no gps show fine required`() {
+        InstrumentationRegistry.getInstrumentation().targetContext.apply {
+            testMappingToMessage(
+                viewState = LocationPermissionViewState.default.copy(
+                    fineLocationGranted = false,
+                    coarseLocationGranted = true,
+                    gpsIsActive = false
+                ),
+                expectedMessage = getString(R.string.location_permission_status_fine_required)
+            )
+        }
+    }
+
+    @Test
+    fun `fine permission and no gps show gps required`() {
+        InstrumentationRegistry.getInstrumentation().targetContext.apply {
+            testMappingToMessage(
+                viewState = LocationPermissionViewState.default.copy(
+                    fineLocationGranted = true,
+                    coarseLocationGranted = true,
+                    gpsIsActive = false
+                ),
+                expectedMessage = getString(R.string.location_permission_status_gps_required)
+            )
+        }
+    }
+
+    @Test
+    fun `fine permission and gps show success`() {
+        InstrumentationRegistry.getInstrumentation().targetContext.apply {
+            testMappingToMessage(
+                viewState = LocationPermissionViewState.default.copy(
+                    fineLocationGranted = true,
+                    coarseLocationGranted = true,
+                    gpsIsActive = true
+                ),
+                expectedMessage = getString(R.string.location_permission_status_success)
+            )
+        }
+    }
+
+    private fun testMappingToMessage(
+        viewState: LocationPermissionViewState,
+        expectedMessage: String
+    ) {
+        composeTestRule.apply {
+            setContent { LocationPermissionStatusBar(viewState = viewState) }
+            onNodeWithTag("status_row")
+                .apply {
+                    assertIsDisplayed()
+                    onChild().apply {
+                        assertIsDisplayed()
+                        assertTextEquals(expectedMessage)
+                    }
+                }
         }
     }
 }
