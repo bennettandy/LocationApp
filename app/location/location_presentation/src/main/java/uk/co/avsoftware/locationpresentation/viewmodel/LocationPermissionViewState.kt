@@ -14,6 +14,8 @@ data class LocationPermissionViewState(
     val locationEvents: List<LocationEvent>
 ) : MviState, Parcelable {
 
+    fun permissionsGranted() = coarseLocationGranted && fineLocationGranted && gpsIsActive
+
     companion object {
         val default = LocationPermissionViewState(
             coarseLocationGranted = false,

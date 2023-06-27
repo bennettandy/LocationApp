@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.AssistChip
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
@@ -39,26 +41,28 @@ fun LocationPermissionStatusBar(
     @Composable
     fun getStateString(viewState: LocationPermissionViewState) =
         stringResource(
-        when {
-            !viewState.coarseLocationGranted -> R.string.location_permission_status_coarse_required
-            !viewState.fineLocationGranted -> R.string.location_permission_status_fine_required
-            !viewState.gpsIsActive -> R.string.location_permission_status_gps_required
+            when {
+                !viewState.coarseLocationGranted -> R.string.location_permission_status_coarse_required
+                !viewState.fineLocationGranted -> R.string.location_permission_status_fine_required
+                !viewState.gpsIsActive -> R.string.location_permission_status_gps_required
 
-            else -> R.string.location_permission_status_success
-        })
+                else -> R.string.location_permission_status_success
+            }
+        )
 
 
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        LocationStatusChipRow(viewState,
+        LocationStatusChipRow(
+            viewState,
             modifier,
             permissionsClicked,
             gpsSettingsClicked,
             navigateToPermissionsClicked
         )
-        
+
         Row(
             Modifier
                 .testTag("status_row")
@@ -132,16 +136,21 @@ private fun LocationStatusChipRow(
                 )
             })
 
-        TextButton(
+        AssistChip(
             onClick = navigateToPermissionsClicked,
-            shape = CircleShape,
-            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
-        ) {
-            Text(
-                style = MaterialTheme.typography.bodySmall,
-                text = stringResource(id = R.string.location_chip_debug)
-            )
-        }
+            label = {
+                Text(
+                    style = MaterialTheme.typography.bodySmall,
+                    text = stringResource(id = R.string.location_chip_debug),
+                )
+            },
+            leadingIcon = {
+                Icon(
+                    Icons.Default.Settings,
+                    stringResource(id = R.string.location_chip_debug_icon_desc)
+                )
+            }
+        )
     }
 }
 

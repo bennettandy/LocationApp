@@ -4,11 +4,15 @@
     <string name="location_chip_fine">Precise</string>
     <string name="location_chip_gps">GPS</string>
     <string name="location_chip_debug">…</string>
+    <string name="location_chip_debug_icon_desc">Settings icon</string>
 
     <string name="location_permission_status_fine_required">Fine location permission is required</string>
     <string name="location_permission_status_coarse_required">Coarse location permission is required</string>
     <string name="location_permission_status_gps_required">GPS Location must be enabled</string>
     <string name="location_permission_status_success">Location services are available</string>
 
-    <string name="location_event_title">Location event</string>
+    <string name="location_event_title">%1d Location events received</string>
+    <string name="location_listen_label">listen</string>
+    <string name="location_listening_label">listening</string>
+    <string name="location_grant_permissions">grant permissions</string>
 </resources>

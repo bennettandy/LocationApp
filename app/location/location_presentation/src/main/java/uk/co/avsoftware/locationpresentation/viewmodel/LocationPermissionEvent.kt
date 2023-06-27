@@ -6,4 +6,7 @@ sealed interface LocationPermissionEvent : MviViewEvent {
     data class ObtainPermissions(val permissions: List<String>) : LocationPermissionEvent
     object CoarsePermissionDenied : LocationPermissionEvent
     object FinePermissionDenied : LocationPermissionEvent
+
+    object ListenerStarted : LocationPermissionEvent
+    object ListenerStopped : LocationPermissionEvent
 }

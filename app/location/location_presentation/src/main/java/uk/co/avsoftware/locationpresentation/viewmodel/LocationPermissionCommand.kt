@@ -7,4 +7,6 @@ interface LocationPermissionCommand : MviCommand {
     object CheckPermissionsCommand : LocationPermissionCommand
     data class HandleDeniedPermissions(val permissions: Map<String, Boolean>) :
         LocationPermissionCommand
+
+    data class ToggleLocationEventListener(val listening: Boolean) : LocationPermissionCommand
 }
