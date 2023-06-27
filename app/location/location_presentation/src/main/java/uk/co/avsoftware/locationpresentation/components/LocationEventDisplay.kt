@@ -32,21 +32,20 @@ fun LocationEventDisplay(
     ) {
 
     }
+    Row {
+        LocationEventsControlSwitch(
+            enabled = state.permissionsGranted(),
+            active = state.locationToggleState,
+            setActive = locationToggled
+        )
+    }
     Row(modifier = Modifier.background(MaterialTheme.colorScheme.primary)) {
         Text(
-            text = stringResource(R.string.location_event_title),
+            text = stringResource(R.string.location_event_title, state.locationEvents.size),
             color = MaterialTheme.colorScheme.onPrimary,
             modifier = Modifier.padding(15.dp)
         )
     }
-    Row() {
-        val checkedState = state.locationToggleState
-        Switch(
-            checked = checkedState,
-            onCheckedChange = { locationToggled(!checkedState) }
-        )
-    }
-
 }
 
 @Preview

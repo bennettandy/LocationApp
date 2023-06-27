@@ -25,8 +25,11 @@ class MainActivityTest {
 
         val scenario = launchActivity<MainActivity>()
         scenario.onActivity {
-            assertNotNull(it)
+            activity ->
+            // access to activity here
+            assertNotNull(activity)
         }
+        // destroy and recreate activity, we shouldn't lose any state
         scenario.recreate()
     }
 

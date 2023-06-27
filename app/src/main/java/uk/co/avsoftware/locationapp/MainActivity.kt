@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
@@ -71,7 +72,7 @@ class MainActivity : ComponentActivity() {
         }
 
         lifecycleScope.launch {
-            locationViewModel.viewEvents.collect() { event ->
+            locationViewModel.viewEvents.collect { event ->
                 when (event) {
                     is LocationPermissionEvent.ObtainPermissions -> locationPermissionRequest.launch(
                         event.permissions.toTypedArray()
@@ -84,9 +85,16 @@ class MainActivity : ComponentActivity() {
                     is LocationPermissionEvent.FinePermissionDenied -> showLocationNavigationDialog(
                         getString(R.string.location_spike_fine_location_required_dialog_title)
                     )
+
+                    is LocationPermissionEvent.ListenerStarted -> showToast(getString(R.string.location_toast_listener_started))
+                    is LocationPermissionEvent.ListenerStopped -> showToast(getString(R.string.location_toast_listener_stopped))
                 }
             }
         }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onResume() {

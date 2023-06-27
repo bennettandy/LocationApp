@@ -1,5 +1,7 @@
 # LocationApp
 
+Test bed application for a number of Android Architectures and Services.
+
 MVI Architecture
 
 Unidirectional data flow
