@@ -5,8 +5,7 @@ import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 
-object TokenRepository {
-    private const val KEY_TOKEN = "TOKEN"
+class TokenRepository {
 
     private lateinit var preferences: SharedPreferences
 
@@ -20,7 +19,7 @@ object TokenRepository {
             "secret_shared_prefs",
             masterKey,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
     }
 
@@ -40,5 +39,9 @@ object TokenRepository {
             remove(KEY_TOKEN)
             apply()
         }
+    }
+
+    companion object {
+        private const val KEY_TOKEN = "TOKEN"
     }
 }

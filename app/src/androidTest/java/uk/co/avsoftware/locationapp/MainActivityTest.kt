@@ -8,7 +8,6 @@ import junit.framework.TestCase.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith
 
-
 /**
  * Instrumented test, which will execute on an Android device.
  *
@@ -25,12 +24,11 @@ class MainActivityTest {
 
         val scenario = launchActivity<MainActivity>()
         scenario.onActivity {
-            activity ->
+                activity ->
             // access to activity here
             assertNotNull(activity)
         }
         // destroy and recreate activity, we shouldn't lose any state
         scenario.recreate()
     }
-
 }

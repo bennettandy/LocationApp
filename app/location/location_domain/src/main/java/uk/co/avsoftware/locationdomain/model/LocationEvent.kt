@@ -7,4 +7,4 @@ import kotlinx.parcelize.Parcelize
 data class LocationEvent(
     val latitude: Double,
     val longitude: Double
-): Parcelable
+) : Parcelable

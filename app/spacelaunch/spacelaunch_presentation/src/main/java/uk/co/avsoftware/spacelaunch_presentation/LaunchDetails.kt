@@ -27,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.Error
 import com.apollographql.apollo3.exception.ApolloException
 import com.example.rocketreserver.BookTripMutation
@@ -38,7 +39,6 @@ import uk.co.avsoftware.spacelaunch_presentation.LaunchDetailsState.ProtocolErro
 import uk.co.avsoftware.spacelaunch_presentation.LaunchDetailsState.Success
 import kotlinx.coroutines.launch
 import uk.co.avsoftware.spacelaunch_data.TokenRepository
-import uk.co.avsoftware.spacelaunch_data.apolloClient
 
 private sealed interface LaunchDetailsState {
     object Loading : LaunchDetailsState
@@ -48,12 +48,12 @@ private sealed interface LaunchDetailsState {
 }
 
 @Composable
-fun LaunchDetails(launchId: String, navigateToLogin: () -> Unit) {
+fun LaunchDetails(tokenRepository: TokenRepository, apolloClient: ApolloClient, launchId: String, navigateToLogin: () -> Unit) {
     var state by remember { mutableStateOf<LaunchDetailsState>(Loading) }
     LaunchedEffect(Unit) {
         state = try {
             val response = apolloClient.query(LaunchDetailsQuery(launchId)).execute()
-            if (response.hasErrors()) {
+            if (response!!.hasErrors()) {
                 ApplicationError(response.errors!!)
             } else {
                 Success(response.data!!)
@@ -66,12 +66,13 @@ fun LaunchDetails(launchId: String, navigateToLogin: () -> Unit) {
         Loading -> Loading()
         is ProtocolError -> ErrorMessage("Oh no... A protocol error happened: ${s.exception.message}")
         is ApplicationError -> ErrorMessage(s.errors[0].message.orEmpty())
-        is Success -> LaunchDetails(s.data, navigateToLogin)
+        is Success -> LaunchDetails(tokenRepository, apolloClient, s.data, navigateToLogin)
     }
 }
 
 @Composable
 private fun LaunchDetails(
+    tokenRepository: TokenRepository, apolloClient: ApolloClient,
     data: LaunchDetailsQuery.Data,
     navigateToLogin: () -> Unit,
 ) {
@@ -125,6 +126,8 @@ private fun LaunchDetails(
                 loading = true
                 scope.launch {
                     val ok = onBookButtonClick(
+                        tokenRepository = tokenRepository,
+                        apolloClient = apolloClient,
                         launchId = data.launch?.id ?: "",
                         isBooked = isBooked,
                         navigateToLogin = navigateToLogin
@@ -145,8 +148,8 @@ private fun LaunchDetails(
     }
 }
 
-private suspend fun onBookButtonClick(launchId: String, isBooked: Boolean, navigateToLogin: () -> Unit): Boolean {
-    if (TokenRepository.getToken() == null) {
+private suspend fun onBookButtonClick(tokenRepository: TokenRepository, apolloClient: ApolloClient, launchId: String, isBooked: Boolean, navigateToLogin: () -> Unit): Boolean {
+    if (tokenRepository?.getToken() == null) {
         navigateToLogin()
         return false
     }
@@ -195,5 +198,5 @@ private fun SmallLoading() {
 @Preview(showBackground = true)
 @Composable
 private fun LaunchDetailsPreview() {
-    LaunchDetails(launchId = "42", navigateToLogin = {})
+    //LaunchDetailslaunchId = "42", navigateToLogin = {})
 }

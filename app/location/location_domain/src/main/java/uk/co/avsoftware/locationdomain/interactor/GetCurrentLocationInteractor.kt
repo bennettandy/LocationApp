@@ -1,7 +1,6 @@
 package uk.co.avsoftware.locationdomain.interactor
 
 import android.Manifest
-import android.location.Location
 import androidx.annotation.RequiresPermission
 import kotlinx.coroutines.flow.first
 import uk.co.avsoftware.locationdomain.model.LocationEvent

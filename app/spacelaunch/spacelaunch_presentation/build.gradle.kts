@@ -51,7 +51,6 @@ dependencies {
     implementation(project(":app:spacelaunch:spacelaunch_domain"))
     implementation(project(":app:spacelaunch:spacelaunch_data"))
 
-
     implementation("androidx.core:core-ktx:1.8.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
@@ -66,6 +65,7 @@ dependencies {
 
     implementation("io.coil-kt:coil-compose:2.2.2")
     implementation("androidx.navigation:navigation-compose:2.5.3")
+    implementation("androidx.security:security-crypto:1.1.0-alpha05")
 
     // FIXME: added temporary before segregating demo into modules
     implementation("com.apollographql.apollo3:apollo-runtime")

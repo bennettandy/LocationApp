@@ -24,13 +24,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.ApolloResponse
 import com.apollographql.apollo3.api.Optional
 import com.example.rocketreserver.LaunchListQuery
-import uk.co.avsoftware.spacelaunch_data.apolloClient
 
 @Composable
-fun LaunchList(onLaunchClick: (launchId: String) -> Unit) {
+fun LaunchList(apolloClient: ApolloClient, onLaunchClick: (launchId: String) -> Unit) {
     var cursor: String? by remember { mutableStateOf(null) }
     var response: ApolloResponse<LaunchListQuery.Data>? by remember { mutableStateOf(null) }
     var launchList by remember { mutableStateOf(emptyList<LaunchListQuery.Launch>()) }

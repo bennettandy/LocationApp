@@ -26,14 +26,14 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.exception.ApolloException
 import com.example.rocketreserver.LoginMutation
 import kotlinx.coroutines.launch
 import uk.co.avsoftware.spacelaunch_data.TokenRepository
-import uk.co.avsoftware.spacelaunch_data.apolloClient
 
 @Composable
-fun Login(navigateBack: () -> Unit) {
+fun Login(tokenRepository: TokenRepository, apolloClient: ApolloClient, navigateBack: () -> Unit) {
     Column(
         modifier = Modifier.padding(16.dp)
     ) {
@@ -68,7 +68,7 @@ fun Login(navigateBack: () -> Unit) {
             onClick = {
                 loading = true
                 scope.launch {
-                    val ok = login(email)
+                    val ok = login(tokenRepository, apolloClient, email)
                     loading = false
                     if (ok) navigateBack()
                 }
@@ -83,7 +83,7 @@ fun Login(navigateBack: () -> Unit) {
     }
 }
 
-private suspend fun login(email: String): Boolean {
+private suspend fun login(tokenRepository: TokenRepository, apolloClient: ApolloClient, email: String): Boolean {
     val response = try {
         apolloClient.mutation(LoginMutation(email = email)).execute()
     } catch (e: ApolloException) {
@@ -99,7 +99,7 @@ private suspend fun login(email: String): Boolean {
         Log.w("Login", "Failed to login: no token returned by the backend")
         return false
     }
-    TokenRepository.setToken(token)
+    tokenRepository.setToken(token)
     return true
 }
 
@@ -115,5 +115,5 @@ private fun Loading() {
 @Preview(showBackground = true)
 @Composable
 private fun LoginPreview() {
-    Login(navigateBack = { })
+    //Login(navigateBack = { })
 }

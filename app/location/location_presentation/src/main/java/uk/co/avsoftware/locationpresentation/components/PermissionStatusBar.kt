@@ -1,13 +1,11 @@
 package uk.co.avsoftware.locationpresentation.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Settings
@@ -16,9 +14,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,7 +46,6 @@ fun LocationPermissionStatusBar(
             }
         )
 
-
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -73,7 +68,8 @@ fun LocationPermissionStatusBar(
                 .align(Alignment.CenterHorizontally)
         ) {
             Text(
-                text = getStateString(viewState), color = MaterialTheme.colorScheme.onPrimary,
+                text = getStateString(viewState),
+                color = MaterialTheme.colorScheme.onPrimary,
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier
@@ -97,7 +93,8 @@ private fun LocationStatusChipRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        FilterChip(selected = viewState.coarseLocationGranted,
+        FilterChip(
+            selected = viewState.coarseLocationGranted,
             onClick = permissionsClicked,
             trailingIcon = {
                 GetStateIcon(successState = viewState.coarseLocationGranted)
@@ -107,7 +104,8 @@ private fun LocationStatusChipRow(
                     style = MaterialTheme.typography.bodyMedium,
                     text = stringResource(id = R.string.location_chip_coarse)
                 )
-            })
+            }
+        )
 
         FilterChip(
             selected = viewState.fineLocationGranted,
@@ -134,14 +132,15 @@ private fun LocationStatusChipRow(
                     style = MaterialTheme.typography.bodyMedium,
                     text = stringResource(id = R.string.location_chip_gps)
                 )
-            })
+            }
+        )
 
         AssistChip(
             onClick = navigateToPermissionsClicked,
             label = {
                 Text(
                     style = MaterialTheme.typography.bodySmall,
-                    text = stringResource(id = R.string.location_chip_debug),
+                    text = stringResource(id = R.string.location_chip_debug)
                 )
             },
             leadingIcon = {
