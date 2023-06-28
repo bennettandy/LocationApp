@@ -1,6 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
-package com.example.rocketreserver
+package uk.co.avsoftware.locationapp
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -16,29 +14,35 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.apollographql.apollo3.api.ApolloResponse
-import com.example.rocketreserver.ui.theme.RocketReserverTheme
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import uk.co.avsoftware.locationapp.ui.theme.LocationAppTheme
+import uk.co.avsoftware.spacelaunch_domain.model.TripBookedResponse
+import uk.co.avsoftware.spacelaunch_presentation.LaunchDetails
+import uk.co.avsoftware.spacelaunch_presentation.LaunchList
+import uk.co.avsoftware.spacelaunch_presentation.Login
 
-class MainActivity : ComponentActivity() {
+class RocketReserverActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         TokenRepository.init(this)
         setContent {
-            RocketReserverTheme {
+            LocationAppTheme {
                 val snackbarHostState = remember { SnackbarHostState() }
-                val tripBookedFlow = remember { apolloClient.subscription(TripsBookedSubscription()).toFlow() }
-                val tripBookedResponse: ApolloResponse<TripsBookedSubscription.Data>? by tripBookedFlow.collectAsState(initial = null)
+
+                val tripBookedFlow: Flow<TripBookedResponse> = emptyFlow() // remember { apolloClient.subscription(TripsBookedSubscription()).toFlow() }
+                val tripBookedResponse: TripBookedResponse? = TripBookedResponse(null) // by tripBookedFlow.collectAsState(initial = null)
+
                 LaunchedEffect(tripBookedResponse) {
                     if (tripBookedResponse == null) return@LaunchedEffect
-                    val message = when (tripBookedResponse!!.data?.tripsBooked) {
+                    val message = when (tripBookedResponse.tripsBooked) {
                         null -> "Subscription error"
                         -1 -> "Trip cancelled"
                         else -> "Trip booked! 🚀"

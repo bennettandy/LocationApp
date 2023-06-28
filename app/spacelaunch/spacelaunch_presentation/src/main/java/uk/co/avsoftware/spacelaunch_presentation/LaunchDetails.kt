@@ -1,4 +1,4 @@
-package com.example.rocketreserver
+package uk.co.avsoftware.spacelaunch_presentation
 
 import android.util.Log
 import androidx.compose.foundation.layout.Box
@@ -29,11 +29,16 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.apollographql.apollo3.api.Error
 import com.apollographql.apollo3.exception.ApolloException
-import com.example.rocketreserver.LaunchDetailsState.ApplicationError
-import com.example.rocketreserver.LaunchDetailsState.Loading
-import com.example.rocketreserver.LaunchDetailsState.ProtocolError
-import com.example.rocketreserver.LaunchDetailsState.Success
+import com.example.rocketreserver.BookTripMutation
+import com.example.rocketreserver.CancelTripMutation
+import com.example.rocketreserver.LaunchDetailsQuery
+import uk.co.avsoftware.spacelaunch_presentation.LaunchDetailsState.ApplicationError
+import uk.co.avsoftware.spacelaunch_presentation.LaunchDetailsState.Loading
+import uk.co.avsoftware.spacelaunch_presentation.LaunchDetailsState.ProtocolError
+import uk.co.avsoftware.spacelaunch_presentation.LaunchDetailsState.Success
 import kotlinx.coroutines.launch
+import uk.co.avsoftware.spacelaunch_data.TokenRepository
+import uk.co.avsoftware.spacelaunch_data.apolloClient
 
 private sealed interface LaunchDetailsState {
     object Loading : LaunchDetailsState
@@ -60,7 +65,7 @@ fun LaunchDetails(launchId: String, navigateToLogin: () -> Unit) {
     when (val s = state) {
         Loading -> Loading()
         is ProtocolError -> ErrorMessage("Oh no... A protocol error happened: ${s.exception.message}")
-        is ApplicationError -> ErrorMessage(s.errors[0].message)
+        is ApplicationError -> ErrorMessage(s.errors[0].message.orEmpty())
         is Success -> LaunchDetails(s.data, navigateToLogin)
     }
 }

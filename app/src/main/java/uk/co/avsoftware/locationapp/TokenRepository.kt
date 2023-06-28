@@ -1,4 +1,4 @@
-package uk.co.avsoftware.spacelaunch_data
+package uk.co.avsoftware.locationapp
 
 import android.content.Context
 import android.content.SharedPreferences

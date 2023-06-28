@@ -1,4 +1,4 @@
-package com.example.rocketreserver
+package uk.co.avsoftware.spacelaunch_data
 
 import android.util.Log
 import com.apollographql.apollo3.ApolloClient

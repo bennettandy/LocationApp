@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.example.rocketreserver
+package uk.co.avsoftware.spacelaunch_presentation
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -26,6 +26,8 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.apollographql.apollo3.api.ApolloResponse
 import com.apollographql.apollo3.api.Optional
+import com.example.rocketreserver.LaunchListQuery
+import uk.co.avsoftware.spacelaunch_data.apolloClient
 
 @Composable
 fun LaunchList(onLaunchClick: (launchId: String) -> Unit) {

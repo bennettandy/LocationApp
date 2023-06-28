@@ -1,4 +1,4 @@
-package com.example.rocketreserver
+package uk.co.avsoftware.locationapp
 
 object NavigationDestinations {
     const val LAUNCH_LIST = "launchList"
