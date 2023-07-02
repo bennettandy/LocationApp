@@ -47,7 +47,7 @@ android {
 
 dependencies {
 
-    implementation(project(":app:core"))
+    implementation(project(":app:common"))
     implementation(project(":app:spacelaunch:spacelaunch_domain"))
     implementation(project(":app:spacelaunch:spacelaunch_data"))
 
