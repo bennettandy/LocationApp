@@ -19,16 +19,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.apollographql.apollo3.ApolloClient
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import uk.co.avsoftware.locationapp.ui.theme.LocationAppTheme
 import uk.co.avsoftware.spacelaunch_data.TokenRepository
-import uk.co.avsoftware.spacelaunch_domain.repository.BookedTripsRepository
 import uk.co.avsoftware.spacelaunch_presentation.LaunchDetails
 import uk.co.avsoftware.spacelaunch_presentation.LaunchList
 import uk.co.avsoftware.spacelaunch_presentation.Login
@@ -45,22 +42,11 @@ class RocketReserverActivity : ComponentActivity() {
     @Inject
     lateinit var tokenRepository: TokenRepository
 
-    @Inject
-    lateinit var bookedTripsRepository: BookedTripsRepository
-
     private val spaceLaunchViewModel: SpaceLaunchViewModel by viewModels()
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // subscribe to View Events
-        lifecycleScope.launch {
-            spaceLaunchViewModel.viewEvents.collect{
-
-        }
-        }
-
 
         setContent {
             LocationAppTheme {
@@ -85,7 +71,7 @@ class RocketReserverActivity : ComponentActivity() {
                     snackbarHost = { SnackbarHost(snackbarHostState) }
                 ) { paddingValues ->
                     Box(Modifier.padding(paddingValues)) {
-                        MainNavHost(apolloClient, tokenRepository)
+                        MainNavHost(apolloClient, tokenRepository, spaceLaunchViewModel)
                     }
                 }
             }
@@ -94,15 +80,19 @@ class RocketReserverActivity : ComponentActivity() {
 }
 
 @Composable
-private fun MainNavHost(apolloClient: ApolloClient, tokenRepository: TokenRepository) {
+private fun MainNavHost(
+    apolloClient: ApolloClient,
+    tokenRepository: TokenRepository,
+    spaceLaunchViewModel: SpaceLaunchViewModel
+) {
     val navController = rememberNavController()
     NavHost(navController, startDestination = NavigationDestinations.LAUNCH_LIST) {
         composable(route = NavigationDestinations.LAUNCH_LIST) {
             LaunchList(
-                apolloClient,
                 onLaunchClick = { launchId ->
                     navController.navigate("${NavigationDestinations.LAUNCH_DETAILS}/$launchId")
-                }
+                },
+                spaceLaunchViewModel
             )
         }
 

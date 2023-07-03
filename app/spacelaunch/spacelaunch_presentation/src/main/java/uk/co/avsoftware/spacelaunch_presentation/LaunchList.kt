@@ -15,46 +15,62 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.apollographql.apollo3.ApolloClient
-import com.apollographql.apollo3.api.ApolloResponse
-import com.apollographql.apollo3.api.Optional
-import com.example.rocketreserver.LaunchListQuery
+import uk.co.avsoftware.spacelaunch_domain.model.Launch
+import uk.co.avsoftware.spacelaunch_domain.model.Launches
+import uk.co.avsoftware.spacelaunch_presentation.viewmodel.SpaceLaunchAction
+import uk.co.avsoftware.spacelaunch_presentation.viewmodel.SpaceLaunchViewModel
 
 @Composable
-fun LaunchList(apolloClient: ApolloClient, onLaunchClick: (launchId: String) -> Unit) {
-    var cursor: String? by remember { mutableStateOf(null) }
-    var response: ApolloResponse<LaunchListQuery.Data>? by remember { mutableStateOf(null) }
-    var launchList by remember { mutableStateOf(emptyList<LaunchListQuery.Launch>()) }
+fun LaunchList(
+//    apolloClient: ApolloClient,
+    onLaunchClick: (launchId: String) -> Unit,
+    spaceLaunchViewModel: SpaceLaunchViewModel
+) {
+    val cursor: String? by remember { mutableStateOf(null) }
+
+    val uiState = spaceLaunchViewModel.uiState.collectAsState()
+    //var response: ApolloResponse<LaunchListQuery.Data>? by remember { mutableStateOf(null) }
+    //var launchList by remember { mutableStateOf(emptyList<LaunchListQuery.Launch>()) }
     LaunchedEffect(cursor) {
-        response = apolloClient.query(LaunchListQuery(Optional.present(cursor))).execute()
-        launchList = launchList + response?.data?.launches?.launches?.filterNotNull().orEmpty()
+        spaceLaunchViewModel.receiveAction(
+            SpaceLaunchAction.RefreshLaunches(cursor)
+        )
+
+       // response = apolloClient.query(LaunchListQuery(Optional.present(cursor))).execute()
+       // launchList = launchList + response?.data?.launches?.launches?.filterNotNull().orEmpty()
     }
 
     LazyColumn {
-        items(launchList) { launch ->
-            LaunchItem(launch = launch, onClick = onLaunchClick)
+        val launches: Launches = uiState.value.launches
+        items(uiState.value.launches.launches) { launch ->
+            launch?.let {
+                LaunchItem(launch = launch, onClick = onLaunchClick)
+            }
         }
 
         item {
-            if (response?.data?.launches?.hasMore == true) {
+            if (launches.hasMore) {
                 LoadingItem()
-                cursor = response?.data?.launches?.cursor
+
+                spaceLaunchViewModel.receiveAction(
+                    SpaceLaunchAction.RefreshLaunches(launches.cursor)
+                )
             }
         }
     }
 }
 
 @Composable
-private fun LaunchItem(launch: LaunchListQuery.Launch, onClick: (launchId: String) -> Unit) {
+private fun LaunchItem(launch: Launch, onClick: (launchId: String) -> Unit) {
     ListItem(
         modifier = Modifier.clickable { onClick(launch.id) },
         headlineText = {

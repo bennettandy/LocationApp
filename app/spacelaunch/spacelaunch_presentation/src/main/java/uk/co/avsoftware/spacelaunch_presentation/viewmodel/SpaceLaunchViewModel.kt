@@ -13,12 +13,14 @@ import timber.log.Timber
 import uk.co.avsoftware.core.annotation.ApplicationId
 import uk.co.avsoftware.core.extensions.Reducer
 import uk.co.avsoftware.core.mvi.AbstractMviViewModel
+import uk.co.avsoftware.spacelaunch_domain.interactor.GetLaunchListInteractor
 import uk.co.avsoftware.spacelaunch_domain.repository.BookedTripsRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class SpaceLaunchViewModel @Inject constructor(
     private val bookedTripsRepository: BookedTripsRepository,
+    private val launchListInteractor: GetLaunchListInteractor,
     savedStateHandle: SavedStateHandle,
     @ApplicationId applicationId: String
 ) : AbstractMviViewModel<SpaceLaunchAction, SpaceLaunchViewState, SpaceLaunchCommand>(
@@ -50,8 +52,16 @@ class SpaceLaunchViewModel @Inject constructor(
     override val reducer: Reducer<SpaceLaunchAction, SpaceLaunchViewState, SpaceLaunchCommand>
         get() = { action, state ->
             when (action) {
+                is SpaceLaunchAction.RefreshLaunches -> state.copy(
+                    isLoading = true
+                ).then(
+                    SpaceLaunchCommand.LoadLaunchList(action.cursor)
+                )
                 is SpaceLaunchAction.Initialise -> state.only()
-
+                is SpaceLaunchAction.HandleLaunches -> state.copy(
+                    isLoading = false,
+                    launches = action.launches
+                ).only()
             }
         }
 
@@ -59,22 +69,16 @@ class SpaceLaunchViewModel @Inject constructor(
         when (command) {
             SpaceLaunchCommand.BookTrip ->
                 viewModelScope.launch {
-//                    receiveAction(
-//                        SpaceLaunchAction.UpdateLocationPermissions(
-//                            coarse = locationPermissionInteractor.coarseLocationEnabled(),
-//                            fine = locationPermissionInteractor.fineLocationEnabled(),
-//                            gpsActivity = isGPSEnabledInteractor()
-//                        )
-//                    )
+                    // todo: implement or delete
                 }
 
+            is SpaceLaunchCommand.LoadLaunchList ->
+                viewModelScope.launch {
+                    launchListInteractor.invoke()?.let {
+                        receiveAction(SpaceLaunchAction.HandleLaunches(it))
+                    }
+                }
 
         }
-    }
-
-
-    companion object {
-        private const val COARSE_PERMISSION = android.Manifest.permission.ACCESS_COARSE_LOCATION
-        private const val FINE_PERMISSION = android.Manifest.permission.ACCESS_FINE_LOCATION
     }
 }
