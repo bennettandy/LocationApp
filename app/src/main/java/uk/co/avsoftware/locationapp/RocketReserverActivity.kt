@@ -14,6 +14,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -23,10 +25,14 @@ import androidx.navigation.compose.rememberNavController
 import com.apollographql.apollo3.ApolloClient
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
+import timber.log.Timber
 import uk.co.avsoftware.locationapp.ui.theme.LocationAppTheme
 import uk.co.avsoftware.spacelaunch_data.TokenRepository
 import uk.co.avsoftware.spacelaunch_domain.model.TripBookedResponse
+import uk.co.avsoftware.spacelaunch_domain.repository.BookedTripsRepository
 import uk.co.avsoftware.spacelaunch_presentation.LaunchDetails
 import uk.co.avsoftware.spacelaunch_presentation.LaunchList
 import uk.co.avsoftware.spacelaunch_presentation.Login
@@ -41,6 +47,9 @@ class RocketReserverActivity : ComponentActivity() {
     @Inject
     lateinit var tokenRepository: TokenRepository
 
+    @Inject
+    lateinit var bookedTripsRepository: BookedTripsRepository
+
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,12 +58,17 @@ class RocketReserverActivity : ComponentActivity() {
             LocationAppTheme {
                 val snackbarHostState = remember { SnackbarHostState() }
 
-                val tripBookedFlow: Flow<TripBookedResponse> = emptyFlow() // remember { apolloClient.subscription(TripsBookedSubscription()).toFlow() }
-                val tripBookedResponse: TripBookedResponse? = TripBookedResponse(null) // by tripBookedFlow.collectAsState(initial = null)
+                val tripBookedFlow: Flow<TripBookedResponse?> = remember {
+                    bookedTripsRepository.bookedTripsFlow()
+                        .onStart { Timber.d("Connected Booked Trips Flow") }
+                        .onEach { Timber.d("Booked ${it?.tripsBooked} Trips") }
+                        .onCompletion { Timber.d("Completed Booked Trips Flow") }
+                }
+                val tripBookedResponse: TripBookedResponse?  by tripBookedFlow.collectAsState(initial = null)
 
                 LaunchedEffect(tripBookedResponse) {
                     if (tripBookedResponse == null) return@LaunchedEffect
-                    val message = when (tripBookedResponse.tripsBooked) {
+                    val message = when (tripBookedResponse!!.tripsBooked) {
                         null -> "Subscription error"
                         -1 -> "Trip cancelled"
                         else -> "Trip booked! 🚀"
