@@ -3,6 +3,7 @@ package uk.co.avsoftware.locationapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -15,27 +16,24 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.apollographql.apollo3.ApolloClient
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
-import timber.log.Timber
+import kotlinx.coroutines.launch
 import uk.co.avsoftware.locationapp.ui.theme.LocationAppTheme
 import uk.co.avsoftware.spacelaunch_data.TokenRepository
-import uk.co.avsoftware.spacelaunch_domain.model.TripBookedResponse
 import uk.co.avsoftware.spacelaunch_domain.repository.BookedTripsRepository
 import uk.co.avsoftware.spacelaunch_presentation.LaunchDetails
 import uk.co.avsoftware.spacelaunch_presentation.LaunchList
 import uk.co.avsoftware.spacelaunch_presentation.Login
+import uk.co.avsoftware.spacelaunch_presentation.viewmodel.SpaceLaunchEvent
+import uk.co.avsoftware.spacelaunch_presentation.viewmodel.SpaceLaunchViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -50,33 +48,36 @@ class RocketReserverActivity : ComponentActivity() {
     @Inject
     lateinit var bookedTripsRepository: BookedTripsRepository
 
+    private val spaceLaunchViewModel: SpaceLaunchViewModel by viewModels()
+
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // subscribe to View Events
+        lifecycleScope.launch {
+            spaceLaunchViewModel.viewEvents.collect{
+
+        }
+        }
+
 
         setContent {
             LocationAppTheme {
                 val snackbarHostState = remember { SnackbarHostState() }
 
-                val tripBookedFlow: Flow<TripBookedResponse?> = remember {
-                    bookedTripsRepository.bookedTripsFlow()
-                        .onStart { Timber.d("Connected Booked Trips Flow") }
-                        .onEach { Timber.d("Booked ${it?.tripsBooked} Trips") }
-                        .onCompletion { Timber.d("Completed Booked Trips Flow") }
-                }
-                val tripBookedResponse: TripBookedResponse?  by tripBookedFlow.collectAsState(initial = null)
-
-                LaunchedEffect(tripBookedResponse) {
-                    if (tripBookedResponse == null) return@LaunchedEffect
-                    val message = when (tripBookedResponse!!.tripsBooked) {
-                        null -> "Subscription error"
-                        -1 -> "Trip cancelled"
-                        else -> "Trip booked! 🚀"
-                    }
-                    snackbarHostState.showSnackbar(
-                        message = message,
-                        duration = SnackbarDuration.Short
-                    )
+                val spaceLaunchEvent = spaceLaunchViewModel.viewEvents.collectAsState()
+                LaunchedEffect(spaceLaunchEvent.value) {
+                        val message = when (spaceLaunchEvent.value) {
+                            is SpaceLaunchEvent.SubscriptionError -> "Subscription error"
+                            is SpaceLaunchEvent.TripCancelled -> "Trip cancelled"
+                            is SpaceLaunchEvent.TripBooked -> "Trip booked! 🚀"
+                            else -> return@LaunchedEffect
+                        }
+                        snackbarHostState.showSnackbar(
+                            message = message,
+                            duration = SnackbarDuration.Short
+                        )
                 }
 
                 Scaffold(
