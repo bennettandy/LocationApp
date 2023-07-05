@@ -1,5 +1,4 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
-
 package uk.co.avsoftware.spacelaunch_presentation
 
 import android.util.Log
@@ -16,11 +15,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -30,13 +28,21 @@ import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.exception.ApolloException
 import com.example.rocketreserver.LoginMutation
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import uk.co.avsoftware.spacelaunch_data.TokenRepository
+import uk.co.avsoftware.spacelaunch_presentation.viewmodel.SpaceLaunchAction
+import uk.co.avsoftware.spacelaunch_presentation.viewmodel.SpaceLaunchViewModel
+import uk.co.avsoftware.spacelaunch_presentation.viewmodel.SpaceLaunchViewState
 
 @Composable
-fun Login(tokenRepository: TokenRepository, apolloClient: ApolloClient, navigateBack: () -> Unit) {
+fun Login(
+    spaceLaunchViewModel: SpaceLaunchViewModel,
+    navigateBack: () -> Unit) {
     Column(
         modifier = Modifier.padding(16.dp)
     ) {
+        val viewState: State<SpaceLaunchViewState> = spaceLaunchViewModel.uiState.collectAsState()
+
         // Title
         Text(
             modifier = Modifier.fillMaxWidth(),
@@ -45,36 +51,57 @@ fun Login(tokenRepository: TokenRepository, apolloClient: ApolloClient, navigate
             text = "Login"
         )
 
+        val scope = rememberCoroutineScope()
+
+        LaunchedEffect(viewState.value) {
+            Timber.d("Check Logged in state: ${viewState.value.isLoggedIn}")
+            if (viewState.value.isLoggedIn) {
+                scope.launch {
+                    navigateBack()
+                }
+            }
+        }
+
         // Email
-        var email by remember { mutableStateOf("") }
+        //var email by remember { mutableStateOf("") }
         OutlinedTextField(
             modifier = Modifier
                 .padding(top = 16.dp)
                 .fillMaxWidth(),
             label = { Text("Email") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            value = email,
-            onValueChange = { email = it }
+            value = viewState.value.email.orEmpty(),
+            onValueChange = {
+                scope.launch {
+                    spaceLaunchViewModel.receiveAction(SpaceLaunchAction.SetEmail(it))
+                }
+            }
         )
 
         // Submit button
-        var loading by remember { mutableStateOf(false) }
-        val scope = rememberCoroutineScope()
+        //var loading by remember { mutableStateOf(false) }
+
         Button(
             modifier = Modifier
                 .padding(top = 32.dp)
                 .fillMaxWidth(),
-            enabled = !loading,
+            enabled = !viewState.value.isLoading,
             onClick = {
-                loading = true
                 scope.launch {
-                    val ok = login(tokenRepository, apolloClient, email)
-                    loading = false
-                    if (ok) navigateBack()
+                    if (viewState.value.isLoggedIn) {
+                        navigateBack()
+                    } else {
+                        //spaceLaunchViewModel.receiveAction(SpaceLaunchAction.ShowLoading)
+                        //loading = true
+                        spaceLaunchViewModel.receiveAction(SpaceLaunchAction.Login)
+//                    val ok = login(tokenRepository, apolloClient, email)
+//                    loading = false
+//                    if (ok) navigateBack()
+                    }
                 }
             }
         ) {
-            if (loading) {
+            if (viewState.value.isLoading) {
                 Loading()
             } else {
                 Text(text = "Submit")

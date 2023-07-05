@@ -14,6 +14,7 @@ import uk.co.avsoftware.core.annotation.ApplicationId
 import uk.co.avsoftware.core.extensions.Reducer
 import uk.co.avsoftware.core.mvi.AbstractMviViewModel
 import uk.co.avsoftware.spacelaunch_domain.interactor.GetLaunchListInteractor
+import uk.co.avsoftware.spacelaunch_domain.interactor.SpaceLaunchLoginInteractor
 import uk.co.avsoftware.spacelaunch_domain.repository.BookedTripsRepository
 import javax.inject.Inject
 
@@ -21,6 +22,7 @@ import javax.inject.Inject
 class SpaceLaunchViewModel @Inject constructor(
     private val bookedTripsRepository: BookedTripsRepository,
     private val launchListInteractor: GetLaunchListInteractor,
+    private val loginInteractor: SpaceLaunchLoginInteractor,
     savedStateHandle: SavedStateHandle,
     @ApplicationId applicationId: String
 ) : AbstractMviViewModel<SpaceLaunchAction, SpaceLaunchViewState, SpaceLaunchCommand>(
@@ -31,7 +33,7 @@ class SpaceLaunchViewModel @Inject constructor(
     val viewEvents: MutableStateFlow<SpaceLaunchEvent?> = MutableStateFlow(null)
 
     init {
-        viewModelScope.launch{
+        viewModelScope.launch {
             bookedTripsRepository.bookedTripsFlow()
                 .onStart { Timber.d("Connected Booked Trips Flow") }
                 .onEach { Timber.d("Booked ${it?.tripsBooked} Trips") }
@@ -39,7 +41,7 @@ class SpaceLaunchViewModel @Inject constructor(
                 .filterNotNull()
                 .collect {
                     viewEvents.tryEmit(
-                         when (it.tripsBooked){
+                        when (it.tripsBooked) {
                             null -> SpaceLaunchEvent.SubscriptionError
                             1 -> SpaceLaunchEvent.TripBooked
                             else -> SpaceLaunchEvent.TripCancelled
@@ -57,11 +59,26 @@ class SpaceLaunchViewModel @Inject constructor(
                 ).then(
                     SpaceLaunchCommand.LoadLaunchList(action.cursor)
                 )
+
                 is SpaceLaunchAction.Initialise -> state.only()
                 is SpaceLaunchAction.HandleLaunches -> state.copy(
                     isLoading = false,
                     launches = action.launches
                 ).only()
+
+                is SpaceLaunchAction.SetEmail -> state.copy(email = action.email).only()
+                is SpaceLaunchAction.Login -> state.copy(
+                    isLoading = true
+                ).then(
+                    SpaceLaunchCommand.Login(state.email)
+                )
+
+                is SpaceLaunchAction.SetLoggedIn -> state.copy(
+                    isLoading = false,
+                    isLoggedIn = action.loggedIn
+                ).only()
+            }.also {
+                pair -> Timber.d("View State: ${pair.first}")
             }
         }
 
@@ -76,6 +93,17 @@ class SpaceLaunchViewModel @Inject constructor(
                 viewModelScope.launch {
                     launchListInteractor.invoke()?.let {
                         receiveAction(SpaceLaunchAction.HandleLaunches(it))
+                    }
+                }
+
+            is SpaceLaunchCommand.Login ->
+                viewModelScope.launch {
+                    command.email?.let {
+                        val loggedIn = loginInteractor(command.email)
+                        receiveAction(SpaceLaunchAction.SetLoggedIn(loggedIn))
+                        if (loggedIn){
+                            viewEvents.tryEmit(SpaceLaunchEvent.LoggedIn)
+                        }
                     }
                 }
 

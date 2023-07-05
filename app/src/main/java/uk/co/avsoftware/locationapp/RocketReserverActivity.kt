@@ -58,6 +58,7 @@ class RocketReserverActivity : ComponentActivity() {
                             is SpaceLaunchEvent.SubscriptionError -> "Subscription error"
                             is SpaceLaunchEvent.TripCancelled -> "Trip cancelled"
                             is SpaceLaunchEvent.TripBooked -> "Trip booked! 🚀"
+                            is SpaceLaunchEvent.LoggedIn -> "Logged in!"
                             else -> return@LaunchedEffect
                         }
                         snackbarHostState.showSnackbar(
@@ -109,8 +110,7 @@ private fun MainNavHost(
 
         composable(route = NavigationDestinations.LOGIN) {
             Login(
-                tokenRepository,
-                apolloClient,
+                spaceLaunchViewModel = spaceLaunchViewModel,
                 navigateBack = {
                     navController.popBackStack()
                 }

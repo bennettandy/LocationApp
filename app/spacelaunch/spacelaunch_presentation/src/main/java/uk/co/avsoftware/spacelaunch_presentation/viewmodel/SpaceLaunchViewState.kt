@@ -7,13 +7,17 @@ import uk.co.avsoftware.spacelaunch_domain.model.Launches
 
 @Parcelize
 data class SpaceLaunchViewState(
+    val email: String?,
     val isLoading: Boolean,
+    val isLoggedIn: Boolean,
     val launches: Launches
 ) : MviState, Parcelable {
 
     companion object {
         val default = SpaceLaunchViewState(
+            email = null,
             isLoading = false,
+            isLoggedIn = false,
             launches = Launches(null, emptyList(), false)
         )
     }
