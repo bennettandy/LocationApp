@@ -9,11 +9,11 @@ data class LaunchDetails(
     val site: String?,
     val mission: Mission?,
     val rocket: Rocket?,
-    val isBooked: Boolean,
-): Parcelable
+    val isBooked: Boolean
+) : Parcelable
 
 @Parcelize
 data class Rocket(
     val name: String?,
-    val type: String?,
-): Parcelable
+    val type: String?
+) : Parcelable

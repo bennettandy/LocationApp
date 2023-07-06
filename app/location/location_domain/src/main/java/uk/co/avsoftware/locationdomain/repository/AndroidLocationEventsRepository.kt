@@ -8,7 +8,7 @@ import uk.co.avsoftware.locationdata.repository.AndroidLocationEventsProvider
 import uk.co.avsoftware.locationdomain.model.LocationEvent
 import javax.inject.Inject
 
-class LocationEventsRepository @Inject constructor(
+class AndroidLocationEventsRepository @Inject constructor(
     private val androidLocationEventsProvider: AndroidLocationEventsProvider
 ) {
     @RequiresPermission(anyOf = [Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION])

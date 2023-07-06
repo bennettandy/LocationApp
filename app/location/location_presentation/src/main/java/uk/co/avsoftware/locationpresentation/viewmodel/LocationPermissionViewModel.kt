@@ -14,14 +14,14 @@ import uk.co.avsoftware.core.extensions.Reducer
 import uk.co.avsoftware.core.mvi.AbstractMviViewModel
 import uk.co.avsoftware.location.interactor.IsGPSEnabledInteractor
 import uk.co.avsoftware.location.interactor.LocationPermissionEnabledInteractor
-import uk.co.avsoftware.locationdomain.repository.LocationEventsRepository
+import uk.co.avsoftware.locationdomain.repository.AndroidLocationEventsRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class LocationPermissionViewModel @Inject constructor(
     private val locationPermissionInteractor: LocationPermissionEnabledInteractor,
     private val isGPSEnabledInteractor: IsGPSEnabledInteractor,
-    private val locationEventsRepository: LocationEventsRepository,
+    private val locationEventsRepository: AndroidLocationEventsRepository,
     savedStateHandle: SavedStateHandle,
     @ApplicationId applicationId: String
 ) : AbstractMviViewModel<LocationPermissionAction, LocationPermissionViewState, LocationPermissionCommand>(

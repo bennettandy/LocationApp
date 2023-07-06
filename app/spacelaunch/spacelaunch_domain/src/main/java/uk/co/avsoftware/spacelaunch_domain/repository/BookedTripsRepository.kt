@@ -12,5 +12,6 @@ class BookedTripsRepository @Inject constructor(
     fun bookedTripsFlow(): Flow<TripBookedResponse?> = apolloBookedTripsRepository.bookedTripsResponseFlow().map {
         it?.let {
             TripBookedResponse(it.numberOfTripsBooked)
-        } }
+        }
+    }
 }

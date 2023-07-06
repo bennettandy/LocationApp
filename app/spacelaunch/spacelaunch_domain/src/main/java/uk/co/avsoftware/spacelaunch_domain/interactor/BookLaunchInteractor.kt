@@ -7,11 +7,11 @@ import javax.inject.Inject
 
 class BookLaunchInteractor @Inject constructor(
     private val apolloBookTripInteractor: ApolloBookTripInteractor
-){
+) {
     suspend operator fun invoke(launchId: String): LaunchBookingResponse =
         apolloBookTripInteractor.invoke(launchId).let {
-            response ->
-            when (response){
+                response ->
+            when (response) {
                 is TripBookingResponse.BookingSuccess -> LaunchBookingResponse.Success
                 is TripBookingResponse.NotLoggedIn -> LaunchBookingResponse.NotLoggedIn
                 else -> LaunchBookingResponse.Error

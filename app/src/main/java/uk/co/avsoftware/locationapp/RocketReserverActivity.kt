@@ -48,23 +48,23 @@ class RocketReserverActivity : ComponentActivity() {
                 val spaceLaunchEvent = spaceLaunchViewModel.viewEvents.collectAsState()
                 val spaceLaunchViewState = spaceLaunchViewModel.uiState.collectAsState()
                 LaunchedEffect(spaceLaunchEvent.value) {
-                    if (spaceLaunchEvent.value is SpaceLaunchEvent.NavigateToLogin){
-                            navController.navigate(NavigationDestinations.LOGIN)
+                    if (spaceLaunchEvent.value is SpaceLaunchEvent.NavigateToLogin) {
+                        navController.navigate(NavigationDestinations.LOGIN)
                     }
 
-                        val message = when (spaceLaunchEvent.value) {
-                            is SpaceLaunchEvent.SubscriptionError -> "Subscription error"
-                            is SpaceLaunchEvent.TripCancelled -> "Trip cancelled"
-                            is SpaceLaunchEvent.TripBooked -> "Trip booked! 🚀"
-                            is SpaceLaunchEvent.LoggedIn -> "Logged in!"
-                            is SpaceLaunchEvent.BookingFailed -> "Booking Failed"
-                            is SpaceLaunchEvent.CancelFailed -> "Cancellation Failed"
-                            else -> return@LaunchedEffect
-                        }
-                        snackbarHostState.showSnackbar(
-                            message = message,
-                            duration = SnackbarDuration.Short
-                        )
+                    val message = when (spaceLaunchEvent.value) {
+                        is SpaceLaunchEvent.SubscriptionError -> "Subscription error"
+                        is SpaceLaunchEvent.TripCancelled -> "Trip cancelled"
+                        is SpaceLaunchEvent.TripBooked -> "Trip booked! 🚀"
+                        is SpaceLaunchEvent.LoggedIn -> "Logged in!"
+                        is SpaceLaunchEvent.BookingFailed -> "Booking Failed"
+                        is SpaceLaunchEvent.CancelFailed -> "Cancellation Failed"
+                        else -> return@LaunchedEffect
+                    }
+                    snackbarHostState.showSnackbar(
+                        message = message,
+                        duration = SnackbarDuration.Short
+                    )
                 }
 
                 Scaffold(
@@ -100,7 +100,7 @@ private fun MainNavHost(
             LaunchDetails(
                 spaceLaunchViewModel = viewModel,
                 viewState = viewState,
-                launchId = navBackStackEntry.arguments!!.getString(NavigationArguments.LAUNCH_ID)!!,
+                launchId = navBackStackEntry.arguments!!.getString(NavigationArguments.LAUNCH_ID)!!
             )
         }
 

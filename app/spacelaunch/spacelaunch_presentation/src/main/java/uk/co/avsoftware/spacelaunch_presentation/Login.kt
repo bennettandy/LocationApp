@@ -1,7 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 package uk.co.avsoftware.spacelaunch_presentation
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,12 +23,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.apollographql.apollo3.ApolloClient
-import com.apollographql.apollo3.exception.ApolloException
-import com.example.rocketreserver.LoginMutation
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import uk.co.avsoftware.spacelaunch_data.TokenRepository
 import uk.co.avsoftware.spacelaunch_presentation.viewmodel.SpaceLaunchAction
 import uk.co.avsoftware.spacelaunch_presentation.viewmodel.SpaceLaunchViewModel
 import uk.co.avsoftware.spacelaunch_presentation.viewmodel.SpaceLaunchViewState
@@ -110,25 +105,6 @@ fun Login(
     }
 }
 
-private suspend fun login(tokenRepository: TokenRepository, apolloClient: ApolloClient, email: String): Boolean {
-    val response = try {
-        apolloClient.mutation(LoginMutation(email = email)).execute()
-    } catch (e: ApolloException) {
-        Log.w("Login", "Failed to login", e)
-        return false
-    }
-    if (response.hasErrors()) {
-        Log.w("Login", "Failed to login: ${response.errors?.get(0)?.message}")
-        return false
-    }
-    val token = response.data?.login?.token
-    if (token == null) {
-        Log.w("Login", "Failed to login: no token returned by the backend")
-        return false
-    }
-    tokenRepository.setToken(token)
-    return true
-}
 
 @Composable
 private fun Loading() {

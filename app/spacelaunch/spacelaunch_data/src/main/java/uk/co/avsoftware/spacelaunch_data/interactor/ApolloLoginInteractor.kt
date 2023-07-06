@@ -12,7 +12,7 @@ class ApolloLoginInteractor @Inject constructor(
     private val tokenRepository: TokenRepository
 ) {
 
-    suspend operator fun invoke( email: String ): Boolean = login(email)
+    suspend operator fun invoke(email: String): Boolean = login(email)
 
     private suspend fun login(email: String): Boolean {
         val response = try {

@@ -8,7 +8,7 @@ import uk.co.avsoftware.spacelaunch_domain.model.Mission
 fun LaunchListQuery.Launches.mapToDomain() = Launches(
     cursor = cursor,
     launches = launches.map {
-        launch ->
+            launch ->
         launch?.let {
             Launch(
                 id = launch.id,

@@ -49,7 +49,6 @@ dependencies {
 
     implementation(project(":app:common"))
     implementation(project(":app:spacelaunch:spacelaunch_domain"))
-    implementation(project(":app:spacelaunch:spacelaunch_data"))
 
     implementation("androidx.core:core-ktx:1.8.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
