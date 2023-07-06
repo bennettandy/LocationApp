@@ -13,9 +13,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowLog
+import uk.co.avsoftware.location_presentation.R
 import uk.co.avsoftware.locationpresentation.components.LocationPermissionStatusBar
 import uk.co.avsoftware.locationpresentation.viewmodel.LocationPermissionViewState
-import uk.co.avsoftware.location_presentation.R
 
 @RunWith(RobolectricTestRunner::class)
 class PermissionStatusBarTest {

@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import javax.inject.Inject
 
-class AndroidLocationEventsRepository @Inject constructor(
+class AndroidLocationEventsProvider @Inject constructor(
     private val locationManager: LocationManager
 ) {
     @RequiresPermission(anyOf = [Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION])
@@ -34,6 +34,4 @@ class AndroidLocationEventsRepository @Inject constructor(
         // Minimum distance between updates (in meters)
         private const val MIN_DISTANCE_BETWEEN_UPDATES_M = 10.0f
     }
-
-
 }

@@ -30,6 +30,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import uk.co.avsoftware.locationapp.screens.Body
 import uk.co.avsoftware.locationapp.screens.BottomBar
@@ -128,6 +129,11 @@ class MainActivity : ComponentActivity() {
         }
     )
 
+    private fun navigateToRocketService() =
+        startActivity(
+            Intent(this, RocketReserverActivity::class.java)
+        )
+
     @OptIn(ExperimentalMaterial3Api::class)
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
@@ -190,25 +196,8 @@ class MainActivity : ComponentActivity() {
                 FloatingActionButton(
                     modifier = Modifier.testTag("Floating Button"),
                     onClick = {
-                        // When clicked open Snackbar
-                        coroutineScope.launch {
-                            when (
-                                snackbarHostState.showSnackbar(
-                                    // Message In the snackbar
-                                    message = "Snack Bar",
-                                    actionLabel = "Dismiss"
-                                )
-                            ) {
-                                SnackbarResult.Dismissed -> {
-                                    // do something when
-                                    // snack bar is dismissed
-                                }
-
-                                SnackbarResult.ActionPerformed -> {
-                                    // when it appears
-                                }
-                            }
-                        }
+                        // showSnackbar(coroutineScope, snackbarHostState)
+                        navigateToRocketService()
                     }
                 ) {
                     // Simple Text inside FAB
@@ -216,5 +205,26 @@ class MainActivity : ComponentActivity() {
                 }
             }
         )
+    }
+
+    private fun showSnackbar(coroutineScope: CoroutineScope, snackbarHostState: SnackbarHostState) {
+        coroutineScope.launch {
+            when (
+                snackbarHostState.showSnackbar(
+                    // Message In the snackbar
+                    message = "Snack Bar",
+                    actionLabel = "Dismiss"
+                )
+            ) {
+                SnackbarResult.Dismissed -> {
+                    // do something when
+                    // snack bar is dismissed
+                }
+
+                SnackbarResult.ActionPerformed -> {
+                    // when it appears
+                }
+            }
+        }
     }
 }

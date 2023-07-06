@@ -14,7 +14,7 @@ import uk.co.avsoftware.location.interactor.IsGPSEnabledInteractor
 import uk.co.avsoftware.location.interactor.LocationPermissionEnabledInteractor
 import uk.co.avsoftware.locationdomain.interactor.GetCurrentLocationInteractor
 import uk.co.avsoftware.locationdomain.interactor.GetGrantedPermissionsInteractor
-import uk.co.avsoftware.locationdomain.repository.LocationEventsRepository
+import uk.co.avsoftware.locationdomain.repository.AndroidLocationEventsRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -44,5 +44,5 @@ internal class LocationPermissionsModule {
     fun provideGetLastLocationInteractor(locationManager: LocationManager) = GetLastLocationInteractor(locationManager)
 
     @Provides
-    fun provideGetCurrentLocationInteractor(locationEventsRepository: LocationEventsRepository) = GetCurrentLocationInteractor(locationEventsRepository)
+    fun provideGetCurrentLocationInteractor(locationEventsRepository: AndroidLocationEventsRepository) = GetCurrentLocationInteractor(locationEventsRepository)
 }

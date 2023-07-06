@@ -5,7 +5,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
@@ -15,14 +14,14 @@ import uk.co.avsoftware.core.extensions.Reducer
 import uk.co.avsoftware.core.mvi.AbstractMviViewModel
 import uk.co.avsoftware.location.interactor.IsGPSEnabledInteractor
 import uk.co.avsoftware.location.interactor.LocationPermissionEnabledInteractor
-import uk.co.avsoftware.locationdomain.repository.LocationEventsRepository
+import uk.co.avsoftware.locationdomain.repository.AndroidLocationEventsRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class LocationPermissionViewModel @Inject constructor(
     private val locationPermissionInteractor: LocationPermissionEnabledInteractor,
     private val isGPSEnabledInteractor: IsGPSEnabledInteractor,
-    private val locationEventsRepository: LocationEventsRepository,
+    private val locationEventsRepository: AndroidLocationEventsRepository,
     savedStateHandle: SavedStateHandle,
     @ApplicationId applicationId: String
 ) : AbstractMviViewModel<LocationPermissionAction, LocationPermissionViewState, LocationPermissionCommand>(
@@ -108,23 +107,22 @@ class LocationPermissionViewModel @Inject constructor(
 
             is LocationPermissionCommand.ToggleLocationEventListener ->
                 viewModelScope.launch {
-                    if (command.listening)
+                    if (command.listening) {
                         startLocationListener()
-                    else
+                    } else {
                         stopLocationListener()
+                    }
                 }
         }
     }
 
     @SuppressLint("MissingPermission")
-    private fun startLocationListener(){
-        if (locationListenerJob?.isActive == true){
+    private fun startLocationListener() {
+        if (locationListenerJob?.isActive == true) {
             Timber.d("Location listener is already active")
-        }
-        else
-        {
+        } else {
             Timber.d("Starting new Listener coroutine")
-            locationListenerJob = viewModelScope.launch{
+            locationListenerJob = viewModelScope.launch {
                 locationEventsRepository().collect {
                     Timber.d("Location event: $it")
                     receiveAction(LocationPermissionAction.ProcessLocationEvent(it))
@@ -134,7 +132,7 @@ class LocationPermissionViewModel @Inject constructor(
         }
     }
 
-    private fun stopLocationListener(){
+    private fun stopLocationListener() {
         locationListenerJob?.cancel()
         viewEvents.tryEmit(LocationPermissionEvent.ListenerStopped)
     }

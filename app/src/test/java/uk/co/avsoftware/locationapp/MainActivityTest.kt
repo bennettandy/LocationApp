@@ -36,7 +36,6 @@ class MainActivityTest {
 
     @Test
     fun `activity composable test`() {
-
         ActivityScenario.launch(MainActivity::class.java)
             .use { scenario ->
                 scenario.onActivity { activity: MainActivity ->
@@ -46,7 +45,6 @@ class MainActivityTest {
                     activity.recreate()
 
                     composeTestRule.onNodeWithTag("Floating Button").assertIsDisplayed()
-
                 }
             }
     }

@@ -28,8 +28,7 @@ fun LocationEventsControlSwitch(enabled: Boolean, active: Boolean, setActive: (B
         Switch(
             checked = active,
             enabled = enabled,
-            onCheckedChange = { setActive(!active) },
+            onCheckedChange = { setActive(!active) }
         )
     }
-
 }

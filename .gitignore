@@ -15,3 +15,5 @@
 local.properties
 app/location/build/intermediates/ktLint/reporterProviders.bin
 app/location/build/intermediates/ktLint/reporters.bin
+app/spacelaunch/build/intermediates/ktLint/reporterProviders.bin
+app/spacelaunch/build/intermediates/ktLint/reporters.bin

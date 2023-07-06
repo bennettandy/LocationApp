@@ -6,5 +6,4 @@ import org.robolectric.annotation.Config
 
 @HiltAndroidTest
 @Config(application = HiltTestApplication::class)
-class MainActvityHiltTest {
-}
+class MainActvityHiltTest

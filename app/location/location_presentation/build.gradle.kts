@@ -47,7 +47,7 @@ android {
 
 dependencies {
 
-    implementation(project(":app:core"))
+    implementation(project(":app:common"))
     implementation(project(":app:location:location_domain"))
 
     implementation("androidx.core:core-ktx:1.8.0")
