@@ -1,6 +1,5 @@
 package uk.co.avsoftware.spacelaunch_presentation
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,65 +15,42 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.apollographql.apollo3.ApolloClient
-import com.apollographql.apollo3.api.Error
-import com.apollographql.apollo3.exception.ApolloException
-import com.example.rocketreserver.BookTripMutation
-import com.example.rocketreserver.CancelTripMutation
-import com.example.rocketreserver.LaunchDetailsQuery
-import uk.co.avsoftware.spacelaunch_presentation.LaunchDetailsState.ApplicationError
-import uk.co.avsoftware.spacelaunch_presentation.LaunchDetailsState.Loading
-import uk.co.avsoftware.spacelaunch_presentation.LaunchDetailsState.ProtocolError
-import uk.co.avsoftware.spacelaunch_presentation.LaunchDetailsState.Success
-import kotlinx.coroutines.launch
-import uk.co.avsoftware.spacelaunch_data.TokenRepository
-
-private sealed interface LaunchDetailsState {
-    object Loading : LaunchDetailsState
-    data class ProtocolError(val exception: ApolloException) : LaunchDetailsState
-    data class ApplicationError(val errors: List<Error>) : LaunchDetailsState
-    data class Success(val data: LaunchDetailsQuery.Data) : LaunchDetailsState
-}
+import uk.co.avsoftware.spacelaunch_domain.model.LaunchDetails
+import uk.co.avsoftware.spacelaunch_presentation.viewmodel.SpaceLaunchAction
+import uk.co.avsoftware.spacelaunch_presentation.viewmodel.SpaceLaunchViewModel
+import uk.co.avsoftware.spacelaunch_presentation.viewmodel.SpaceLaunchViewState
 
 @Composable
-fun LaunchDetails(tokenRepository: TokenRepository, apolloClient: ApolloClient, launchId: String, navigateToLogin: () -> Unit) {
-    var state by remember { mutableStateOf<LaunchDetailsState>(Loading) }
+fun LaunchDetails(
+    spaceLaunchViewModel: SpaceLaunchViewModel,
+    viewState: SpaceLaunchViewState,
+    launchId: String
+) {
     LaunchedEffect(Unit) {
-        state = try {
-            val response = apolloClient.query(LaunchDetailsQuery(launchId)).execute()
-            if (response!!.hasErrors()) {
-                ApplicationError(response.errors!!)
-            } else {
-                Success(response.data!!)
-            }
-        } catch (e: ApolloException) {
-            ProtocolError(e)
-        }
+        // load details
+        spaceLaunchViewModel.receiveAction(SpaceLaunchAction.LoadDetails(launchId))
     }
-    when (val s = state) {
-        Loading -> Loading()
-        is ProtocolError -> ErrorMessage("Oh no... A protocol error happened: ${s.exception.message}")
-        is ApplicationError -> ErrorMessage(s.errors[0].message.orEmpty())
-        is Success -> LaunchDetails(tokenRepository, apolloClient, s.data, navigateToLogin)
+
+    val isLoading = viewState.launchDetailsLoading
+    val launchDetails = viewState.launchDetails
+
+    when {
+        isLoading -> Loading()
+        else -> LaunchDetails(spaceLaunchViewModel, viewState, launchDetails)
     }
 }
 
 @Composable
 private fun LaunchDetails(
-    tokenRepository: TokenRepository, apolloClient: ApolloClient,
-    data: LaunchDetailsQuery.Data,
-    navigateToLogin: () -> Unit,
+    viewModel: SpaceLaunchViewModel,
+    spaceLaunchViewState: SpaceLaunchViewState,
+    launchDetails: LaunchDetails?,
 ) {
     Column(
         modifier = Modifier.padding(16.dp)
@@ -83,7 +59,7 @@ private fun LaunchDetails(
             // Mission patch
             AsyncImage(
                 modifier = Modifier.size(160.dp, 160.dp),
-                model = data.launch?.mission?.missionPatch,
+                model = launchDetails?.mission?.missionPatch,
                 placeholder = painterResource(R.drawable.ic_placeholder),
                 error = painterResource(R.drawable.ic_placeholder),
                 contentDescription = "Mission patch"
@@ -95,84 +71,53 @@ private fun LaunchDetails(
                 // Mission name
                 Text(
                     style = MaterialTheme.typography.headlineMedium,
-                    text = data.launch?.mission?.name ?: ""
+                    text = launchDetails?.mission?.name ?: ""
                 )
 
                 // Rocket name
                 Text(
                     modifier = Modifier.padding(top = 8.dp),
                     style = MaterialTheme.typography.headlineSmall,
-                    text = data.launch?.rocket?.name?.let { "🚀 $it" } ?: "",
+                    text = launchDetails?.rocket?.name?.let { "🚀 $it" } ?: "",
                 )
 
                 // Site
                 Text(
                     modifier = Modifier.padding(top = 8.dp),
                     style = MaterialTheme.typography.titleMedium,
-                    text = data.launch?.site ?: "",
+                    text = launchDetails?.site ?: "",
                 )
             }
         }
         // Book button
-        var loading by remember { mutableStateOf(false) }
-        val scope = rememberCoroutineScope()
-        var isBooked by remember { mutableStateOf(data.launch?.isBooked == true) }
         Button(
             modifier = Modifier
                 .padding(top = 32.dp)
                 .fillMaxWidth(),
-            enabled = !loading,
+            enabled = !spaceLaunchViewState.bookingInProgress,
             onClick = {
-                loading = true
-                scope.launch {
-                    val ok = onBookButtonClick(
-                        tokenRepository = tokenRepository,
-                        apolloClient = apolloClient,
-                        launchId = data.launch?.id ?: "",
-                        isBooked = isBooked,
-                        navigateToLogin = navigateToLogin
-                    )
-                    if (ok) {
-                        isBooked = !isBooked
+                launchDetails?.id?.let {
+                    if (spaceLaunchViewState.launchDetails?.isBooked == true) {
+                        viewModel.receiveAction(SpaceLaunchAction.CancelLaunch(it))
                     }
-                    loading = false
+                    else
+                    {
+                        viewModel.receiveAction(SpaceLaunchAction.BookLaunch(it))
+                    }
                 }
             }
         ) {
-            if (loading) {
+            if (spaceLaunchViewState.bookingInProgress) {
                 SmallLoading()
             } else {
-                Text(text = if (!isBooked) "Book now" else "Cancel booking")
+                Text(text = if (spaceLaunchViewState.launchDetails?.isBooked == true) "Cancel Booking" else "Book now")
             }
         }
     }
 }
 
-private suspend fun onBookButtonClick(tokenRepository: TokenRepository, apolloClient: ApolloClient, launchId: String, isBooked: Boolean, navigateToLogin: () -> Unit): Boolean {
-    if (tokenRepository?.getToken() == null) {
-        navigateToLogin()
-        return false
-    }
-    val mutation = if (isBooked) {
-        CancelTripMutation(id = launchId)
-    } else {
-        BookTripMutation(id = launchId)
-    }
-    val response = try {
-        apolloClient.mutation(mutation).execute()
-    } catch (e: ApolloException) {
-        Log.w("LaunchDetails", "Failed to book/cancel trip", e)
-        return false
-    }
-
-    if (response.hasErrors()) {
-        Log.w("LaunchDetails", "Failed to book/cancel trip: ${response.errors?.get(0)?.message}")
-        return false
-    }
-    return true
-}
-
 @Composable
+// TODO: implement booking error display
 private fun ErrorMessage(text: String) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Text(text = text)

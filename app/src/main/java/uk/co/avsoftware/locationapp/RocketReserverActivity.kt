@@ -19,28 +19,21 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.apollographql.apollo3.ApolloClient
 import dagger.hilt.android.AndroidEntryPoint
 import uk.co.avsoftware.locationapp.ui.theme.LocationAppTheme
-import uk.co.avsoftware.spacelaunch_data.TokenRepository
 import uk.co.avsoftware.spacelaunch_presentation.LaunchDetails
 import uk.co.avsoftware.spacelaunch_presentation.LaunchList
 import uk.co.avsoftware.spacelaunch_presentation.Login
 import uk.co.avsoftware.spacelaunch_presentation.viewmodel.SpaceLaunchEvent
 import uk.co.avsoftware.spacelaunch_presentation.viewmodel.SpaceLaunchViewModel
-import javax.inject.Inject
+import uk.co.avsoftware.spacelaunch_presentation.viewmodel.SpaceLaunchViewState
 
 @AndroidEntryPoint
 class RocketReserverActivity : ComponentActivity() {
-
-    @Inject
-    lateinit var apolloClient: ApolloClient
-
-    @Inject
-    lateinit var tokenRepository: TokenRepository
 
     private val spaceLaunchViewModel: SpaceLaunchViewModel by viewModels()
 
@@ -51,14 +44,21 @@ class RocketReserverActivity : ComponentActivity() {
         setContent {
             LocationAppTheme {
                 val snackbarHostState = remember { SnackbarHostState() }
-
+                val navController = rememberNavController()
                 val spaceLaunchEvent = spaceLaunchViewModel.viewEvents.collectAsState()
+                val spaceLaunchViewState = spaceLaunchViewModel.uiState.collectAsState()
                 LaunchedEffect(spaceLaunchEvent.value) {
+                    if (spaceLaunchEvent.value is SpaceLaunchEvent.NavigateToLogin){
+                            navController.navigate(NavigationDestinations.LOGIN)
+                    }
+
                         val message = when (spaceLaunchEvent.value) {
                             is SpaceLaunchEvent.SubscriptionError -> "Subscription error"
                             is SpaceLaunchEvent.TripCancelled -> "Trip cancelled"
                             is SpaceLaunchEvent.TripBooked -> "Trip booked! 🚀"
                             is SpaceLaunchEvent.LoggedIn -> "Logged in!"
+                            is SpaceLaunchEvent.BookingFailed -> "Booking Failed"
+                            is SpaceLaunchEvent.CancelFailed -> "Cancellation Failed"
                             else -> return@LaunchedEffect
                         }
                         snackbarHostState.showSnackbar(
@@ -72,7 +72,7 @@ class RocketReserverActivity : ComponentActivity() {
                     snackbarHost = { SnackbarHost(snackbarHostState) }
                 ) { paddingValues ->
                     Box(Modifier.padding(paddingValues)) {
-                        MainNavHost(apolloClient, tokenRepository, spaceLaunchViewModel)
+                        MainNavHost(navController, spaceLaunchViewModel, spaceLaunchViewState.value)
                     }
                 }
             }
@@ -82,35 +82,31 @@ class RocketReserverActivity : ComponentActivity() {
 
 @Composable
 private fun MainNavHost(
-    apolloClient: ApolloClient,
-    tokenRepository: TokenRepository,
-    spaceLaunchViewModel: SpaceLaunchViewModel
+    navController: NavHostController,
+    viewModel: SpaceLaunchViewModel,
+    viewState: SpaceLaunchViewState
 ) {
-    val navController = rememberNavController()
     NavHost(navController, startDestination = NavigationDestinations.LAUNCH_LIST) {
         composable(route = NavigationDestinations.LAUNCH_LIST) {
             LaunchList(
                 onLaunchClick = { launchId ->
                     navController.navigate("${NavigationDestinations.LAUNCH_DETAILS}/$launchId")
                 },
-                spaceLaunchViewModel
+                viewModel
             )
         }
 
         composable(route = "${NavigationDestinations.LAUNCH_DETAILS}/{${NavigationArguments.LAUNCH_ID}}") { navBackStackEntry ->
             LaunchDetails(
-                tokenRepository,
-                apolloClient,
+                spaceLaunchViewModel = viewModel,
+                viewState = viewState,
                 launchId = navBackStackEntry.arguments!!.getString(NavigationArguments.LAUNCH_ID)!!,
-                navigateToLogin = {
-                    navController.navigate(NavigationDestinations.LOGIN)
-                }
             )
         }
 
         composable(route = NavigationDestinations.LOGIN) {
             Login(
-                spaceLaunchViewModel = spaceLaunchViewModel,
+                spaceLaunchViewModel = viewModel,
                 navigateBack = {
                     navController.popBackStack()
                 }
