@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "uk.co.avsoftware.spacelaunch_data"
+    namespace = "uk.co.avsoftware.spacelaunchdata"
     compileSdk = 33
 
     defaultConfig {

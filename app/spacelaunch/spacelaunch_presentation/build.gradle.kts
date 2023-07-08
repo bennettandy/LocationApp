@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "uk.co.avsoftware.spacelaunch_presentation"
+    namespace = "uk.co.avsoftware.spacelaunchpresentation"
     compileSdk = ProjectConfig.compileSdk
 
     defaultConfig {

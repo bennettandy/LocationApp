@@ -25,12 +25,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import uk.co.avsoftware.locationapp.ui.theme.LocationAppTheme
-import uk.co.avsoftware.spacelaunch_presentation.LaunchDetails
-import uk.co.avsoftware.spacelaunch_presentation.LaunchList
-import uk.co.avsoftware.spacelaunch_presentation.Login
-import uk.co.avsoftware.spacelaunch_presentation.viewmodel.SpaceLaunchEvent
-import uk.co.avsoftware.spacelaunch_presentation.viewmodel.SpaceLaunchViewModel
-import uk.co.avsoftware.spacelaunch_presentation.viewmodel.SpaceLaunchViewState
+import uk.co.avsoftware.spacelaunchpresentation.LaunchDetails
+import uk.co.avsoftware.spacelaunchpresentation.LaunchList
+import uk.co.avsoftware.spacelaunchpresentation.Login
+import uk.co.avsoftware.spacelaunchpresentation.viewmodel.SpaceLaunchEvent
+import uk.co.avsoftware.spacelaunchpresentation.viewmodel.SpaceLaunchViewModel
+import uk.co.avsoftware.spacelaunchpresentation.viewmodel.SpaceLaunchViewState
 
 @AndroidEntryPoint
 class RocketReserverActivity : ComponentActivity() {
