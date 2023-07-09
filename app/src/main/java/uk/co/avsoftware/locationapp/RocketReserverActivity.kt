@@ -47,6 +47,7 @@ class RocketReserverActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val spaceLaunchEvent = spaceLaunchViewModel.viewEvents.collectAsState()
                 val spaceLaunchViewState = spaceLaunchViewModel.uiState.collectAsState()
+
                 LaunchedEffect(spaceLaunchEvent.value) {
                     if (spaceLaunchEvent.value is SpaceLaunchEvent.NavigateToLogin) {
                         navController.navigate(NavigationDestinations.LOGIN)

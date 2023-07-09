@@ -201,7 +201,7 @@ class MainActivity : ComponentActivity() {
                     },
                 ) {
                     // Simple Text inside FAB
-                    Text(text = "X")
+                    Text(text = "Rockets")
                 }
             },
         )
