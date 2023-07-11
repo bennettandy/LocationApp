@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "uk.co.avsoftware.spacelaunch_data"
+    namespace = "uk.co.avsoftware.spacelaunchdata"
     compileSdk = 33
 
     defaultConfig {
@@ -22,7 +22,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -36,6 +36,9 @@ android {
 }
 
 dependencies {
+
+    implementation(project(":app:common"))
+
     // Hilt
     implementation("com.google.dagger:hilt-android:2.46.1")
     kapt("com.google.dagger:hilt-android-compiler:2.46.1")

@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.onSurface, shape = RectangleShape)
+                        .background(MaterialTheme.colorScheme.onSurface, shape = RectangleShape),
                 ) {
                     ScaffoldExample(locationViewModel)
                 }
@@ -63,12 +63,12 @@ class MainActivity : ComponentActivity() {
         }
 
         val locationPermissionRequest = registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions()
+            ActivityResultContracts.RequestMultiplePermissions(),
         ) { permissions: Map<String, Boolean> ->
             locationViewModel.receiveAction(
                 LocationPermissionAction.ProcessPermissionResponse(
-                    permissions
-                )
+                    permissions,
+                ),
             )
         }
 
@@ -76,15 +76,15 @@ class MainActivity : ComponentActivity() {
             locationViewModel.viewEvents.collect { event ->
                 when (event) {
                     is LocationPermissionEvent.ObtainPermissions -> locationPermissionRequest.launch(
-                        event.permissions.toTypedArray()
+                        event.permissions.toTypedArray(),
                     )
                     // when permission is denied we have to send the user to settings via dialog
                     is LocationPermissionEvent.CoarsePermissionDenied -> showLocationNavigationDialog(
-                        getString(R.string.location_spike_location_required_dialog_title)
+                        getString(R.string.location_spike_location_required_dialog_title),
                     )
 
                     is LocationPermissionEvent.FinePermissionDenied -> showLocationNavigationDialog(
-                        getString(R.string.location_spike_fine_location_required_dialog_title)
+                        getString(R.string.location_spike_fine_location_required_dialog_title),
                     )
 
                     is LocationPermissionEvent.ListenerStarted -> showToast(getString(R.string.location_toast_listener_started))
@@ -119,19 +119,19 @@ class MainActivity : ComponentActivity() {
         startActivity(
             Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS).apply {
                 addCategory(Intent.CATEGORY_DEFAULT)
-            }
+            },
         )
 
     private fun navigateToLocationPermissions() = startActivity(
         Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
             addCategory(Intent.CATEGORY_DEFAULT)
             data = Uri.parse("package:" + BuildConfig.APPLICATION_ID)
-        }
+        },
     )
 
     private fun navigateToRocketService() =
         startActivity(
-            Intent(this, RocketReserverActivity::class.java)
+            Intent(this, RocketReserverActivity::class.java),
         )
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -176,7 +176,7 @@ class MainActivity : ComponentActivity() {
                         coroutineScope.launch {
                             navigateToLocationPermissions()
                         }
-                    }
+                    },
                 )
             },
 
@@ -198,12 +198,12 @@ class MainActivity : ComponentActivity() {
                     onClick = {
                         // showSnackbar(coroutineScope, snackbarHostState)
                         navigateToRocketService()
-                    }
+                    },
                 ) {
                     // Simple Text inside FAB
-                    Text(text = "X")
+                    Text(text = "Rockets")
                 }
-            }
+            },
         )
     }
 
@@ -213,7 +213,7 @@ class MainActivity : ComponentActivity() {
                 snackbarHostState.showSnackbar(
                     // Message In the snackbar
                     message = "Snack Bar",
-                    actionLabel = "Dismiss"
+                    actionLabel = "Dismiss",
                 )
             ) {
                 SnackbarResult.Dismissed -> {
