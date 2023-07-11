@@ -1,12 +1,10 @@
 plugins {
-    id("kotlin-kapt")
     id("com.android.library")
-    kotlin("android")
-    id("com.apollographql.apollo3").version("3.7.5")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
-    namespace = "uk.co.avsoftware.spacelaunchdata"
+    namespace = "uk.co.avsoftware.common_test"
     compileSdk = 33
 
     defaultConfig {
@@ -39,26 +37,13 @@ dependencies {
 
     implementation(project(":app:common"))
 
-    // Hilt
-    implementation("com.google.dagger:hilt-android:2.46.1")
-    kapt("com.google.dagger:hilt-android-compiler:2.46.1")
-
-    implementation("androidx.core:core-ktx:1.10.1")
+    implementation("androidx.core:core-ktx:1.8.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
-
-    implementation("com.apollographql.apollo3:apollo-runtime")
-
-    implementation("androidx.navigation:navigation-compose:2.6.0")
-    implementation("androidx.security:security-crypto:1.1.0-alpha06")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
 
     testImplementation("junit:junit:4.13.2")
+
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-}
-
-apollo {
-    service("service") {
-        packageName.set("com.example.rocketreserver")
-    }
 }

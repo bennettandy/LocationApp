@@ -76,6 +76,11 @@ dependencies {
     kaptTest("com.google.dagger:hilt-android-compiler:2.46.1")
 
     testImplementation("junit:junit:4.13.2")
+    testImplementation(project(":app:common-test"))
+//    testImplementation("org.mockito:mockito-core:2.19.0")
+    testImplementation("io.mockk:mockk-android:1.13.5")
+    testImplementation("app.cash.turbine:turbine:0.12.1")
+
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 

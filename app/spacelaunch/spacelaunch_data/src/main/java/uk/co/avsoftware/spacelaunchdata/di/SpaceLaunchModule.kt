@@ -11,12 +11,17 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.delay
 import okhttp3.OkHttpClient
+import uk.co.avsoftware.core.coroutines.DefaultDispatcherProvider
+import uk.co.avsoftware.core.coroutines.DispatcherProvider
 import uk.co.avsoftware.spacelaunchdata.AuthorizationInterceptor
 import uk.co.avsoftware.spacelaunchdata.TokenRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
 class SpaceLaunchModule {
+
+    @Provides
+    fun provideDispatcherProvider(defaultDispatcherProvider: DefaultDispatcherProvider): DispatcherProvider = defaultDispatcherProvider
 
     @Provides
     fun provideTokenRepository(@ApplicationContext context: Context): TokenRepository =
@@ -35,7 +40,7 @@ class SpaceLaunchModule {
             .okHttpClient(
                 OkHttpClient.Builder()
                     .addInterceptor(authorizationInterceptor)
-                    .build()
+                    .build(),
             )
             .webSocketReopenWhen { throwable, attempt ->
                 Log.d("Apollo", "WebSocket got disconnected, reopening after a delay", throwable)

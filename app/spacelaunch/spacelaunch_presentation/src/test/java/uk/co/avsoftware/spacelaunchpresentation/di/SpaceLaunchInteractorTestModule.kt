@@ -5,7 +5,10 @@ import dagger.Provides
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
+import uk.co.avsoftware.commontest.coroutines.UnitTestDispatcherProvider
 import uk.co.avsoftware.core.annotation.ApplicationId
+import uk.co.avsoftware.core.coroutines.DispatcherProvider
 import uk.co.avsoftware.spacelaunchdomain.di.SpaceLaunchInteractorModule
 import uk.co.avsoftware.spacelaunchdomain.interactor.BookLaunchInteractor
 import uk.co.avsoftware.spacelaunchdomain.interactor.CancelLaunchBookingInteractor
@@ -26,13 +29,16 @@ import uk.co.avsoftware.spacelaunchdomain.repository.BookedTripsRepository
 class SpaceLaunchInteractorTestModule {
 
     @Provides
+    fun provideDispatcherProvider(): DispatcherProvider = UnitTestDispatcherProvider()
+
+    @Provides
     @ApplicationId
     fun provideTestAppId() = "TestID"
 
     @Provides
     internal fun provideBookedTripsRepository(): BookedTripsRepository = object : BookedTripsRepository {
         override fun bookedTripsFlow(): Flow<TripBookedResponse?> {
-            TODO("Not yet implemented")
+            return flowOf(null)
         }
     }
 

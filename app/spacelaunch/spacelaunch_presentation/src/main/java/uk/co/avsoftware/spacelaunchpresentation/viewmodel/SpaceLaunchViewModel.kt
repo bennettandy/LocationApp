@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import uk.co.avsoftware.core.annotation.ApplicationId
+import uk.co.avsoftware.core.coroutines.DefaultDispatcherProvider
+import uk.co.avsoftware.core.coroutines.DispatcherProvider
 import uk.co.avsoftware.core.extensions.Reducer
 import uk.co.avsoftware.core.mvi.AbstractMviViewModel
 import uk.co.avsoftware.spacelaunchdomain.interactor.BookLaunchInteractor
@@ -33,15 +35,17 @@ class SpaceLaunchViewModel @Inject constructor(
     private val cancelLaunchBookingInteractor: CancelLaunchBookingInteractor,
     savedStateHandle: SavedStateHandle,
     @ApplicationId applicationId: String,
+    dispatcherProvider: DispatcherProvider = DefaultDispatcherProvider(),
 ) : AbstractMviViewModel<SpaceLaunchAction, SpaceLaunchViewState, SpaceLaunchCommand>(
     SpaceLaunchViewState.default,
     savedStateHandle = savedStateHandle,
     applicationId = applicationId,
+
 ) {
     val viewEvents: MutableStateFlow<SpaceLaunchEvent?> = MutableStateFlow(null)
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(context = dispatcherProvider.default()) {
             bookedTripsRepository.bookedTripsFlow()
                 .onStart { Timber.d("Connected Booked Trips Flow") }
                 .onEach { Timber.d("Booked ${it?.tripsBooked} Trips") }
@@ -67,8 +71,9 @@ class SpaceLaunchViewModel @Inject constructor(
                 ).then(
                     SpaceLaunchCommand.LoadLaunchList(action.cursor),
                 )
-
-                is SpaceLaunchAction.Initialise -> state.only()
+                is SpaceLaunchAction.SetLoadingFlag -> state.copy(
+                    isLoading = action.isLoading,
+                ).only()
                 is SpaceLaunchAction.HandleLaunches -> state.copy(
                     isLoading = false,
                     launches = action.launches,
@@ -120,16 +125,12 @@ class SpaceLaunchViewModel @Inject constructor(
 
     override fun executeCommand(command: SpaceLaunchCommand) {
         when (command) {
-            SpaceLaunchCommand.BookTrip ->
-                viewModelScope.launch {
-                    // todo: implement or delete
-                }
-
             is SpaceLaunchCommand.LoadLaunchList ->
                 viewModelScope.launch {
                     launchListInteractor.invoke()?.let {
                         receiveAction(SpaceLaunchAction.HandleLaunches(it))
                     }
+                    receiveAction(SpaceLaunchAction.SetLoadingFlag(false))
                 }
 
             is SpaceLaunchCommand.Login ->

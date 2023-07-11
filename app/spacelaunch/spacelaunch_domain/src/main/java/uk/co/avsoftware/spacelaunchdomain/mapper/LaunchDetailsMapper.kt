@@ -5,7 +5,7 @@ import uk.co.avsoftware.spacelaunchdomain.model.LaunchDetails
 import uk.co.avsoftware.spacelaunchdomain.model.Mission
 import uk.co.avsoftware.spacelaunchdomain.model.Rocket
 
-fun LaunchDetailsQuery.Launch.mapToDomain(): LaunchDetails {
+internal fun LaunchDetailsQuery.Launch.mapToDomain(): LaunchDetails {
     val launch = this
     return LaunchDetails(
         id = id,
