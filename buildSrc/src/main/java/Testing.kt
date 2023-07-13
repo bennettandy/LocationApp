@@ -5,7 +5,7 @@ object Testing {
     private const val junitAndroidExtVersion = "1.1.3"
     const val junitAndroidExt = "androidx.test.ext:junit:$junitAndroidExtVersion"
 
-    private const val coroutinesTestVersion = "1.5.1"
+    private const val coroutinesTestVersion = "1.7.1"
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesTestVersion"
 
     private const val truthVersion = "1.1.3"

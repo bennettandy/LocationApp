@@ -32,6 +32,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import uk.co.avsoftware.coreui.Dimensions
+import uk.co.avsoftware.coreui.LocalSpacing
 import uk.co.avsoftware.locationapp.screens.Body
 import uk.co.avsoftware.locationapp.screens.BottomBar
 import uk.co.avsoftware.locationapp.ui.theme.LocationAppTheme
@@ -51,6 +53,9 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             LocationAppTheme {
+                // our local spacing values from core-uk
+                val spacing: Dimensions = LocalSpacing.current
+
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier
