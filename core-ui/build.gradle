@@ -6,15 +6,15 @@ apply plugin: 'kotlin-parcelize'
 
 android {
     compileSdk ProjectConfig.compileSdk
-            namespace = "uk.co.avsoftware.locationapp.coreui"
+    namespace = "uk.co.avsoftware.locationapp.coreui"
 
     defaultConfig {
         minSdk ProjectConfig.minSdk
-                targetSdk ProjectConfig.targetSdk
-                versionCode ProjectConfig.versionCode
-                versionName ProjectConfig.versionName
+        targetSdk ProjectConfig.targetSdk
+        versionCode ProjectConfig.versionCode
+        versionName ProjectConfig.versionName
 
-                testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
     buildFeatures {
@@ -42,35 +42,36 @@ android {
 
 dependencies {
     coreLibraryDesugaring Build.coreLibraryDesugar
+
     implementation Compose.compiler
-            implementation Compose.ui
-            implementation Compose.uiToolingPreview
-            implementation Compose.hiltNavigationCompose
-            implementation Compose.material
-            implementation Compose.runtime
-            implementation Compose.navigation
-            implementation Compose.viewModelCompose
-            implementation Compose.activityCompose
+    implementation Compose.ui
+    implementation Compose.uiToolingPreview
+    implementation Compose.hiltNavigationCompose
+    implementation Compose.runtime
+    implementation Compose.navigation
+    implementation Compose.viewModelCompose
+    implementation Compose.activityCompose
+    implementation Google.material
 
-            kapt DaggerHilt.hiltCompiler
-            implementation DaggerHilt.hiltAndroid
+    kapt DaggerHilt.hiltCompiler
+    implementation DaggerHilt.hiltAndroid
 
-            testImplementation Testing.junit4
-            testImplementation Testing.junitAndroidExt
-            testImplementation Testing.truth
-            testImplementation Testing.coroutines
-            testImplementation Testing.turbine
-            testImplementation Testing.composeUiTest
-            testImplementation Testing.mockk
-            testImplementation Testing.mockWebServer
+    testImplementation Testing.junit4
+    testImplementation Testing.junitAndroidExt
+    testImplementation Testing.truth
+    testImplementation Testing.coroutines
+    testImplementation Testing.turbine
+    testImplementation Testing.composeUiTest
+    testImplementation Testing.mockk
+    testImplementation Testing.mockWebServer
 
-            androidTestImplementation Testing.junit4
-            androidTestImplementation Testing.junitAndroidExt
-            androidTestImplementation Testing.truth
-            androidTestImplementation Testing.coroutines
-            androidTestImplementation Testing.turbine
-            androidTestImplementation Testing.composeUiTest
-            androidTestImplementation Testing.mockk
-            androidTestImplementation Testing.mockWebServer
-            androidTestImplementation Testing.hiltTesting
+    androidTestImplementation Testing.junit4
+    androidTestImplementation Testing.junitAndroidExt
+    androidTestImplementation Testing.truth
+    androidTestImplementation Testing.coroutines
+    androidTestImplementation Testing.turbine
+    androidTestImplementation Testing.composeUiTest
+    androidTestImplementation Testing.mockk
+    androidTestImplementation Testing.mockWebServer
+    androidTestImplementation Testing.hiltTesting
 }

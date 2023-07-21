@@ -27,4 +27,7 @@ object Testing {
 
     private const val testRunnerVersion = "1.4.0"
     const val testRunner = "androidx.test:runner:$testRunnerVersion"
+
+    private const val uiTestManifestVersion = "1.4.3"
+    const val uiTestManifest = "androidx.compose.ui:ui-test-manifest:$uiTestManifestVersion"
 }
