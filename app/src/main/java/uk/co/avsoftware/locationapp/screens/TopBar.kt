@@ -31,12 +31,12 @@ fun TopBar(onMenuClicked: () -> Unit) {
                 // When clicked trigger onClick
                 // Callback to trigger drawer open
                 modifier = Modifier.clickable(onClick = onMenuClicked),
-                tint = Color.White
+                tint = Color.White,
             )
         },
         // background color of topAppBar
-        colors = TopAppBarDefaults.smallTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        )
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+        ),
     )
 }

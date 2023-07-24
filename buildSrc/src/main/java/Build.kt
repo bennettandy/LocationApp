@@ -17,6 +17,8 @@ object Build {
 
     const val kotlinJvmTarget = "17"
 
+    @JvmField // so Groovy code doesn't complain of Access Rights
     public val sourceCompatibility = JavaVersion.VERSION_17
+    @JvmField
     public val targetCompatibility = JavaVersion.VERSION_17
 }

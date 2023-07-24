@@ -21,15 +21,6 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion Compose.composeCompilerVersion
     }
-//    buildTypes {
-//        release {
-////            isMinifyEnabled = false
-//            proguardFiles(
-//                getDefaultProguardFile("proguard-android-optimize.txt"),
-//                "proguard-rules.pro",
-//            )
-//        }
-//    }
     compileOptions {
         sourceCompatibility = Build.sourceCompatibility
         targetCompatibility = Build.targetCompatibility
@@ -37,11 +28,6 @@ android {
     kotlinOptions {
         jvmTarget = Build.kotlinJvmTarget
     }
-//    testOptions {
-//        unitTests {
-//            isIncludeAndroidResources = true
-//        }
-//    }
 }
 
 dependencies {
