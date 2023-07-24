@@ -1,15 +1,17 @@
 package uk.co.avsoftware.locationapp
 
+import timber.log.Timber
+
 object FakeCrashLibrary {
     fun log(priority: Int, tag: String?, message: String) {
-        // empty
+        Timber.v("Log $priority, $tag, $message")
     }
 
     fun logError(t: Throwable) {
-        // empty
+        Timber.v(t, "Error ${t.message}")
     }
 
     fun logWarning(t: Throwable) {
-        // empty
+        Timber.v(t, "Warning ${t.message}")
     }
 }

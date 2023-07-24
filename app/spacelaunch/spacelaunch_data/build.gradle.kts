@@ -57,6 +57,7 @@ dependencies {
 
 apollo {
     service("service") {
-        packageName.set("com.example.rocketreserver")
+        srcDir("src/main/graphql")
+        packageNamesFromFilePaths("com.example.rocketreserver")
     }
 }
