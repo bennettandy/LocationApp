@@ -7,25 +7,25 @@ plugins {
 
 android {
     namespace 'uk.co.avsoftware.locationapp'
-    compileSdk 33
+    compileSdk ProjectConfig.compileSdk
 
     defaultConfig {
-        applicationId "uk.co.avsoftware.locationapp"
-        minSdk 33
-        targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        minSdk ProjectConfig.minSdk
+        targetSdk ProjectConfig.targetSdk
+        versionCode ProjectConfig.versionCode
+        versionName ProjectConfig.versionName
+
+        buildConfigField "boolean", "ANALYTICS", "false"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
-        }
-
-        buildFeatures {
-            buildConfig = true
-        }
+        consumerProguardFiles "consumer-rules.pro"
     }
-
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion Compose.composeCompilerVersion
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -33,22 +33,12 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility = Build.sourceCompatibility
+        targetCompatibility = Build.targetCompatibility
     }
     kotlinOptions {
-        jvmTarget = "17"
-    }
-    buildFeatures {
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion '1.4.6'
-    }
-    packagingOptions {
-        resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
-        }
+        jvmTarget = Build.kotlinJvmTarget
     }
     testOptions {
         unitTests {
@@ -59,60 +49,64 @@ android {
 
 dependencies {
 
+    // common compose classes
+    implementation(project(":core-ui"))
+
     implementation implementation(project(':app:common',))
     implementation(project(":app:location:location_presentation"))
     implementation(project(":app:spacelaunch:spacelaunch_presentation"))
 
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
-    implementation 'androidx.activity:activity-compose:1.5.1'
+    coreLibraryDesugaring Build.coreLibraryDesugar
+
+    kapt DaggerHilt.hiltCompiler
+    implementation DaggerHilt.hiltAndroid
+    implementation Google.material
+    implementation Compose.ui
+    implementation Compose.uiGraphics
+    implementation Compose.navigation
+    implementation Compose.activityCompose
+    implementation Compose.uiToolingPreview
+    implementation Google.material3
+    implementation Compose.lifecycleLiveData
+    implementation Compose.lifecycleRuntime
+    implementation Compose.lifecycleViewmodel
+
+    implementation Timber.timber
+    implementation AndroidX.coreKtx
+    implementation AndroidX.appCompat
+
+    testImplementation Testing.junit4
+    testImplementation Testing.junitAndroidExt
+    testImplementation Testing.truth
+    testImplementation Testing.coroutines
+    testImplementation Testing.turbine
+    testImplementation Testing.composeUiTest
+    testImplementation Testing.mockk
+    testImplementation Testing.mockWebServer
+
+    androidTestImplementation Testing.junit4
+    androidTestImplementation Testing.junitAndroidExt
+    androidTestImplementation Testing.truth
+    androidTestImplementation Testing.coroutines
+    androidTestImplementation Testing.turbine
+    androidTestImplementation Testing.composeUiTest
+    androidTestImplementation Testing.mockk
+    androidTestImplementation Testing.mockWebServer
+    androidTestImplementation Testing.hiltTesting
+
     implementation platform('androidx.compose:compose-bom:2022.10.00')
 
-    implementation 'androidx.compose.ui:ui'
-    implementation 'androidx.compose.ui:ui-graphics'
-    implementation 'androidx.compose.ui:ui-tooling-preview'
-    implementation 'androidx.compose.material3:material3'
-
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
-
-    implementation("androidx.navigation:navigation-compose:2.5.3")
-
-    // Hilt
-    implementation("com.google.dagger:hilt-android:2.46.1")
-    testImplementation("com.google.dagger:hilt-android-testing:2.46.1")
-    kapt("com.google.dagger:hilt-android-compiler:2.46.1")
-
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test:core-ktx:1.5.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation platform('androidx.compose:compose-bom:2022.10.00')
-    androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
-    debugImplementation 'androidx.compose.ui:ui-tooling'
-    debugImplementation 'androidx.compose.ui:ui-test-manifest'
-    implementation("com.jakewharton.timber:timber:5.0.1")
-
     // Roboelectric
-    testImplementation 'org.robolectric:robolectric:4.9'
-    testImplementation 'androidx.compose.ui:ui-test-junit4:1.4.3'
-    debugImplementation 'androidx.compose.ui:ui-test-manifest:1.4.3'
-
+    testImplementation RoboElectric.roboElectric
+    testImplementation Testing.composeUiTest
+    debugImplementation Testing.uiTestManifest
     // For Robolectric tests.
-    testImplementation 'com.google.dagger:hilt-android-testing:2.45'
-    // ...with Kotlin.
-    kaptTest 'com.google.dagger:hilt-android-compiler:2.44'
-    // ...with Java.
-    testAnnotationProcessor 'com.google.dagger:hilt-android-compiler:2.44'
-
+    testImplementation DaggerHilt.hiltTest
+    kaptTest DaggerHilt.hiltCompiler
+    testAnnotationProcessor DaggerHilt.hiltCompiler
 
     // For instrumented tests.
-    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.44'
-    // ...with Kotlin.
-    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.44'
-    // ...with Java.
-    androidTestAnnotationProcessor 'com.google.dagger:hilt-android-compiler:2.44'
+    androidTestImplementation DaggerHilt.hiltTest
+    kaptAndroidTest DaggerHilt.hiltCompiler
+    androidTestAnnotationProcessor DaggerHilt.hiltCompiler
 }

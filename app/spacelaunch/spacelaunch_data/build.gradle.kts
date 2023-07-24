@@ -7,12 +7,10 @@ plugins {
 
 android {
     namespace = "uk.co.avsoftware.spacelaunchdata"
-    compileSdk = 33
+    compileSdk = ProjectConfig.compileSdk
 
     defaultConfig {
-        minSdk = 28
-        targetSdk = 33
-
+        minSdk = ProjectConfig.minSdk
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -27,11 +25,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = Build.sourceCompatibility
+        targetCompatibility = Build.targetCompatibility
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = Build.kotlinJvmTarget
     }
 }
 
@@ -59,6 +57,7 @@ dependencies {
 
 apollo {
     service("service") {
-        packageName.set("com.example.rocketreserver")
+        srcDir("src/main/graphql")
+        packageNamesFromFilePaths("com.example.rocketreserver")
     }
 }

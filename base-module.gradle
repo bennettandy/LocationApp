@@ -1,3 +1,4 @@
+// Base Module
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
@@ -5,6 +6,7 @@ apply plugin: 'kotlin-parcelize'
 
 android {
     compileSdk ProjectConfig.compileSdk
+    namespace = "uk.co.avsoftware.locationapp"
 
     defaultConfig {
         minSdk ProjectConfig.minSdk
@@ -17,18 +19,17 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
         coreLibraryDesugaringEnabled true
-
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = Build.sourceCompatibility
+        targetCompatibility = Build.targetCompatibility
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = Build.kotlinJvmTarget
     }
 }
 

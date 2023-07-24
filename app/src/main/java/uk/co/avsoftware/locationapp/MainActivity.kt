@@ -12,7 +12,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -32,6 +31,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import timber.log.Timber
+import uk.co.avsoftware.coreui.Dimensions
+import uk.co.avsoftware.coreui.LocalSpacing
 import uk.co.avsoftware.locationapp.screens.Body
 import uk.co.avsoftware.locationapp.screens.BottomBar
 import uk.co.avsoftware.locationapp.ui.theme.LocationAppTheme
@@ -40,7 +42,6 @@ import uk.co.avsoftware.locationpresentation.viewmodel.LocationPermissionAction
 import uk.co.avsoftware.locationpresentation.viewmodel.LocationPermissionEvent
 import uk.co.avsoftware.locationpresentation.viewmodel.LocationPermissionViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
@@ -51,6 +52,10 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             LocationAppTheme {
+                // our local spacing values from core-uk
+                val spacing: Dimensions = LocalSpacing.current
+                Timber.d("Spacing values obtained -  medium = ${spacing.spaceMedium}")
+
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier
@@ -100,7 +105,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        // trigger viewmodel refresh
+        // trigger viewModel refresh
         locationViewModel.receiveAction(LocationPermissionAction.RefreshCurrentPermissions)
     }
 
@@ -134,7 +139,6 @@ class MainActivity : ComponentActivity() {
             Intent(this, RocketReserverActivity::class.java),
         )
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
     fun ScaffoldExample(viewModel: LocationPermissionViewModel) {
@@ -158,7 +162,7 @@ class MainActivity : ComponentActivity() {
             // pass the scaffold state
             // scaffoldState = scaffoldState,
 
-            // pass the topbar we created
+            // pass the topBar we created
             topBar = {
                 LocationPermissionStatusBar(
                     state.value,
@@ -176,7 +180,7 @@ class MainActivity : ComponentActivity() {
                         coroutineScope.launch {
                             navigateToLocationPermissions()
                         }
-                    },
+                    }
                 )
             },
 
@@ -196,14 +200,14 @@ class MainActivity : ComponentActivity() {
                 FloatingActionButton(
                     modifier = Modifier.testTag("Floating Button"),
                     onClick = {
-                        // showSnackbar(coroutineScope, snackbarHostState)
+                        showSnackbar(coroutineScope, snackbarHostState)
                         navigateToRocketService()
-                    },
+                    }
                 ) {
                     // Simple Text inside FAB
                     Text(text = "Rockets")
                 }
-            },
+            }
         )
     }
 
@@ -213,7 +217,7 @@ class MainActivity : ComponentActivity() {
                 snackbarHostState.showSnackbar(
                     // Message In the snackbar
                     message = "Snack Bar",
-                    actionLabel = "Dismiss",
+                    actionLabel = "Dismiss"
                 )
             ) {
                 SnackbarResult.Dismissed -> {

@@ -1,0 +1,51 @@
+plugins {
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
+}
+
+android {
+    namespace = "uk.co.avsoftware.common_test"
+    compileSdk = ProjectConfig.compileSdk
+
+    defaultConfig {
+        minSdk = ProjectConfig.minSdk
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
+    }
+
+    compileOptions {
+        sourceCompatibility = Build.sourceCompatibility
+        targetCompatibility = Build.targetCompatibility
+    }
+    kotlinOptions {
+        jvmTarget = Build.kotlinJvmTarget
+    }
+}
+
+dependencies {
+    implementation(project(":app:common"))
+
+    implementation Coroutines.coroutines
+    implementation Testing.coroutines // need UnconfinedTestDispatcher
+
+    testImplementation Testing.junit4
+    testImplementation Testing.junitAndroidExt
+    testImplementation Testing.truth
+    testImplementation Testing.coroutines
+    testImplementation Testing.turbine
+    testImplementation Testing.composeUiTest
+    testImplementation Testing.mockk
+    testImplementation Testing.mockWebServer
+
+    androidTestImplementation Testing.junit4
+    androidTestImplementation Testing.junitAndroidExt
+    androidTestImplementation Testing.truth
+    androidTestImplementation Testing.coroutines
+    androidTestImplementation Testing.turbine
+    androidTestImplementation Testing.composeUiTest
+    androidTestImplementation Testing.mockk
+    androidTestImplementation Testing.mockWebServer
+    androidTestImplementation Testing.hiltTesting
+
+}
