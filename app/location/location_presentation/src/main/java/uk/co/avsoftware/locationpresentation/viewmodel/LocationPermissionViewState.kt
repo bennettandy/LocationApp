@@ -2,7 +2,7 @@ package uk.co.avsoftware.locationpresentation.viewmodel
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import uk.co.avsoftware.core.mvi.MviState
+import uk.co.avsoftware.common.mvi.MviState
 import uk.co.avsoftware.locationdomain.model.LocationEvent
 
 @Parcelize

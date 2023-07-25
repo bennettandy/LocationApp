@@ -1,4 +1,4 @@
-package uk.co.avsoftware.core.coroutines
+package uk.co.avsoftware.common.coroutines
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

@@ -180,7 +180,7 @@ class MainActivity : ComponentActivity() {
                         coroutineScope.launch {
                             navigateToLocationPermissions()
                         }
-                    }
+                    },
                 )
             },
 
@@ -202,12 +202,12 @@ class MainActivity : ComponentActivity() {
                     onClick = {
                         showSnackbar(coroutineScope, snackbarHostState)
                         navigateToRocketService()
-                    }
+                    },
                 ) {
                     // Simple Text inside FAB
                     Text(text = "Rockets")
                 }
-            }
+            },
         )
     }
 
@@ -217,7 +217,7 @@ class MainActivity : ComponentActivity() {
                 snackbarHostState.showSnackbar(
                     // Message In the snackbar
                     message = "Snack Bar",
-                    actionLabel = "Dismiss"
+                    actionLabel = "Dismiss",
                 )
             ) {
                 SnackbarResult.Dismissed -> {

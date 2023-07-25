@@ -10,11 +10,11 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import uk.co.avsoftware.core.annotation.ApplicationId
-import uk.co.avsoftware.core.coroutines.DefaultDispatcherProvider
-import uk.co.avsoftware.core.coroutines.DispatcherProvider
-import uk.co.avsoftware.core.extensions.Reducer
-import uk.co.avsoftware.core.mvi.AbstractMviViewModel
+import uk.co.avsoftware.common.annotation.ApplicationId
+import uk.co.avsoftware.common.coroutines.DefaultDispatcherProvider
+import uk.co.avsoftware.common.coroutines.DispatcherProvider
+import uk.co.avsoftware.common.extensions.Reducer
+import uk.co.avsoftware.common.mvi.AbstractMviViewModel
 import uk.co.avsoftware.spacelaunchdomain.interactor.BookLaunchInteractor
 import uk.co.avsoftware.spacelaunchdomain.interactor.CancelLaunchBookingInteractor
 import uk.co.avsoftware.spacelaunchdomain.interactor.GetLaunchDetailsInteractor

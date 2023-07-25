@@ -3,7 +3,7 @@ package uk.co.avsoftware.commontest.coroutines
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import uk.co.avsoftware.core.coroutines.DispatcherProvider
+import uk.co.avsoftware.common.coroutines.DispatcherProvider
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class UnitTestDispatcherProvider(

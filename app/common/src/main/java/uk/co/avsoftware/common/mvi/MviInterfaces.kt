@@ -1,4 +1,4 @@
-package uk.co.avsoftware.core.mvi
+package uk.co.avsoftware.common.mvi
 
 interface MviAction
 interface MviCommand

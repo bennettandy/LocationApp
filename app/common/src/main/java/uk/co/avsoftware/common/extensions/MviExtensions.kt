@@ -1,7 +1,7 @@
-package uk.co.avsoftware.core.extensions
+package uk.co.avsoftware.common.extensions
 
 import androidx.lifecycle.SavedStateHandle
-import uk.co.avsoftware.core.mvi.MviState
+import uk.co.avsoftware.common.mvi.MviState
 
 typealias Reducer<ACTION, STATE, COMMAND> = (ACTION, STATE) -> Pair<STATE, COMMAND?>
 

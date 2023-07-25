@@ -2,7 +2,7 @@ package uk.co.avsoftware.spacelaunchpresentation.viewmodel
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import uk.co.avsoftware.core.mvi.MviState
+import uk.co.avsoftware.common.mvi.MviState
 import uk.co.avsoftware.spacelaunchdomain.model.LaunchDetails
 import uk.co.avsoftware.spacelaunchdomain.model.Launches
 

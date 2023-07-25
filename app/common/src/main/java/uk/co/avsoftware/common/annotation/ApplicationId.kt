@@ -1,4 +1,4 @@
-package uk.co.avsoftware.core.annotation
+package uk.co.avsoftware.common.annotation
 
 @MustBeDocumented
 @kotlin.annotation.Retention(AnnotationRetention.RUNTIME)

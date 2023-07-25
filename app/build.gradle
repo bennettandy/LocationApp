@@ -56,24 +56,27 @@ dependencies {
     implementation(project(":app:location:location_presentation"))
     implementation(project(":app:spacelaunch:spacelaunch_presentation"))
 
+    implementation AndroidX.coreKtx
+    implementation AndroidX.appCompat
+    implementation Google.material
+    implementation Google.material3
+
+    implementation DaggerHilt.hiltAndroid
+    kapt DaggerHilt.hiltCompiler
+
     coreLibraryDesugaring Build.coreLibraryDesugar
 
-    kapt DaggerHilt.hiltCompiler
-    implementation DaggerHilt.hiltAndroid
-    implementation Google.material
     implementation Compose.ui
     implementation Compose.uiGraphics
     implementation Compose.navigation
     implementation Compose.activityCompose
     implementation Compose.uiToolingPreview
-    implementation Google.material3
     implementation Compose.lifecycleLiveData
     implementation Compose.lifecycleRuntime
     implementation Compose.lifecycleViewmodel
 
     implementation Timber.timber
-    implementation AndroidX.coreKtx
-    implementation AndroidX.appCompat
+
 
     testImplementation Testing.junit4
     testImplementation Testing.junitAndroidExt

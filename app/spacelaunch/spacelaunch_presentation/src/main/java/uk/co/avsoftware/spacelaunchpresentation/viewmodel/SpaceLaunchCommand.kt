@@ -1,6 +1,6 @@
 package uk.co.avsoftware.spacelaunchpresentation.viewmodel
 
-import uk.co.avsoftware.core.mvi.MviCommand
+import uk.co.avsoftware.common.mvi.MviCommand
 
 interface SpaceLaunchCommand : MviCommand {
     data class Login(val email: String?) : SpaceLaunchCommand

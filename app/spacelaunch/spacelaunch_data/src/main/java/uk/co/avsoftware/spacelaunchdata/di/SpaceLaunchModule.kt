@@ -11,8 +11,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.delay
 import okhttp3.OkHttpClient
-import uk.co.avsoftware.core.coroutines.DefaultDispatcherProvider
-import uk.co.avsoftware.core.coroutines.DispatcherProvider
+import uk.co.avsoftware.common.coroutines.DefaultDispatcherProvider
+import uk.co.avsoftware.common.coroutines.DispatcherProvider
 import uk.co.avsoftware.spacelaunchdata.AuthorizationInterceptor
 import uk.co.avsoftware.spacelaunchdata.TokenRepository
 

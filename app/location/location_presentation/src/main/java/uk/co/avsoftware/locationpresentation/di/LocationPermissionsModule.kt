@@ -8,7 +8,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import uk.co.avsoftware.core.annotation.ApplicationId
+import uk.co.avsoftware.common.annotation.ApplicationId
 import uk.co.avsoftware.location.interactor.GetLastLocationInteractor
 import uk.co.avsoftware.location.interactor.IsGPSEnabledInteractor
 import uk.co.avsoftware.location.interactor.LocationPermissionEnabledInteractor

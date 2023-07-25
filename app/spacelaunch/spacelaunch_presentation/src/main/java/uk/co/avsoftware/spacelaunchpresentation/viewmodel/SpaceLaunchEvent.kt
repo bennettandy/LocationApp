@@ -1,6 +1,6 @@
 package uk.co.avsoftware.spacelaunchpresentation.viewmodel
 
-import uk.co.avsoftware.core.mvi.MviViewEvent
+import uk.co.avsoftware.common.mvi.MviViewEvent
 
 sealed interface SpaceLaunchEvent : MviViewEvent {
     object TripBooked : SpaceLaunchEvent
