@@ -1,6 +1,6 @@
 package uk.co.avsoftware.locationpresentation.viewmodel
 
-import uk.co.avsoftware.core.mvi.MviViewEvent
+import uk.co.avsoftware.common.mvi.MviViewEvent
 
 sealed interface LocationPermissionEvent : MviViewEvent {
     data class ObtainPermissions(val permissions: List<String>) : LocationPermissionEvent

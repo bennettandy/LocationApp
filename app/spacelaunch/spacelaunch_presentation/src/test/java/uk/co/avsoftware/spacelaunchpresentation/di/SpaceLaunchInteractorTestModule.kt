@@ -7,8 +7,8 @@ import dagger.hilt.testing.TestInstallIn
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import uk.co.avsoftware.commontest.coroutines.UnitTestDispatcherProvider
-import uk.co.avsoftware.core.annotation.ApplicationId
-import uk.co.avsoftware.core.coroutines.DispatcherProvider
+import uk.co.avsoftware.common.annotation.ApplicationId
+import uk.co.avsoftware.common.coroutines.DispatcherProvider
 import uk.co.avsoftware.spacelaunchdomain.di.SpaceLaunchInteractorModule
 import uk.co.avsoftware.spacelaunchdomain.interactor.BookLaunchInteractor
 import uk.co.avsoftware.spacelaunchdomain.interactor.CancelLaunchBookingInteractor

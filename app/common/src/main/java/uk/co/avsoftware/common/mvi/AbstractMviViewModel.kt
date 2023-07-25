@@ -1,13 +1,13 @@
-package uk.co.avsoftware.core.mvi
+package uk.co.avsoftware.common.mvi
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import uk.co.avsoftware.core.extensions.Reducer
-import uk.co.avsoftware.core.extensions.getMviState
-import uk.co.avsoftware.core.extensions.setMviState
+import uk.co.avsoftware.common.extensions.Reducer
+import uk.co.avsoftware.common.extensions.getMviState
+import uk.co.avsoftware.common.extensions.setMviState
 
 abstract class AbstractMviViewModel<A : MviAction, S : MviState, C : MviCommand>(
     initialState: S,

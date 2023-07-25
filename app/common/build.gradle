@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "uk.co.avsoftware.core"
+    namespace = Modules.commonNamespace
     compileSdk = ProjectConfig.compileSdk
 
     defaultConfig {

@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import uk.co.avsoftware.core.annotation.ApplicationId
+import uk.co.avsoftware.common.annotation.ApplicationId
 import uk.co.avsoftware.locationapp.BuildConfig
 
 @Module

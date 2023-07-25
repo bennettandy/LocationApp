@@ -4,6 +4,11 @@ object Modules {
     const val core = ":core"
     const val coreUi = ":core-ui"
 
+    const val common = ":app:common"
+    const val commonNamespace = "uk.co.avsoftware.common"
+
+    const val commonTest = ":app:common-test"
+
     const val onboardingDomain = ":onboarding:onboarding_domain"
     const val onboardingPresentation = ":onboarding:onboarding_presentation"
 

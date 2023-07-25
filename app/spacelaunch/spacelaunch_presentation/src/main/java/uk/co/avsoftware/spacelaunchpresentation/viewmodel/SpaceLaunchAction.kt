@@ -1,6 +1,6 @@
 package uk.co.avsoftware.spacelaunchpresentation.viewmodel
 
-import uk.co.avsoftware.core.mvi.MviAction
+import uk.co.avsoftware.common.mvi.MviAction
 import uk.co.avsoftware.spacelaunchdomain.model.LaunchDetails
 import uk.co.avsoftware.spacelaunchdomain.model.Launches
 

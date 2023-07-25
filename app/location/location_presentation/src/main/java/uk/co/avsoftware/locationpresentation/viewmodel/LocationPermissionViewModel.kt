@@ -9,9 +9,9 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import uk.co.avsoftware.core.annotation.ApplicationId
-import uk.co.avsoftware.core.extensions.Reducer
-import uk.co.avsoftware.core.mvi.AbstractMviViewModel
+import uk.co.avsoftware.common.annotation.ApplicationId
+import uk.co.avsoftware.common.extensions.Reducer
+import uk.co.avsoftware.common.mvi.AbstractMviViewModel
 import uk.co.avsoftware.location.interactor.IsGPSEnabledInteractor
 import uk.co.avsoftware.location.interactor.LocationPermissionEnabledInteractor
 import uk.co.avsoftware.locationdomain.repository.AndroidLocationEventsRepository

@@ -18,6 +18,9 @@ object Testing {
     private const val turbineVersion = "0.7.0"
     const val turbine = "app.cash.turbine:turbine:$turbineVersion"
 
+    private const val espressoCoreVersion = "3.5.1"
+    const val espressoCore = "androidx.test.espresso:espresso-core:$espressoCoreVersion"
+
     private const val mockWebServerVersion = "4.9.3"
     const val mockWebServer = "com.squareup.okhttp3:mockwebserver:$mockWebServerVersion"
 

@@ -1,6 +1,6 @@
 package uk.co.avsoftware.locationpresentation.viewmodel
 
-import uk.co.avsoftware.core.mvi.MviCommand
+import uk.co.avsoftware.common.mvi.MviCommand
 
 interface LocationPermissionCommand : MviCommand {
     object RefreshCurrentPermissions : LocationPermissionCommand

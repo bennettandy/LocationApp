@@ -1,6 +1,6 @@
 package uk.co.avsoftware.locationpresentation.viewmodel
 
-import uk.co.avsoftware.core.mvi.MviAction
+import uk.co.avsoftware.common.mvi.MviAction
 import uk.co.avsoftware.locationdomain.model.LocationEvent
 
 sealed interface LocationPermissionAction : MviAction {
