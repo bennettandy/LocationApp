@@ -8,13 +8,13 @@ import uk.co.avsoftware.spacelaunchdomain.model.SpaceLaunchDetailResponse
 import javax.inject.Inject
 
 internal class GetLaunchDetailsInteractorApollo @Inject constructor(
-    private val getLaunchDetailInteractor: ApolloGetLaunchDetailInteractor,
+    private val getLaunchDetailInteractor: ApolloGetLaunchDetailInteractor
 ) : GetLaunchDetailsInteractor {
     override suspend operator fun invoke(launchId: String): SpaceLaunchDetailResponse =
         when (val response: LaunchDetailsResponse = getLaunchDetailInteractor.invoke(launchId)) {
             is LaunchDetailsResponse.Success -> {
                 SpaceLaunchDetailResponse.Success(
-                    response.data?.mapToDomain(),
+                    response.data?.mapToDomain()
                 )
             }
 

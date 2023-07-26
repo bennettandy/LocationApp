@@ -7,7 +7,7 @@ import uk.co.avsoftware.spacelaunchdomain.model.LaunchBookingResponse
 import javax.inject.Inject
 
 internal class CancelLaunchBookingInteractorApollo @Inject constructor(
-    private val apolloCancelTripInteractor: ApolloCancelTripInteractor,
+    private val apolloCancelTripInteractor: ApolloCancelTripInteractor
 ) : CancelLaunchBookingInteractor {
     override suspend operator fun invoke(launchId: String): LaunchBookingResponse =
         apolloCancelTripInteractor.invoke(launchId).let {

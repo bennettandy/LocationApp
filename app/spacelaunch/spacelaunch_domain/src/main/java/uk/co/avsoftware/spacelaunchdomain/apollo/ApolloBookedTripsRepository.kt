@@ -8,7 +8,7 @@ import uk.co.avsoftware.spacelaunchdomain.repository.BookedTripsRepository
 import javax.inject.Inject
 
 internal class ApolloBookedTripsRepository @Inject constructor(
-    private val apolloBookedTripsRepository: ApolloBookedTripsRepository,
+    private val apolloBookedTripsRepository: ApolloBookedTripsRepository
 ) : BookedTripsRepository {
     override fun bookedTripsFlow(): Flow<TripBookedResponse?> = apolloBookedTripsRepository.bookedTripsResponseFlow().map {
         it?.let {

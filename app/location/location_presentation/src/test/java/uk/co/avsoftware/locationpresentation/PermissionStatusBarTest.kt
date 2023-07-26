@@ -91,9 +91,9 @@ class PermissionStatusBarTest {
                 viewState = LocationPermissionViewState.default.copy(
                     fineLocationGranted = true,
                     coarseLocationGranted = true,
-                    gpsIsActive = true,
+                    gpsIsActive = true
                 ),
-                expectedMessage = getString(R.string.location_permission_status_success),
+                expectedMessage = getString(R.string.location_permission_status_success)
             )
         }
     }

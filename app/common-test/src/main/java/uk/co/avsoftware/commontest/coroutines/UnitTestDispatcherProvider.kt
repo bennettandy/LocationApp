@@ -7,7 +7,7 @@ import uk.co.avsoftware.common.coroutines.DispatcherProvider
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class UnitTestDispatcherProvider(
-    private val testDispatcher: CoroutineDispatcher = UnconfinedTestDispatcher(),
+    private val testDispatcher: CoroutineDispatcher = UnconfinedTestDispatcher()
 ) : DispatcherProvider {
     override fun default(): CoroutineDispatcher = testDispatcher
     override fun io(): CoroutineDispatcher = testDispatcher

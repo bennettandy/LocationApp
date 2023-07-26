@@ -17,8 +17,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import uk.co.avsoftware.commontest.coroutines.UnitTestDispatcherProvider
 import uk.co.avsoftware.common.annotation.ApplicationId
+import uk.co.avsoftware.commontest.coroutines.UnitTestDispatcherProvider
 import uk.co.avsoftware.spacelaunchdomain.interactor.BookLaunchInteractor
 import uk.co.avsoftware.spacelaunchdomain.interactor.CancelLaunchBookingInteractor
 import uk.co.avsoftware.spacelaunchdomain.interactor.GetLaunchDetailsInteractor
@@ -79,7 +79,7 @@ class SpaceLaunchViewModelTest {
             cancelLaunchBookingInteractor = cancelLaunchBookingInteractor,
             savedStateHandle = SavedStateHandle(),
             applicationId = appId,
-            dispatcherProvider = UnitTestDispatcherProvider(),
+            dispatcherProvider = UnitTestDispatcherProvider()
         )
     }
 

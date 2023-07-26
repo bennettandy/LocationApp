@@ -20,7 +20,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
+                "proguard-rules.pro"
             )
         }
     }
@@ -35,7 +35,7 @@ android {
 
 dependencies {
 
-    implementation(project(":app:spacelaunch:spacelaunch_data"))
+    implementation(project(Modules.spacelaunchDataModule))
 
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)

@@ -7,7 +7,7 @@ import uk.co.avsoftware.spacelaunchdomain.model.Launches
 import javax.inject.Inject
 
 internal class GetLaunchListInteractorApollo @Inject constructor(
-    private val apolloGetLaunchListInteractor: ApolloGetLaunchListInteractor,
+    private val apolloGetLaunchListInteractor: ApolloGetLaunchListInteractor
 ) : GetLaunchListInteractor {
     override suspend operator fun invoke(): Launches? =
         apolloGetLaunchListInteractor()?.mapToDomain()
