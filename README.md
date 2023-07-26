@@ -13,7 +13,7 @@ Modular application utilising Roboelectric Unit tests to test Composable UI comp
 App Module containing 2 Feature Modules.
 Each Feature Module has Presentation --> Domain --> Data Modules
 
-App Module
+App Module includes just the Presentation modules of each of the features.
 |
 --> Location Presentation --> Location Domain --> LocationData
 |
