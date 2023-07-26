@@ -5,13 +5,12 @@ plugins {
 }
 
 android {
-    namespace = "uk.co.avsoftware.location_data"
+    namespace = Modules.locationDataModuleNamespace
     compileSdk = ProjectConfig.compileSdk
 
     defaultConfig {
         minSdk = ProjectConfig.minSdk
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = Testing.testInstrumentationRunner
         consumerProguardFiles("consumer-rules.pro")
     }
 

@@ -23,7 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import uk.co.avsoftware.location_presentation.R
+import uk.co.avsoftware.locationpresentation.R
 import uk.co.avsoftware.locationpresentation.viewmodel.LocationPermissionViewState
 
 @Composable

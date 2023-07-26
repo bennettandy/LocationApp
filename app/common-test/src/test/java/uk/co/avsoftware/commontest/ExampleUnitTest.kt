@@ -1,4 +1,4 @@
-package uk.co.avsoftware.common_test
+package uk.co.avsoftware.commontest
 
 import org.junit.Test
 

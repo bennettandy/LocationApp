@@ -6,13 +6,12 @@ plugins {
 }
 
 android {
-    namespace = "uk.co.avsoftware.spacelaunchdomain"
+    namespace = Modules.spacelaunchDomainModuleNamespace
     compileSdk = ProjectConfig.compileSdk
 
     defaultConfig {
         minSdk = ProjectConfig.minSdk
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = Testing.testInstrumentationRunner
         consumerProguardFiles("consumer-rules.pro")
     }
 
