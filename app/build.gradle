@@ -50,11 +50,11 @@ android {
 dependencies {
 
     // common compose classes
-    implementation(project(":core-ui"))
+    implementation(project(Modules.coreUi))
 
-    implementation implementation(project(':app:common',))
-    implementation(project(":app:location:location_presentation"))
-    implementation(project(":app:spacelaunch:spacelaunch_presentation"))
+    implementation(project(Modules.common))
+    implementation(project(Modules.locationPresentationModule))
+    implementation(project(Modules.spacelaunchPresentationModule))
 
     implementation AndroidX.coreKtx
     implementation AndroidX.appCompat

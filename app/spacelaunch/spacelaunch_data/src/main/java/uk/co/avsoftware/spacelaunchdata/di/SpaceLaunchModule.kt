@@ -40,7 +40,7 @@ class SpaceLaunchModule {
             .okHttpClient(
                 OkHttpClient.Builder()
                     .addInterceptor(authorizationInterceptor)
-                    .build(),
+                    .build()
             )
             .webSocketReopenWhen { throwable, attempt ->
                 Log.d("Apollo", "WebSocket got disconnected, reopening after a delay", throwable)

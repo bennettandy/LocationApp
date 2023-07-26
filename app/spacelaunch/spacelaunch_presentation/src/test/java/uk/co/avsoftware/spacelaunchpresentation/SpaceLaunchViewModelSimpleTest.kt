@@ -102,7 +102,7 @@ class SpaceLaunchViewModelSimpleTest {
         val launches = Launches(
             cursor = null,
             launches = emptyList(),
-            hasMore = false,
+            hasMore = false
         )
         coEvery { launchListInteractor.invoke() } returns launches
         coEvery { bookedTripsRepository.bookedTripsFlow() } coAnswers { emptyFlow() }
@@ -136,6 +136,6 @@ class SpaceLaunchViewModelSimpleTest {
         cancelLaunchBookingInteractor = cancelLaunchBookingInteractor,
         savedStateHandle = SavedStateHandle(),
         applicationId = appId,
-        dispatcherProvider = UnitTestDispatcherProvider(),
+        dispatcherProvider = UnitTestDispatcherProvider()
     )
 }
