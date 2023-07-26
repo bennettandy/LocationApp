@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "uk.co.avsoftware.common_test"
+    namespace = Modules.commonTestNamespace
     compileSdk = ProjectConfig.compileSdk
 
     defaultConfig {
@@ -24,7 +24,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":app:common"))
+    implementation(project(Modules.common))
 
     implementation Coroutines.coroutines
     implementation Testing.coroutines // need UnconfinedTestDispatcher

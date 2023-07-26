@@ -1,18 +1,38 @@
 object Modules {
+    // Application Module
     const val app = ":app"
+    const val appNamespace = "uk.co.avsoftware.locationapp"
 
+    // Shared Modules
     const val core = ":core"
+    const val coreNamespace = "uk.co.avsoftware.core"
+
     const val coreUi = ":core-ui"
+    const val coreUiNamespace = "uk.co.avsoftware.coreui"
 
     const val common = ":app:common"
     const val commonNamespace = "uk.co.avsoftware.common"
 
     const val commonTest = ":app:common-test"
+    const val commonTestNamespace = "uk.co.avsoftware.commontest"
 
-    const val onboardingDomain = ":onboarding:onboarding_domain"
-    const val onboardingPresentation = ":onboarding:onboarding_presentation"
+    // Location Feature Modules
+    const val locationDataModule = ":app:location:location_data"
+    const val locationDataModuleNamespace = "uk.co.avsoftware.locationdata"
 
-    const val trackerData = ":tracker:tracker_data"
-    const val trackerDomain = ":tracker:tracker_domain"
-    const val trackerPresentation = ":tracker:tracker_presentation"
+    const val locationDomainModule = ":app:location:location_domain"
+    const val locationDomainModuleNamespace = "uk.co.avsoftware.locationdomain"
+
+    const val locationPresentationModule = ":app:location:location_presentation"
+    const val locationPresentationModuleNamespace = "uk.co.avsoftware.locationpresentation"
+
+    // Space Launch Feature Modules
+    const val spacelaunchDataModule = ":app:spacelaunch:spacelaunch_data"
+    const val spacelaunchDataModuleNamespace = "uk.co.avsoftware.spacelaunchdata"
+
+    const val spacelaunchDomainModule = ":app:spacelaunch:spacelaunch_domain"
+    const val spacelaunchDomainModuleNamespace = "uk.co.avsoftware.spacelaunchdomain"
+
+    const val spacelaunchPresentationModule = ":app:spacelaunch:spacelaunch_presentation"
+    const val spacelaunchPresentationModuleNamespace = "uk.co.avsoftware.spacelaunchpresentation"
 }

@@ -6,15 +6,14 @@ apply plugin: 'kotlin-parcelize'
 
 android {
     compileSdk ProjectConfig.compileSdk
-    namespace = "uk.co.avsoftware.locationapp.coreui"
+    namespace = Modules.coreUiNamespace
 
     defaultConfig {
         minSdk ProjectConfig.minSdk
         targetSdk ProjectConfig.targetSdk
         versionCode ProjectConfig.versionCode
         versionName ProjectConfig.versionName
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = Testing.testInstrumentationRunner
         consumerProguardFiles "consumer-rules.pro"
     }
     buildFeatures {

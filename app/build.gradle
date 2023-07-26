@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace 'uk.co.avsoftware.locationapp'
+    namespace Modules.appNamespace
     compileSdk ProjectConfig.compileSdk
 
     defaultConfig {
@@ -17,7 +17,7 @@ android {
 
         buildConfigField "boolean", "ANALYTICS", "false"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner Testing.testInstrumentationRunner
         consumerProguardFiles "consumer-rules.pro"
     }
     buildFeatures {

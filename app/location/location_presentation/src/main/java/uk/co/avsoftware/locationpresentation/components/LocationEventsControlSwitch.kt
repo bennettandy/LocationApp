@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import uk.co.avsoftware.location_presentation.R
+import uk.co.avsoftware.locationpresentation.R
 
 @Composable
 fun LocationEventsControlSwitch(enabled: Boolean, active: Boolean, setActive: (Boolean) -> Unit) {
