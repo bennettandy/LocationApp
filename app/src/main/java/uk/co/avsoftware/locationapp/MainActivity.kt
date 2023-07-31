@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.onSurface, shape = RectangleShape)
+                        .background(MaterialTheme.colorScheme.onSurface, shape = RectangleShape),
                 ) {
                     ScaffoldExample(locationViewModel)
                 }
@@ -73,7 +73,7 @@ class MainActivity : ComponentActivity() {
             locationViewModel.receiveAction(
                 LocationPermissionAction.ProcessPermissionResponse(
                     permissions
-                )
+                ),
             )
         }
 

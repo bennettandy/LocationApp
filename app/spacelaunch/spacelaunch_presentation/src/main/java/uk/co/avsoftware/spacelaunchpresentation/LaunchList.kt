@@ -32,14 +32,14 @@ import uk.co.avsoftware.spacelaunchpresentation.viewmodel.SpaceLaunchViewModel
 @Composable
 fun LaunchList(
     onLaunchClick: (launchId: String) -> Unit,
-    spaceLaunchViewModel: SpaceLaunchViewModel
+    spaceLaunchViewModel: SpaceLaunchViewModel,
 ) {
     val cursor: String? by remember { mutableStateOf(null) }
 
     val uiState = spaceLaunchViewModel.uiState.collectAsState()
     LaunchedEffect(cursor) {
         spaceLaunchViewModel.receiveAction(
-            SpaceLaunchAction.RefreshLaunches(cursor)
+            SpaceLaunchAction.RefreshLaunches(cursor),
         )
     }
 
@@ -56,7 +56,7 @@ fun LaunchList(
                 LoadingItem()
 
                 spaceLaunchViewModel.receiveAction(
-                    SpaceLaunchAction.RefreshLaunches(launches.cursor)
+                    SpaceLaunchAction.RefreshLaunches(launches.cursor),
                 )
             }
         }
@@ -67,11 +67,12 @@ fun LaunchList(
 private fun LaunchItem(launch: Launch, onClick: (launchId: String) -> Unit) {
     ListItem(
         modifier = Modifier.clickable { onClick(launch.id) },
-        headlineText = {
+
+        headlineContent = {
             // Mission name
             Text(text = launch.mission?.name ?: "")
         },
-        supportingText = {
+        supportingContent = {
             // Site
             Text(text = launch.site ?: "")
         },
@@ -82,9 +83,9 @@ private fun LaunchItem(launch: Launch, onClick: (launchId: String) -> Unit) {
                 model = launch.mission?.missionPatch,
                 placeholder = painterResource(R.drawable.ic_placeholder),
                 error = painterResource(R.drawable.ic_placeholder),
-                contentDescription = "Mission patch"
+                contentDescription = "Mission patch",
             )
-        }
+        },
     )
 }
 
@@ -94,7 +95,7 @@ private fun LoadingItem() {
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(16.dp),
     ) {
         CircularProgressIndicator()
     }

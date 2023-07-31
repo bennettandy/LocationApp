@@ -30,7 +30,7 @@ import uk.co.avsoftware.spacelaunchpresentation.viewmodel.SpaceLaunchViewState
 fun LaunchDetails(
     spaceLaunchViewModel: SpaceLaunchViewModel,
     viewState: SpaceLaunchViewState,
-    launchId: String
+    launchId: String,
 ) {
     LaunchedEffect(Unit) {
         // load details
@@ -50,10 +50,10 @@ fun LaunchDetails(
 private fun LaunchDetails(
     viewModel: SpaceLaunchViewModel,
     spaceLaunchViewState: SpaceLaunchViewState,
-    launchDetails: LaunchDetails?
+    launchDetails: LaunchDetails?,
 ) {
     Column(
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier.padding(16.dp),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             // Mission patch
@@ -62,7 +62,7 @@ private fun LaunchDetails(
                 model = launchDetails?.mission?.missionPatch,
                 placeholder = painterResource(R.drawable.ic_placeholder),
                 error = painterResource(R.drawable.ic_placeholder),
-                contentDescription = "Mission patch"
+                contentDescription = "Mission patch",
             )
 
             Spacer(modifier = Modifier.size(16.dp))
@@ -71,21 +71,21 @@ private fun LaunchDetails(
                 // Mission name
                 Text(
                     style = MaterialTheme.typography.headlineMedium,
-                    text = launchDetails?.mission?.name ?: ""
+                    text = launchDetails?.mission?.name ?: "",
                 )
 
                 // Rocket name
                 Text(
                     modifier = Modifier.padding(top = 8.dp),
                     style = MaterialTheme.typography.headlineSmall,
-                    text = launchDetails?.rocket?.name?.let { "🚀 $it" } ?: ""
+                    text = launchDetails?.rocket?.name?.let { "🚀 $it" } ?: "",
                 )
 
                 // Site
                 Text(
                     modifier = Modifier.padding(top = 8.dp),
                     style = MaterialTheme.typography.titleMedium,
-                    text = launchDetails?.site ?: ""
+                    text = launchDetails?.site ?: "",
                 )
             }
         }
@@ -103,7 +103,7 @@ private fun LaunchDetails(
                         viewModel.receiveAction(SpaceLaunchAction.BookLaunch(it))
                     }
                 }
-            }
+            },
         ) {
             if (spaceLaunchViewState.bookingInProgress) {
                 SmallLoading()
@@ -134,7 +134,7 @@ private fun SmallLoading() {
     CircularProgressIndicator(
         modifier = Modifier.size(24.dp),
         color = LocalContentColor.current,
-        strokeWidth = 2.dp
+        strokeWidth = 2.dp,
     )
 }
 

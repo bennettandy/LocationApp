@@ -15,6 +15,7 @@ android {
         versionCode ProjectConfig.versionCode
         versionName ProjectConfig.versionName
 
+        // development code to inject field into BuildConfig
         buildConfigField "boolean", "ANALYTICS", "false"
 
         testInstrumentationRunner Testing.testInstrumentationRunner
@@ -49,33 +50,29 @@ android {
 
 dependencies {
 
-    // common compose classes
     implementation(project(Modules.coreUi))
-
     implementation(project(Modules.common))
     implementation(project(Modules.locationPresentationModule))
     implementation(project(Modules.spacelaunchPresentationModule))
 
-    implementation AndroidX.coreKtx
-    implementation AndroidX.appCompat
-    implementation Google.material
-    implementation Google.material3
+    implementation(platform(Compose.bom))
+    implementation(AndroidX.coreKtx)
+    implementation(AndroidX.appCompat)
+    implementation(MaterialDesign.material)
+    implementation(Compose.lifecycleRuntime)
+    implementation(Compose.activityCompose)
+    implementation(Compose.ui)
+    implementation(Compose.uiGraphics)
+    implementation(Compose.uiToolingPreview)
+    implementation(MaterialDesign.material3)
+    implementation(Navigation.navigationCompose)
+    implementation(Timber.timber)
+
 
     implementation DaggerHilt.hiltAndroid
     kapt DaggerHilt.hiltCompiler
 
     coreLibraryDesugaring Build.coreLibraryDesugar
-
-    implementation Compose.ui
-    implementation Compose.uiGraphics
-    implementation Compose.navigation
-    implementation Compose.activityCompose
-    implementation Compose.uiToolingPreview
-    implementation Compose.lifecycleLiveData
-    implementation Compose.lifecycleRuntime
-    implementation Compose.lifecycleViewmodel
-
-    implementation Timber.timber
 
 
     testImplementation Testing.junit4
@@ -97,7 +94,7 @@ dependencies {
     androidTestImplementation Testing.mockWebServer
     androidTestImplementation Testing.hiltTesting
 
-    implementation platform('androidx.compose:compose-bom:2022.10.00')
+//    implementation platform(Compose.bom)
 
     // Roboelectric
     testImplementation RoboElectric.roboElectric

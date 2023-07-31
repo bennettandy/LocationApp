@@ -50,7 +50,7 @@ dependencies {
     implementation Compose.navigation
     implementation Compose.viewModelCompose
     implementation Compose.activityCompose
-    implementation Google.material
+    implementation MaterialDesign.material
 
     kapt DaggerHilt.hiltCompiler
     implementation DaggerHilt.hiltAndroid

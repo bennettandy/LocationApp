@@ -64,13 +64,13 @@ class RocketReserverActivity : ComponentActivity() {
                     }
                     snackbarHostState.showSnackbar(
                         message = message,
-                        duration = SnackbarDuration.Short
+                        duration = SnackbarDuration.Short,
                     )
                 }
 
                 Scaffold(
                     topBar = { TopAppBar({ Text(stringResource(R.string.app_name)) }) },
-                    snackbarHost = { SnackbarHost(snackbarHostState) }
+                    snackbarHost = { SnackbarHost(snackbarHostState) },
                 ) { paddingValues ->
                     Box(Modifier.padding(paddingValues)) {
                         MainNavHost(navController, spaceLaunchViewModel, spaceLaunchViewState.value)
@@ -85,7 +85,7 @@ class RocketReserverActivity : ComponentActivity() {
 private fun MainNavHost(
     navController: NavHostController,
     viewModel: SpaceLaunchViewModel,
-    viewState: SpaceLaunchViewState
+    viewState: SpaceLaunchViewState,
 ) {
     NavHost(navController, startDestination = NavigationDestinations.LAUNCH_LIST) {
         composable(route = NavigationDestinations.LAUNCH_LIST) {
@@ -93,7 +93,7 @@ private fun MainNavHost(
                 onLaunchClick = { launchId ->
                     navController.navigate("${NavigationDestinations.LAUNCH_DETAILS}/$launchId")
                 },
-                viewModel
+                viewModel,
             )
         }
 
@@ -101,7 +101,7 @@ private fun MainNavHost(
             LaunchDetails(
                 spaceLaunchViewModel = viewModel,
                 viewState = viewState,
-                launchId = navBackStackEntry.arguments!!.getString(NavigationArguments.LAUNCH_ID)!!
+                launchId = navBackStackEntry.arguments!!.getString(NavigationArguments.LAUNCH_ID)!!,
             )
         }
 
@@ -110,7 +110,7 @@ private fun MainNavHost(
                 spaceLaunchViewModel = viewModel,
                 navigateBack = {
                     navController.popBackStack()
-                }
+                },
             )
         }
     }

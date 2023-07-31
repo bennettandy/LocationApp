@@ -2,7 +2,7 @@ plugins {
     id("kotlin-kapt")
     id("com.android.library")
     kotlin("android")
-    id("com.apollographql.apollo3").version("3.7.5")
+    id("com.apollographql.apollo3").version(Apollo.apolloVersion)
 }
 
 android {
@@ -20,7 +20,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -41,18 +41,18 @@ dependencies {
     implementation(DaggerHilt.hiltAndroid)
     kapt(DaggerHilt.hiltCompiler)
 
-    implementation("androidx.core:core-ktx:1.10.1")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.9.0")
+    implementation(AndroidX.coreKtx)
+    implementation(AndroidX.appCompat)
+    implementation(MaterialDesign.material)
 
-    implementation("com.apollographql.apollo3:apollo-runtime")
+    implementation(Apollo.apolloRuntime)
 
-    implementation("androidx.navigation:navigation-compose:2.6.0")
-    implementation("androidx.security:security-crypto:1.1.0-alpha06")
+    implementation(Navigation.navigationCompose)
+    implementation(AndroidX.securityCrypto)
 
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    testImplementation(Testing.junit4)
+    androidTestImplementation(Testing.junitAndroidExt)
+    androidTestImplementation(Testing.espressoCore)
 }
 
 apollo {
