@@ -3,6 +3,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-parcelize'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
     compileSdk ProjectConfig.compileSdk
@@ -40,6 +41,7 @@ android {
 }
 
 dependencies {
+    implementation AndroidX.coreKtx
     coreLibraryDesugaring Build.coreLibraryDesugar
 
     implementation Compose.compiler

@@ -27,7 +27,8 @@ dependencies {
     implementation(project(Modules.common))
 
     implementation Coroutines.coroutines
-    implementation Testing.coroutines // need UnconfinedTestDispatcher
+    implementation Testing.coroutines
+    implementation AndroidX.coreKtx // need UnconfinedTestDispatcher
 
     testImplementation Testing.junit4
     testImplementation Testing.junitAndroidExt
