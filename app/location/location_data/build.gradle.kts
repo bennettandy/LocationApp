@@ -41,6 +41,11 @@ dependencies {
     implementation(DaggerHilt.hiltAndroid)
     kapt(DaggerHilt.hiltCompiler)
 
+    // Room
+    implementation(Room.roomKtx)
+    implementation(Room.roomRuntime)
+    kapt(Room.roomCompiler)
+
     // Testing
     testImplementation(Testing.junit4)
     testImplementation(Testing.junitAndroidExt)

@@ -43,6 +43,7 @@ dependencies {
 
     // Hilt
     implementation(DaggerHilt.hiltAndroid)
+    implementation(AndroidX.coreKtx)
     kapt(DaggerHilt.hiltCompiler)
 
     // Testing

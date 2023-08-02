@@ -3,7 +3,7 @@
 plugins {
     id("com.android.application") version "8.0.2" apply false
     id("com.android.library") version "8.0.2" apply false
-    id("org.jetbrains.kotlin.android") version Kotlin.version apply false
+    id("org.jetbrains.kotlin.android") version "1.9.0" apply false
     id("com.google.dagger.hilt.android") version DaggerHilt.version apply false
     id("org.jlleitschuh.gradle.ktlint") version "11.4.0" apply false
     id("org.jetbrains.kotlin.jvm") version Kotlin.version apply false

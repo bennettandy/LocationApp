@@ -42,6 +42,7 @@ dependencies {
 
     implementation(project(Modules.common))
     implementation(project(Modules.spacelaunchDomainModule))
+    implementation AndroidX.coreKtx
     testImplementation(project(Modules.commonTest))
 
     implementation(AndroidX.coreKtx)
