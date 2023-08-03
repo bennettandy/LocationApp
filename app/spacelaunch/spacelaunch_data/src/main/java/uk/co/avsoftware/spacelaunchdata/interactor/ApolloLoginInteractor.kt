@@ -3,13 +3,13 @@ package uk.co.avsoftware.spacelaunchdata.interactor
 import android.util.Log
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.exception.ApolloException
-import com.example.rocketreserver.LoginMutation
+import uk.co.avsoftware.spacelaunchdata.LoginMutation
 import uk.co.avsoftware.spacelaunchdata.TokenRepository
 import javax.inject.Inject
 
 class ApolloLoginInteractor @Inject constructor(
     private val apolloClient: ApolloClient,
-    private val tokenRepository: TokenRepository
+    private val tokenRepository: TokenRepository,
 ) {
 
     suspend operator fun invoke(email: String): Boolean = login(email)

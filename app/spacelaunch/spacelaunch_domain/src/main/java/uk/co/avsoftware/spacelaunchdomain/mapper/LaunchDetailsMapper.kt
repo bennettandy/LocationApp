@@ -1,6 +1,6 @@
 package uk.co.avsoftware.spacelaunchdomain.mapper
 
-import com.example.rocketreserver.LaunchDetailsQuery
+import uk.co.avsoftware.spacelaunchdata.LaunchDetailsQuery
 import uk.co.avsoftware.spacelaunchdomain.model.LaunchDetails
 import uk.co.avsoftware.spacelaunchdomain.model.Mission
 import uk.co.avsoftware.spacelaunchdomain.model.Rocket
@@ -13,15 +13,15 @@ internal fun LaunchDetailsQuery.Launch.mapToDomain(): LaunchDetails {
         mission = mission?.let {
             Mission(
                 name = launch.mission?.name,
-                missionPatch = launch.mission?.missionPatch
+                missionPatch = launch.mission?.missionPatch,
             )
         },
         rocket = rocket?.let {
             Rocket(
                 name = launch.rocket?.name,
-                type = launch.rocket?.type
+                type = launch.rocket?.type,
             )
         },
-        isBooked = isBooked
+        isBooked = isBooked,
     )
 }

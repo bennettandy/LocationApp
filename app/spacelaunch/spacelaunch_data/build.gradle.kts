@@ -59,6 +59,6 @@ dependencies {
 apollo {
     service("service") {
         srcDir("src/main/graphql")
-        packageNamesFromFilePaths("com.example.rocketreserver")
+        packageNamesFromFilePaths(Modules.spacelaunchDataModuleNamespace)
     }
 }

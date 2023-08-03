@@ -1,8 +1,5 @@
 package uk.co.avsoftware.spacelaunchdata
 
-import com.example.rocketreserver.BookTripMutation
-import com.example.rocketreserver.CancelTripMutation
-
 sealed interface TripBookingResponse {
     object NotLoggedIn : TripBookingResponse
     data class BookingSuccess(val bookedTrips: BookTripMutation.BookTrips?) : TripBookingResponse

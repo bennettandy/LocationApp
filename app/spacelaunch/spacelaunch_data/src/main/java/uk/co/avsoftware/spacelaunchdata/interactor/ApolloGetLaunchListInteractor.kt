@@ -2,11 +2,11 @@ package uk.co.avsoftware.spacelaunchdata.interactor
 
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.Optional
-import com.example.rocketreserver.LaunchListQuery
+import uk.co.avsoftware.spacelaunchdata.LaunchListQuery
 import javax.inject.Inject
 
 class ApolloGetLaunchListInteractor @Inject constructor(
-    private val apolloClient: ApolloClient
+    private val apolloClient: ApolloClient,
 ) {
 
     // was used in initial compose remember() state

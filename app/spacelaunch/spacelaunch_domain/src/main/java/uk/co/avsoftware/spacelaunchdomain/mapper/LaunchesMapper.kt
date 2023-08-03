@@ -1,6 +1,6 @@
 package uk.co.avsoftware.spacelaunchdomain.mapper
 
-import com.example.rocketreserver.LaunchListQuery
+import uk.co.avsoftware.spacelaunchdata.LaunchListQuery
 import uk.co.avsoftware.spacelaunchdomain.model.Launch
 import uk.co.avsoftware.spacelaunchdomain.model.Launches
 import uk.co.avsoftware.spacelaunchdomain.model.Mission
@@ -16,11 +16,11 @@ fun LaunchListQuery.Launches.mapToDomain() = Launches(
                 mission = it.mission?.let {
                     Mission(
                         name = it.name,
-                        missionPatch = it.missionPatch
+                        missionPatch = it.missionPatch,
                     )
-                }
+                },
             )
         }
     },
-    hasMore = hasMore
+    hasMore = hasMore,
 )

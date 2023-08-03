@@ -2,11 +2,11 @@ package uk.co.avsoftware.spacelaunchdata.interactor
 
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.exception.ApolloException
-import com.example.rocketreserver.LaunchDetailsQuery
+import uk.co.avsoftware.spacelaunchdata.LaunchDetailsQuery
 import javax.inject.Inject
 
 class ApolloGetLaunchDetailInteractor @Inject constructor(
-    private val apolloClient: ApolloClient
+    private val apolloClient: ApolloClient,
 ) {
     suspend operator fun invoke(launchId: String): LaunchDetailsResponse =
         loadDetails(launchId)

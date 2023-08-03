@@ -18,7 +18,7 @@ import uk.co.avsoftware.spacelaunchdata.TokenRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
-class SpaceLaunchModule {
+class SpaceLaunchDataModule {
 
     @Provides
     fun provideDispatcherProvider(defaultDispatcherProvider: DefaultDispatcherProvider): DispatcherProvider = defaultDispatcherProvider
