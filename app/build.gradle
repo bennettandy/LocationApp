@@ -50,7 +50,7 @@ android {
 
 dependencies {
 
-    implementation(project(Modules.coreUi))
+    implementation(project(Modules.commonUi))
     implementation(project(Modules.common))
     implementation(project(Modules.locationPresentationModule))
     implementation(project(Modules.spacelaunchPresentationModule))

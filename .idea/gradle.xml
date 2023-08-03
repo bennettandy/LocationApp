@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/app/common" />
             <option value="$PROJECT_DIR$/app/common-test" />
+            <option value="$PROJECT_DIR$/app/common-ui" />
             <option value="$PROJECT_DIR$/app/location" />
             <option value="$PROJECT_DIR$/app/location/location_data" />
             <option value="$PROJECT_DIR$/app/location/location_domain" />
@@ -22,8 +23,6 @@
             <option value="$PROJECT_DIR$/app/spacelaunch/spacelaunch_domain" />
             <option value="$PROJECT_DIR$/app/spacelaunch/spacelaunch_presentation" />
             <option value="$PROJECT_DIR$/buildSrc" />
-            <option value="$PROJECT_DIR$/core" />
-            <option value="$PROJECT_DIR$/core-ui" />
           </set>
         </option>
       </GradleProjectSettings>

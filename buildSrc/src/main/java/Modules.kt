@@ -4,11 +4,8 @@ object Modules {
     const val appNamespace = "uk.co.avsoftware.locationapp"
 
     // Shared Modules
-    const val core = ":core"
-    const val coreNamespace = "uk.co.avsoftware.core"
-
-    const val coreUi = ":core-ui"
-    const val coreUiNamespace = "uk.co.avsoftware.coreui"
+    const val commonUi = ":app:common-ui"
+    const val commonUiNamespace = "uk.co.avsoftware.commonui"
 
     const val common = ":app:common"
     const val commonNamespace = "uk.co.avsoftware.common"
