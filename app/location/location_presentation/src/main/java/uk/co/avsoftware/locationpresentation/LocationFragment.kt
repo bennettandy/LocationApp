@@ -1,17 +1,18 @@
-package uk.co.avsoftware.locationapp
+package uk.co.avsoftware.locationpresentation
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -25,82 +26,94 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.testTag
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import uk.co.avsoftware.common.annotation.ApplicationId
 import uk.co.avsoftware.commonui.Dimensions
 import uk.co.avsoftware.commonui.LocalSpacing
-import uk.co.avsoftware.locationapp.screens.Body
-import uk.co.avsoftware.locationapp.screens.BottomBar
-import uk.co.avsoftware.locationapp.ui.theme.LocationAppTheme
+import uk.co.avsoftware.commonui.theme.LocationAppTheme
 import uk.co.avsoftware.locationpresentation.components.LocationPermissionStatusBar
+import uk.co.avsoftware.locationpresentation.screens.Body
+import uk.co.avsoftware.locationpresentation.screens.BottomBar
 import uk.co.avsoftware.locationpresentation.viewmodel.LocationPermissionAction
 import uk.co.avsoftware.locationpresentation.viewmodel.LocationPermissionEvent
 import uk.co.avsoftware.locationpresentation.viewmodel.LocationPermissionViewModel
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class LocationFragment : Fragment() {
 
-    private val locationViewModel: LocationPermissionViewModel by viewModels()
+    @Inject
+    @ApplicationId
+    lateinit var applicationId: String
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private val locationViewModel: LocationPermissionViewModel by activityViewModels()
 
-        setContent {
-            LocationAppTheme {
-                // our local spacing values from core-uk
-                val spacing: Dimensions = LocalSpacing.current
-                Timber.d("Spacing values obtained -  medium = ${spacing.spaceMedium}")
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        return ComposeView(requireActivity()).apply {
+            setContent {
+                LocationAppTheme {
+                    // our local spacing values from core-uk
+                    val spacing: Dimensions = LocalSpacing.current
+                    Timber.d("Spacing values obtained -  medium = ${spacing.spaceMedium}")
 
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.onSurface, shape = RectangleShape),
-                ) {
-                    ScaffoldExample(locationViewModel)
+                    // A surface container using the 'background' color from the theme
+                    Surface(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(MaterialTheme.colorScheme.onSurface, shape = RectangleShape),
+                    ) {
+                        LocationContainerScaffold(locationViewModel)
+                    }
                 }
             }
-        }
 
-        val locationPermissionRequest = registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions(),
-        ) { permissions: Map<String, Boolean> ->
-            locationViewModel.receiveAction(
-                LocationPermissionAction.ProcessPermissionResponse(
-                    permissions,
-                ),
-            )
-        }
+            val locationPermissionRequest = registerForActivityResult(
+                ActivityResultContracts.RequestMultiplePermissions(),
+            ) { permissions: Map<String, Boolean> ->
+                locationViewModel.receiveAction(
+                    LocationPermissionAction.ProcessPermissionResponse(
+                        permissions,
+                    ),
+                )
+            }
 
-        lifecycleScope.launch {
-            locationViewModel.viewEvents.collect { event ->
-                when (event) {
-                    is LocationPermissionEvent.ObtainPermissions -> locationPermissionRequest.launch(
-                        event.permissions.toTypedArray(),
-                    )
-                    // when permission is denied we have to send the user to settings via dialog
-                    is LocationPermissionEvent.CoarsePermissionDenied -> showLocationNavigationDialog(
-                        getString(R.string.location_spike_location_required_dialog_title),
-                    )
+            lifecycleScope.launch {
+                locationViewModel.viewEvents.collect { event ->
+                    when (event) {
+                        is LocationPermissionEvent.ObtainPermissions -> locationPermissionRequest.launch(
+                            event.permissions.toTypedArray(),
+                        )
+                        // when permission is denied we have to send the user to settings via dialog
+                        is LocationPermissionEvent.CoarsePermissionDenied -> showLocationNavigationDialog(
+                            getString(R.string.location_spike_location_required_dialog_title),
+                        )
 
-                    is LocationPermissionEvent.FinePermissionDenied -> showLocationNavigationDialog(
-                        getString(R.string.location_spike_fine_location_required_dialog_title),
-                    )
-
-                    is LocationPermissionEvent.ListenerStarted -> showToast(getString(R.string.location_toast_listener_started))
-                    is LocationPermissionEvent.ListenerStopped -> showToast(getString(R.string.location_toast_listener_stopped))
+                        is LocationPermissionEvent.FinePermissionDenied -> showLocationNavigationDialog(
+                            getString(R.string.location_spike_fine_location_required_dialog_title),
+                        )
+                        is LocationPermissionEvent.ListenerStarted -> showToast(getString(R.string.location_toast_listener_started))
+                        is LocationPermissionEvent.ListenerStopped -> showToast(getString(R.string.location_toast_listener_stopped))
+                    }
                 }
             }
         }
     }
 
     private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onResume() {
@@ -110,7 +123,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun showLocationNavigationDialog(title: String) =
-        MaterialAlertDialogBuilder(this)
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(title)
             .setMessage(R.string.location_fine_location_required_dialog_message)
             .setNegativeButton(android.R.string.cancel) { dialog, _ -> dialog.dismiss() }
@@ -130,18 +143,17 @@ class MainActivity : ComponentActivity() {
     private fun navigateToLocationPermissions() = startActivity(
         Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
             addCategory(Intent.CATEGORY_DEFAULT)
-            data = Uri.parse("package:" + BuildConfig.APPLICATION_ID)
+            data = Uri.parse("package: $applicationId")
         },
     )
 
-    private fun navigateToRocketService() =
-        startActivity(
-            Intent(this, RocketReserverActivity::class.java),
-        )
+    private fun navigateToRocketService() = {
+        // remove
+    }
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
-    fun ScaffoldExample(viewModel: LocationPermissionViewModel) {
+    fun LocationContainerScaffold(viewModel: LocationPermissionViewModel) {
         val state = viewModel.uiState.collectAsState()
 
         val snackbarHostState = remember { SnackbarHostState() }
@@ -156,13 +168,10 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+        val clearLocationList = { viewModel.receiveAction(LocationPermissionAction.ClearLocationEventList) }
+
         // Scaffold Composable
         Scaffold(
-
-            // pass the scaffold state
-            // scaffoldState = scaffoldState,
-
-            // pass the topBar we created
             topBar = {
                 LocationPermissionStatusBar(
                     state.value,
@@ -191,7 +200,14 @@ class MainActivity : ComponentActivity() {
             // Pass the body in
             // content parameter
             content = {
-                Body(state.value, locationToggled = locationToggled)
+                Body(
+                    state.value,
+                    locationToggled = locationToggled,
+                    clearLocationList = clearLocationList,
+                    modifier = Modifier
+                        .padding(top = LocalSpacing.current.spaceXXL) // space below top bar
+                        .background(MaterialTheme.colorScheme.secondaryContainer),
+                )
             },
 
             floatingActionButton = {

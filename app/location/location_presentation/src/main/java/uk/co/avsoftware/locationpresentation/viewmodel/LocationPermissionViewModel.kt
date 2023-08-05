@@ -23,11 +23,11 @@ class LocationPermissionViewModel @Inject constructor(
     private val isGPSEnabledInteractor: IsGPSEnabledInteractor,
     private val locationEventsRepository: AndroidLocationEventsRepository,
     savedStateHandle: SavedStateHandle,
-    @ApplicationId applicationId: String
+    @ApplicationId applicationId: String,
 ) : AbstractMviViewModel<LocationPermissionAction, LocationPermissionViewState, LocationPermissionCommand>(
     LocationPermissionViewState.default,
     savedStateHandle = savedStateHandle,
-    applicationId = applicationId
+    applicationId = applicationId,
 ) {
     val viewEvents: MutableSharedFlow<LocationPermissionEvent> = MutableSharedFlow<LocationPermissionEvent>(replay = 0, extraBufferCapacity = 1, BufferOverflow.DROP_OLDEST)
 
@@ -37,34 +37,37 @@ class LocationPermissionViewModel @Inject constructor(
         get() = { action, state ->
             when (action) {
                 is LocationPermissionAction.RefreshCurrentPermissions -> state.then(
-                    LocationPermissionCommand.RefreshCurrentPermissions
+                    LocationPermissionCommand.RefreshCurrentPermissions,
                 )
 
                 is LocationPermissionAction.UpdateLocationPermissions -> state.copy(
                     coarseLocationGranted = action.coarse,
                     fineLocationGranted = action.fine,
-                    gpsIsActive = action.gpsActivity
+                    gpsIsActive = action.gpsActivity,
                 )
                     .only()
 
                 is LocationPermissionAction.RequestPermissionClicked -> state.then(
-                    LocationPermissionCommand.CheckPermissionsCommand
+                    LocationPermissionCommand.CheckPermissionsCommand,
                 )
 
                 is LocationPermissionAction.ProcessPermissionResponse -> state.copy(
                     coarseLocationGranted = action.permissions[COARSE_PERMISSION] ?: false,
-                    fineLocationGranted = action.permissions[FINE_PERMISSION] ?: false
+                    fineLocationGranted = action.permissions[FINE_PERMISSION] ?: false,
                 ).then(
-                    LocationPermissionCommand.HandleDeniedPermissions(action.permissions)
+                    LocationPermissionCommand.HandleDeniedPermissions(action.permissions),
                 )
 
                 is LocationPermissionAction.ToggleLocationListening -> state.copy(
-                    locationToggleState = action.listening
+                    locationToggleState = action.listening,
                 ).then(
-                    LocationPermissionCommand.ToggleLocationEventListener(action.listening)
+                    LocationPermissionCommand.ToggleLocationEventListener(action.listening),
                 )
                 is LocationPermissionAction.ProcessLocationEvent -> state.copy(
-                    locationEvents = listOf(action.event).plus(state.locationEvents).take(10)
+                    locationEvents = listOf(action.event).plus(state.locationEvents).take(10),
+                ).only()
+                is LocationPermissionAction.ClearLocationEventList -> state.copy(
+                    locationEvents = emptyList(),
                 ).only()
             }
         }
@@ -77,8 +80,8 @@ class LocationPermissionViewModel @Inject constructor(
                         LocationPermissionAction.UpdateLocationPermissions(
                             coarse = locationPermissionInteractor.coarseLocationEnabled(),
                             fine = locationPermissionInteractor.fineLocationEnabled(),
-                            gpsActivity = isGPSEnabledInteractor()
-                        )
+                            gpsActivity = isGPSEnabledInteractor(),
+                        ),
                     )
                 }
 
@@ -88,9 +91,9 @@ class LocationPermissionViewModel @Inject constructor(
                         LocationPermissionEvent.ObtainPermissions(
                             permissions = listOf(
                                 COARSE_PERMISSION,
-                                FINE_PERMISSION
-                            )
-                        )
+                                FINE_PERMISSION,
+                            ),
+                        ),
                     )
                 }
 

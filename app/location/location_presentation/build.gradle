@@ -3,6 +3,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -32,11 +33,14 @@ android {
 dependencies {
 
     implementation(project(Modules.common))
+    implementation(project(Modules.commonUi))
     implementation(project(Modules.locationDomainModule))
 
-    implementation(platform(Compose.bom))
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)
+    implementation(AndroidX.fragmentKtx)
+
+    implementation(platform(Compose.bom))
     implementation(MaterialDesign.material)
     implementation(Compose.lifecycleRuntime)
     implementation(Compose.activityCompose)

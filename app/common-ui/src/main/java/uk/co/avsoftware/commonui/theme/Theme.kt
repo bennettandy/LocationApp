@@ -1,4 +1,4 @@
-package uk.co.avsoftware.locationapp.ui.theme
+package uk.co.avsoftware.commonui.theme
 
 import android.app.Activity
 import android.os.Build

@@ -2,11 +2,10 @@
     <string name="app_name">Location App</string>
     <string name="title_activity_main">MainActivity</string>
 
-    <string name="location_spike_location_required_dialog_title">Location Permissions Required</string>
-    <string name="location_spike_fine_location_required_dialog_title">Fine Location Permission is Required</string>
-    <string name="location_fine_location_required_dialog_message">Fine location required message</string>
-
-    <string name="location_toast_listener_started">Listener Started</string>
-    <string name="location_toast_listener_stopped">Listener Stopped</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_location">Location Events</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_space_launches">Launches</string>
 
 </resources>
