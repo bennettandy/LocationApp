@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class ApolloCancelTripInteractor @Inject constructor(
     private val tokenRepository: TokenRepository,
-    private val apolloClient: ApolloClient,
+    private val apolloClient: ApolloClient
 ) {
 
     suspend operator fun invoke(launchId: String): TripBookingResponse {
@@ -26,7 +26,7 @@ class ApolloCancelTripInteractor @Inject constructor(
         if (response.hasErrors()) return TripBookingResponse.Error
 
         return TripBookingResponse.CancelSuccess(
-            response.data,
+            response.data
         )
     }
 }

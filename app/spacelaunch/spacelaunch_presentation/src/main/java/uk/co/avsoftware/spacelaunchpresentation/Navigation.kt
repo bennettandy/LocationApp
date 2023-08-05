@@ -1,4 +1,4 @@
-package uk.co.avsoftware.locationapp
+package uk.co.avsoftware.spacelaunchpresentation
 
 object NavigationDestinations {
     const val LAUNCH_LIST = "launchList"

@@ -6,7 +6,7 @@ import uk.co.avsoftware.spacelaunchdata.LaunchDetailsQuery
 import javax.inject.Inject
 
 class ApolloGetLaunchDetailInteractor @Inject constructor(
-    private val apolloClient: ApolloClient,
+    private val apolloClient: ApolloClient
 ) {
     suspend operator fun invoke(launchId: String): LaunchDetailsResponse =
         loadDetails(launchId)

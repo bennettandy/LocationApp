@@ -10,7 +10,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowLog
-import uk.co.avsoftware.locationapp.screens.BottomBar
+import uk.co.avsoftware.locationpresentation.screens.BottomBar
 
 @RunWith(RobolectricTestRunner::class)
 class MainActivityTest {

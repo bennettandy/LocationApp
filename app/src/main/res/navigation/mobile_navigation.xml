@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="uk.co.avsoftware.locationapp.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_location"
+        android:name="uk.co.avsoftware.locationpresentation.LocationFragment"
+        android:label="@string/title_location" />
+
+    <fragment
+        android:id="@+id/navigation_space_launch"
+        android:name="uk.co.avsoftware.spacelaunchpresentation.SpaceLaunchFragment"
+        android:label="@string/title_space_launches" />
+</navigation>

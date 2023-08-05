@@ -7,14 +7,14 @@ import uk.co.avsoftware.locationdomain.model.LocationEvent
 import javax.inject.Inject
 
 class LocationDataRepository @Inject constructor(
-    private val locationDataRoomRepository: LocationDataRoomRepository,
+    private val locationDataRoomRepository: LocationDataRoomRepository
 ) {
     fun getLocationList(): Flow<List<LocationEvent>> = locationDataRoomRepository.getLocationList().map { list ->
         list.map { location ->
             // Map to Domain Object
             LocationEvent(
                 latitude = location.latitude,
-                longitude = location.longitude,
+                longitude = location.longitude
             )
         }
     }

@@ -1,4 +1,4 @@
-package uk.co.avsoftware.locationapp.screens
+package uk.co.avsoftware.locationpresentation.screens
 
 import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons

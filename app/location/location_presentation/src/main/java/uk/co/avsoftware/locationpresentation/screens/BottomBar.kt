@@ -1,4 +1,4 @@
-package uk.co.avsoftware.locationapp.screens
+package uk.co.avsoftware.locationpresentation.screens
 
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults

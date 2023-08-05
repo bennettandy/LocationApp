@@ -12,4 +12,5 @@ sealed interface LocationPermissionAction : MviAction {
         LocationPermissionAction
     data class ToggleLocationListening(val listening: Boolean) : LocationPermissionAction
     data class ProcessLocationEvent(val event: LocationEvent) : LocationPermissionAction
+    object ClearLocationEventList : LocationPermissionAction
 }

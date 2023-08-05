@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class ApolloLoginInteractor @Inject constructor(
     private val apolloClient: ApolloClient,
-    private val tokenRepository: TokenRepository,
+    private val tokenRepository: TokenRepository
 ) {
 
     suspend operator fun invoke(email: String): Boolean = login(email)

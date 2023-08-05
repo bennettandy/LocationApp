@@ -23,6 +23,7 @@ android {
     }
     buildFeatures {
         compose true
+        viewBinding true
     }
     composeOptions {
         kotlinCompilerExtensionVersion Compose.composeCompilerVersion
@@ -35,11 +36,11 @@ android {
     }
     compileOptions {
         coreLibraryDesugaringEnabled true
-        sourceCompatibility = Build.sourceCompatibility
-        targetCompatibility = Build.targetCompatibility
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
     }
     kotlinOptions {
-        jvmTarget = Build.kotlinJvmTarget
+        jvmTarget = '1.8'
     }
     testOptions {
         unitTests {
@@ -71,6 +72,11 @@ dependencies {
 
     implementation DaggerHilt.hiltAndroid
     implementation AndroidX.coreKtx
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.6.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
     kapt DaggerHilt.hiltCompiler
 
     coreLibraryDesugaring Build.coreLibraryDesugar

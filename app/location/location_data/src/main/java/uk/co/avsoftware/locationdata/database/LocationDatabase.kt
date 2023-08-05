@@ -7,7 +7,7 @@ import uk.co.avsoftware.locationdata.entities.Location
 
 @Database(
     entities = [Location::class],
-    version = 1,
+    version = 1
 )
 abstract class LocationDatabase : RoomDatabase() {
     abstract val locationDao: LocationDao

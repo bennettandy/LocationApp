@@ -66,6 +66,9 @@ class LocationPermissionViewModel @Inject constructor(
                 is LocationPermissionAction.ProcessLocationEvent -> state.copy(
                     locationEvents = listOf(action.event).plus(state.locationEvents).take(10)
                 ).only()
+                is LocationPermissionAction.ClearLocationEventList -> state.copy(
+                    locationEvents = emptyList()
+                ).only()
             }
         }
 

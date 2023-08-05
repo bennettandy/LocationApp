@@ -18,7 +18,8 @@ import uk.co.avsoftware.locationpresentation.viewmodel.LocationPermissionViewSta
 @Composable
 fun LocationEventDisplay(
     state: LocationPermissionViewState,
-    locationToggled: (Boolean) -> Unit
+    locationToggled: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Column(
         modifier = Modifier
@@ -32,11 +33,11 @@ fun LocationEventDisplay(
             setActive = locationToggled
         )
     }
-    Row(modifier = Modifier.background(MaterialTheme.colorScheme.primary)) {
+    Row(modifier = modifier.background(MaterialTheme.colorScheme.primary)) {
         Text(
             text = stringResource(R.string.location_event_title, state.locationEvents.size),
             color = MaterialTheme.colorScheme.onPrimary,
-            modifier = Modifier.padding(15.dp)
+            modifier = modifier.padding(15.dp)
         )
     }
 }
@@ -44,5 +45,5 @@ fun LocationEventDisplay(
 @Preview
 @Composable
 fun Preview() {
-    LocationEventDisplay(state = LocationPermissionViewState.default, locationToggled = {})
+    LocationEventDisplay(state = LocationPermissionViewState.default, locationToggled = {}, modifier = Modifier)
 }

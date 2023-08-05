@@ -13,15 +13,15 @@ internal fun LaunchDetailsQuery.Launch.mapToDomain(): LaunchDetails {
         mission = mission?.let {
             Mission(
                 name = launch.mission?.name,
-                missionPatch = launch.mission?.missionPatch,
+                missionPatch = launch.mission?.missionPatch
             )
         },
         rocket = rocket?.let {
             Rocket(
                 name = launch.rocket?.name,
-                type = launch.rocket?.type,
+                type = launch.rocket?.type
             )
         },
-        isBooked = isBooked,
+        isBooked = isBooked
     )
 }
