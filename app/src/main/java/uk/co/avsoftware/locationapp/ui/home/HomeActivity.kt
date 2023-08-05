@@ -1,4 +1,4 @@
-package uk.co.avsoftware.locationapp
+package uk.co.avsoftware.locationapp.ui.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +8,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import uk.co.avsoftware.locationapp.R
 import uk.co.avsoftware.locationapp.databinding.ActivityHomeBinding
 
 @AndroidEntryPoint
