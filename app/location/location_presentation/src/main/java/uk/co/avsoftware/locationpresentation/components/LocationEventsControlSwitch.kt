@@ -20,15 +20,15 @@ fun LocationEventsControlSwitch(enabled: Boolean, active: Boolean, setActive: (B
                     !enabled -> R.string.location_grant_permissions
                     active -> R.string.location_listening_label
                     else -> R.string.location_listen_label
-                },
+                }
             ),
             color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.padding(15.dp),
+            modifier = Modifier.padding(15.dp)
         )
         Switch(
             checked = active,
             enabled = enabled,
-            onCheckedChange = { setActive(!active) },
+            onCheckedChange = { setActive(!active) }
         )
     }
 }

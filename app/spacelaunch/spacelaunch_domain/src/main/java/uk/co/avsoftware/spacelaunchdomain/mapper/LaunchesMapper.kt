@@ -16,11 +16,11 @@ fun LaunchListQuery.Launches.mapToDomain() = Launches(
                 mission = it.mission?.let {
                     Mission(
                         name = it.name,
-                        missionPatch = it.missionPatch,
+                        missionPatch = it.missionPatch
                     )
-                },
+                }
             )
         }
     },
-    hasMore = hasMore,
+    hasMore = hasMore
 )

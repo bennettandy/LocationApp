@@ -23,7 +23,7 @@ fun CachedEventList(state: List<LocationEvent>, clearListClicked: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(spacing.spaceMedium)
-            .background(color = MaterialTheme.colorScheme.primaryContainer),
+            .background(color = MaterialTheme.colorScheme.primaryContainer)
     ) {
         item {
             Text(text = "Cached Location List")
@@ -42,7 +42,7 @@ fun CachedEventList(state: List<LocationEvent>, clearListClicked: () -> Unit) {
             Text(
                 text = stringResource(R.string.location_event_title, state.size),
                 color = MaterialTheme.colorScheme.onPrimary,
-                modifier = Modifier.padding(15.dp),
+                modifier = Modifier.padding(15.dp)
             )
         }
     }

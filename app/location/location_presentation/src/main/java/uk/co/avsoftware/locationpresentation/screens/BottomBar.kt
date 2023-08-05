@@ -13,7 +13,7 @@ fun BottomBar() {
     // BottomAppBar Composable
     BottomAppBar(
         containerColor = BottomAppBarDefaults.containerColor,
-        modifier = Modifier.testTag("BottomBar"),
+        modifier = Modifier.testTag("BottomBar")
     ) {
         Text(text = "Bottom App Bar", color = Color.White)
     }

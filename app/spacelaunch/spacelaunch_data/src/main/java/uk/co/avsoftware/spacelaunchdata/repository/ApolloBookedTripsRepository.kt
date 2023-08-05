@@ -8,7 +8,7 @@ import uk.co.avsoftware.spacelaunchdata.TripsBookedSubscription
 import javax.inject.Inject
 
 class ApolloBookedTripsRepository @Inject constructor(
-    private val apolloClient: ApolloClient,
+    private val apolloClient: ApolloClient
 ) {
     fun bookedTripsResponseFlow(): Flow<BookedTripResponse?> =
         apolloClient.subscription(TripsBookedSubscription()).toFlow()
@@ -16,7 +16,7 @@ class ApolloBookedTripsRepository @Inject constructor(
                 it.data?.let { data ->
                     // not null
                     BookedTripResponse(
-                        data.tripsBooked,
+                        data.tripsBooked
                     )
                 }
             }

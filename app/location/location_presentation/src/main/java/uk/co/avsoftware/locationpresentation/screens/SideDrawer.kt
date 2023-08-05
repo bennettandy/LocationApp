@@ -16,7 +16,7 @@ fun Drawer() {
     Column(
         Modifier
             .background(Color.White)
-            .fillMaxSize(),
+            .fillMaxSize()
     ) {
         // Repeat is a loop which
         // takes count as argument
@@ -24,7 +24,7 @@ fun Drawer() {
             Text(
                 text = "Item number $item",
                 modifier = Modifier.padding(8.dp),
-                color = Color.Black,
+                color = Color.Black
             )
         }
     }

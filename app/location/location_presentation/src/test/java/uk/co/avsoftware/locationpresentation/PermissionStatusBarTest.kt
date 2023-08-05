@@ -36,9 +36,9 @@ class PermissionStatusBarTest {
                 viewState = LocationPermissionViewState.default.copy(
                     fineLocationGranted = false,
                     coarseLocationGranted = false,
-                    gpsIsActive = false,
+                    gpsIsActive = false
                 ),
-                expectedMessage = getString(R.string.location_permission_status_coarse_required),
+                expectedMessage = getString(R.string.location_permission_status_coarse_required)
             )
         }
     }
@@ -50,9 +50,9 @@ class PermissionStatusBarTest {
                 viewState = LocationPermissionViewState.default.copy(
                     fineLocationGranted = false,
                     coarseLocationGranted = true,
-                    gpsIsActive = true,
+                    gpsIsActive = true
                 ),
-                expectedMessage = getString(R.string.location_permission_status_fine_required),
+                expectedMessage = getString(R.string.location_permission_status_fine_required)
             )
         }
     }
@@ -64,9 +64,9 @@ class PermissionStatusBarTest {
                 viewState = LocationPermissionViewState.default.copy(
                     fineLocationGranted = false,
                     coarseLocationGranted = true,
-                    gpsIsActive = false,
+                    gpsIsActive = false
                 ),
-                expectedMessage = getString(R.string.location_permission_status_fine_required),
+                expectedMessage = getString(R.string.location_permission_status_fine_required)
             )
         }
     }
@@ -78,9 +78,9 @@ class PermissionStatusBarTest {
                 viewState = LocationPermissionViewState.default.copy(
                     fineLocationGranted = true,
                     coarseLocationGranted = true,
-                    gpsIsActive = false,
+                    gpsIsActive = false
                 ),
-                expectedMessage = getString(R.string.location_permission_status_gps_required),
+                expectedMessage = getString(R.string.location_permission_status_gps_required)
             )
         }
     }
@@ -93,16 +93,16 @@ class PermissionStatusBarTest {
                 viewState = LocationPermissionViewState.default.copy(
                     fineLocationGranted = true,
                     coarseLocationGranted = true,
-                    gpsIsActive = true,
+                    gpsIsActive = true
                 ),
-                expectedMessage = getString(R.string.location_permission_status_success),
+                expectedMessage = getString(R.string.location_permission_status_success)
             )
         }
     }
 
     private fun testMappingToMessage(
         viewState: LocationPermissionViewState,
-        expectedMessage: String,
+        expectedMessage: String
     ) {
         composeTestRule.apply {
             setContent { LocationPermissionStatusBar(viewState = viewState) }

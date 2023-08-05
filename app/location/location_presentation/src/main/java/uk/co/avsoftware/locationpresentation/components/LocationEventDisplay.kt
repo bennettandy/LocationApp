@@ -23,21 +23,21 @@ fun LocationEventDisplay(
 ) {
     Column(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
     ) {
     }
     Row {
         LocationEventsControlSwitch(
             enabled = state.permissionsGranted(),
             active = state.locationToggleState,
-            setActive = locationToggled,
+            setActive = locationToggled
         )
     }
     Row(modifier = modifier.background(MaterialTheme.colorScheme.primary)) {
         Text(
             text = stringResource(R.string.location_event_title, state.locationEvents.size),
             color = MaterialTheme.colorScheme.onPrimary,
-            modifier = modifier.padding(15.dp),
+            modifier = modifier.padding(15.dp)
         )
     }
 }

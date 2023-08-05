@@ -6,7 +6,7 @@ import uk.co.avsoftware.spacelaunchdata.LaunchListQuery
 import javax.inject.Inject
 
 class ApolloGetLaunchListInteractor @Inject constructor(
-    private val apolloClient: ApolloClient,
+    private val apolloClient: ApolloClient
 ) {
 
     // was used in initial compose remember() state

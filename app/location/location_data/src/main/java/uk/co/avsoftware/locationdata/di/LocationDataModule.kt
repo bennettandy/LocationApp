@@ -19,7 +19,7 @@ class LocationDataModule {
         Room.databaseBuilder(
             applicationContext,
             LocationDatabase::class.java,
-            "location-database",
+            "location-database"
         ).build()
 
     @Provides

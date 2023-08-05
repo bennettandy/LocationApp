@@ -11,15 +11,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
@@ -27,7 +24,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.testTag
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -40,9 +36,9 @@ import uk.co.avsoftware.common.annotation.ApplicationId
 import uk.co.avsoftware.commonui.Dimensions
 import uk.co.avsoftware.commonui.LocalSpacing
 import uk.co.avsoftware.commonui.theme.LocationAppTheme
+import uk.co.avsoftware.locationpresentation.components.CachedEventList
+import uk.co.avsoftware.locationpresentation.components.LocationEventDisplay
 import uk.co.avsoftware.locationpresentation.components.LocationPermissionStatusBar
-import uk.co.avsoftware.locationpresentation.screens.Body
-import uk.co.avsoftware.locationpresentation.screens.BottomBar
 import uk.co.avsoftware.locationpresentation.viewmodel.LocationPermissionAction
 import uk.co.avsoftware.locationpresentation.viewmodel.LocationPermissionEvent
 import uk.co.avsoftware.locationpresentation.viewmodel.LocationPermissionViewModel
@@ -60,7 +56,7 @@ class LocationFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         return ComposeView(requireActivity()).apply {
             setContent {
@@ -73,7 +69,10 @@ class LocationFragment : Fragment() {
                     Surface(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(MaterialTheme.colorScheme.onSurface, shape = RectangleShape),
+                            .background(
+                                MaterialTheme.colorScheme.onSurface,
+                                shape = RectangleShape
+                            )
                     ) {
                         LocationContainerScaffold(locationViewModel)
                     }
@@ -81,12 +80,12 @@ class LocationFragment : Fragment() {
             }
 
             val locationPermissionRequest = registerForActivityResult(
-                ActivityResultContracts.RequestMultiplePermissions(),
+                ActivityResultContracts.RequestMultiplePermissions()
             ) { permissions: Map<String, Boolean> ->
                 locationViewModel.receiveAction(
                     LocationPermissionAction.ProcessPermissionResponse(
-                        permissions,
-                    ),
+                        permissions
+                    )
                 )
             }
 
@@ -94,16 +93,17 @@ class LocationFragment : Fragment() {
                 locationViewModel.viewEvents.collect { event ->
                     when (event) {
                         is LocationPermissionEvent.ObtainPermissions -> locationPermissionRequest.launch(
-                            event.permissions.toTypedArray(),
+                            event.permissions.toTypedArray()
                         )
                         // when permission is denied we have to send the user to settings via dialog
                         is LocationPermissionEvent.CoarsePermissionDenied -> showLocationNavigationDialog(
-                            getString(R.string.location_spike_location_required_dialog_title),
+                            getString(R.string.location_spike_location_required_dialog_title)
                         )
 
                         is LocationPermissionEvent.FinePermissionDenied -> showLocationNavigationDialog(
-                            getString(R.string.location_spike_fine_location_required_dialog_title),
+                            getString(R.string.location_spike_fine_location_required_dialog_title)
                         )
+
                         is LocationPermissionEvent.ListenerStarted -> showToast(getString(R.string.location_toast_listener_started))
                         is LocationPermissionEvent.ListenerStopped -> showToast(getString(R.string.location_toast_listener_stopped))
                     }
@@ -137,19 +137,15 @@ class LocationFragment : Fragment() {
         startActivity(
             Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS).apply {
                 addCategory(Intent.CATEGORY_DEFAULT)
-            },
+            }
         )
 
     private fun navigateToLocationPermissions() = startActivity(
         Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
             addCategory(Intent.CATEGORY_DEFAULT)
             data = Uri.parse("package: $applicationId")
-        },
+        }
     )
-
-    private fun navigateToRocketService() = {
-        // remove
-    }
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
@@ -168,63 +164,32 @@ class LocationFragment : Fragment() {
             }
         }
 
-        val clearLocationList = { viewModel.receiveAction(LocationPermissionAction.ClearLocationEventList) }
+        val clearLocationList =
+            { viewModel.receiveAction(LocationPermissionAction.ClearLocationEventList) }
 
-        // Scaffold Composable
-        Scaffold(
-            topBar = {
-                LocationPermissionStatusBar(
-                    state.value,
-                    permissionsClicked = {
-                        coroutineScope.launch {
-                            viewModel.receiveAction(LocationPermissionAction.RequestPermissionClicked)
-                        }
-                    },
-                    gpsSettingsClicked = {
-                        coroutineScope.launch {
-                            navigateToGPSSettings()
-                        }
-                    },
-                    navigateToPermissionsClicked = {
-                        coroutineScope.launch {
-                            navigateToLocationPermissions()
-                        }
-                    },
-                )
-            },
-
-            // pass the bottomBar
-            // we created
-            bottomBar = { BottomBar() },
-
-            // Pass the body in
-            // content parameter
-            content = {
-                Body(
-                    state.value,
-                    locationToggled = locationToggled,
-                    clearLocationList = clearLocationList,
-                    modifier = Modifier
-                        .padding(top = LocalSpacing.current.spaceXXL) // space below top bar
-                        .background(MaterialTheme.colorScheme.secondaryContainer),
-                )
-            },
-
-            floatingActionButton = {
-                // Create a floating action button in
-                // floatingActionButton parameter of scaffold
-                FloatingActionButton(
-                    modifier = Modifier.testTag("Floating Button"),
-                    onClick = {
-                        showSnackbar(coroutineScope, snackbarHostState)
-                        navigateToRocketService()
-                    },
-                ) {
-                    // Simple Text inside FAB
-                    Text(text = "Rockets")
+        Column() {
+            // status bar
+            LocationPermissionStatusBar(
+                state.value,
+                permissionsClicked = {
+                    coroutineScope.launch {
+                        viewModel.receiveAction(LocationPermissionAction.RequestPermissionClicked)
+                    }
+                },
+                gpsSettingsClicked = {
+                    coroutineScope.launch {
+                        navigateToGPSSettings()
+                    }
+                },
+                navigateToPermissionsClicked = {
+                    coroutineScope.launch {
+                        navigateToLocationPermissions()
+                    }
                 }
-            },
-        )
+            )
+            LocationEventDisplay(state.value, locationToggled = locationToggled)
+            CachedEventList(state.value.locationEvents, clearLocationList)
+        }
     }
 
     private fun showSnackbar(coroutineScope: CoroutineScope, snackbarHostState: SnackbarHostState) {
@@ -233,7 +198,7 @@ class LocationFragment : Fragment() {
                 snackbarHostState.showSnackbar(
                     // Message In the snackbar
                     message = "Snack Bar",
-                    actionLabel = "Dismiss",
+                    actionLabel = "Dismiss"
                 )
             ) {
                 SnackbarResult.Dismissed -> {
