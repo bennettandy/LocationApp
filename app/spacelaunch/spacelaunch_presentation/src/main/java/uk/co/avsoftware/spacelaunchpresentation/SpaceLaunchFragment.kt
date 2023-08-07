@@ -4,22 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavHostController
@@ -41,7 +33,7 @@ class SpaceLaunchFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         return ComposeView(requireActivity()).apply {
             setContent {
@@ -67,22 +59,15 @@ class SpaceLaunchFragment : Fragment() {
                         }
                         snackbarHostState.showSnackbar(
                             message = message,
-                            duration = SnackbarDuration.Short
+                            duration = SnackbarDuration.Short,
                         )
                     }
 
-                    Scaffold(
-                        topBar = { TopAppBar({ Text(stringResource(R.string.title_rocket_reservations)) }) },
-                        snackbarHost = { SnackbarHost(snackbarHostState) }
-                    ) { paddingValues ->
-                        Box(Modifier.padding(paddingValues)) {
-                            MainNavHost(
-                                navController,
-                                spaceLaunchViewModel,
-                                spaceLaunchViewState.value
-                            )
-                        }
-                    }
+                    MainNavHost(
+                        navController,
+                        spaceLaunchViewModel,
+                        spaceLaunchViewState.value,
+                    )
                 }
             }
         }
@@ -92,7 +77,7 @@ class SpaceLaunchFragment : Fragment() {
     private fun MainNavHost(
         navController: NavHostController,
         viewModel: SpaceLaunchViewModel,
-        viewState: SpaceLaunchViewState
+        viewState: SpaceLaunchViewState,
     ) {
         NavHost(navController, startDestination = NavigationDestinations.LAUNCH_LIST) {
             composable(route = NavigationDestinations.LAUNCH_LIST) {
@@ -100,7 +85,7 @@ class SpaceLaunchFragment : Fragment() {
                     onLaunchClick = { launchId ->
                         navController.navigate("${NavigationDestinations.LAUNCH_DETAILS}/$launchId")
                     },
-                    viewModel
+                    viewModel,
                 )
             }
 
@@ -108,7 +93,7 @@ class SpaceLaunchFragment : Fragment() {
                 LaunchDetails(
                     spaceLaunchViewModel = viewModel,
                     viewState = viewState,
-                    launchId = navBackStackEntry.arguments!!.getString(NavigationArguments.LAUNCH_ID)!!
+                    launchId = navBackStackEntry.arguments!!.getString(NavigationArguments.LAUNCH_ID)!!,
                 )
             }
 
@@ -117,7 +102,7 @@ class SpaceLaunchFragment : Fragment() {
                     spaceLaunchViewModel = viewModel,
                     navigateBack = {
                         navController.popBackStack()
-                    }
+                    },
                 )
             }
         }
