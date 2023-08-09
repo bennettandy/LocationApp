@@ -11,6 +11,10 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/app/authentication" />
+            <option value="$PROJECT_DIR$/app/authentication/auth_data" />
+            <option value="$PROJECT_DIR$/app/authentication/auth_domain" />
+            <option value="$PROJECT_DIR$/app/authentication/auth_presentation" />
             <option value="$PROJECT_DIR$/app/common" />
             <option value="$PROJECT_DIR$/app/common-test" />
             <option value="$PROJECT_DIR$/app/common-ui" />

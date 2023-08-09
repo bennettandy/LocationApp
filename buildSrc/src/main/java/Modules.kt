@@ -32,4 +32,14 @@ object Modules {
 
     const val spacelaunchPresentationModule = ":app:spacelaunch:spacelaunch_presentation"
     const val spacelaunchPresentationModuleNamespace = "uk.co.avsoftware.spacelaunchpresentation"
+
+    // Authentication Module
+    const val authDataModule = ":app:authentication:auth_data"
+    const val authDataModuleNamespace = "uk.co.avsoftware.authdata"
+
+    const val authDomainModule = ":app:authentication:auth_domain"
+    const val authDomainModuleNamespace = "uk.co.avsoftware.authdomain"
+
+    const val authPresentationModule = ":app:authentication:auth_presentation"
+    const val authPresentationModuleNamespace = "uk.co.avsoftware.authpresentation"
 }
