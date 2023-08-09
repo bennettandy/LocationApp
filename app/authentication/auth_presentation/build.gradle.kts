@@ -2,6 +2,7 @@ plugins {
     id("kotlin-kapt")
     id("com.android.library")
     kotlin("android")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -38,12 +39,14 @@ android {
 }
 
 dependencies {
+
+    implementation(project(Modules.authDomainModule))
+
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)
     implementation(MaterialDesign.material)
 
     // Firebase
-//    implementation(Firebase.bom)
     implementation(Firebase.authentication)
 
     // Hilt

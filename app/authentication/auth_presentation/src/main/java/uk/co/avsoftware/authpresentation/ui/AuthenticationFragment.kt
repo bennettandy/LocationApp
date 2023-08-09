@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import dagger.hilt.android.AndroidEntryPoint
 import uk.co.avsoftware.authpresentation.R
 
 /**
@@ -12,6 +13,7 @@ import uk.co.avsoftware.authpresentation.R
  * Use the [AuthenticationFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class AuthenticationFragment : Fragment() {
     // TODO: Rename and change types of parameters
 //    private var param1: String? = null

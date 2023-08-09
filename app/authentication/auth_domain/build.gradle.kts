@@ -38,6 +38,9 @@ android {
 }
 
 dependencies {
+
+    implementation(project(Modules.authDataModule))
+
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)
     implementation(MaterialDesign.material)
