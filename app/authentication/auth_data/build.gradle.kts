@@ -55,6 +55,8 @@ dependencies {
     implementation(Room.roomRuntime)
     kapt(Room.roomCompiler)
 
+    implementation(Timber.timber)
+
     // Testing
     testImplementation(Testing.junit4)
     testImplementation(Testing.junitAndroidExt)
