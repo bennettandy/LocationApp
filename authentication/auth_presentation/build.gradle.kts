@@ -13,13 +13,7 @@ android {
         minSdk = ProjectConfig.minSdk
         testInstrumentationRunner = Testing.testInstrumentationRunner
         consumerProguardFiles("consumer-rules.pro")
-        kapt {
-            arguments {
-                arg("room.schemaLocation", "$projectDir/schemas")
-            }
-        }
     }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -28,6 +22,12 @@ android {
                 "proguard-rules.pro",
             )
         }
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = Compose.composeCompilerVersion
     }
     compileOptions {
         sourceCompatibility = Build.sourceCompatibility
@@ -41,6 +41,8 @@ android {
 dependencies {
 
     implementation(project(Modules.authDomainModule))
+    implementation(project(Modules.common))
+    implementation(project(Modules.commonUi))
 
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)
@@ -64,7 +66,7 @@ dependencies {
     androidTestImplementation(Testing.espressoCore)
 
     // Compose ?
-    implementation(MaterialDesign.material)
+//    implementation(MaterialDesign.material)
     implementation(MaterialDesign.material3)
     implementation(Compose.lifecycleRuntime)
     implementation(Compose.activityCompose)
@@ -72,6 +74,5 @@ dependencies {
     implementation(Compose.ui)
     implementation(Compose.uiGraphics)
     implementation(Compose.uiToolingPreview)
-    implementation(MaterialDesign.material3)
     implementation(Timber.timber)
 }

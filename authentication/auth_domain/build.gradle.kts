@@ -12,11 +12,6 @@ android {
         minSdk = ProjectConfig.minSdk
         testInstrumentationRunner = Testing.testInstrumentationRunner
         consumerProguardFiles("consumer-rules.pro")
-        kapt {
-            arguments {
-                arg("room.schemaLocation", "$projectDir/schemas")
-            }
-        }
     }
 
     buildTypes {

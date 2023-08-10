@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_welcome">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="uk.co.avsoftware.locationapp.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_welcome"
+        android:name="uk.co.avsoftware.authpresentation.ui.AuthenticationFragment"
+        android:label="@string/title_welcome"
+         />
 
     <fragment
         android:id="@+id/navigation_location"

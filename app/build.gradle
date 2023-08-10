@@ -55,6 +55,7 @@ dependencies {
     implementation(project(Modules.common))
     implementation(project(Modules.locationPresentationModule))
     implementation(project(Modules.spacelaunchPresentationModule))
+    implementation(project(Modules.authPresentationModule))
 
     implementation(platform(Compose.bom))
     implementation(AndroidX.coreKtx)

@@ -19,7 +19,6 @@ import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
@@ -56,7 +55,7 @@ class LocationFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         return ComposeView(requireActivity()).apply {
             setContent {
@@ -71,8 +70,8 @@ class LocationFragment : Fragment() {
                             .fillMaxSize()
                             .background(
                                 MaterialTheme.colorScheme.onSurface,
-                                shape = RectangleShape
-                            )
+                                shape = RectangleShape,
+                            ),
                     ) {
                         LocationContainerScaffold(locationViewModel)
                     }
@@ -80,12 +79,12 @@ class LocationFragment : Fragment() {
             }
 
             val locationPermissionRequest = registerForActivityResult(
-                ActivityResultContracts.RequestMultiplePermissions()
+                ActivityResultContracts.RequestMultiplePermissions(),
             ) { permissions: Map<String, Boolean> ->
                 locationViewModel.receiveAction(
                     LocationPermissionAction.ProcessPermissionResponse(
-                        permissions
-                    )
+                        permissions,
+                    ),
                 )
             }
 
@@ -93,15 +92,15 @@ class LocationFragment : Fragment() {
                 locationViewModel.viewEvents.collect { event ->
                     when (event) {
                         is LocationPermissionEvent.ObtainPermissions -> locationPermissionRequest.launch(
-                            event.permissions.toTypedArray()
+                            event.permissions.toTypedArray(),
                         )
                         // when permission is denied we have to send the user to settings via dialog
                         is LocationPermissionEvent.CoarsePermissionDenied -> showLocationNavigationDialog(
-                            getString(R.string.location_spike_location_required_dialog_title)
+                            getString(R.string.location_spike_location_required_dialog_title),
                         )
 
                         is LocationPermissionEvent.FinePermissionDenied -> showLocationNavigationDialog(
-                            getString(R.string.location_spike_fine_location_required_dialog_title)
+                            getString(R.string.location_spike_fine_location_required_dialog_title),
                         )
 
                         is LocationPermissionEvent.ListenerStarted -> showToast(getString(R.string.location_toast_listener_started))
@@ -137,14 +136,14 @@ class LocationFragment : Fragment() {
         startActivity(
             Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS).apply {
                 addCategory(Intent.CATEGORY_DEFAULT)
-            }
+            },
         )
 
     private fun navigateToLocationPermissions() = startActivity(
         Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
             addCategory(Intent.CATEGORY_DEFAULT)
             data = Uri.parse("package: $applicationId")
-        }
+        },
     )
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -152,7 +151,7 @@ class LocationFragment : Fragment() {
     fun LocationContainerScaffold(viewModel: LocationPermissionViewModel) {
         val state = viewModel.uiState.collectAsState()
 
-        val snackbarHostState = remember { SnackbarHostState() }
+//        val snackbarHostState = remember { SnackbarHostState() }
         // Create a coroutine scope. Opening of
         // Drawer and snackbar should happen in
         // background thread without blocking main thread
@@ -185,7 +184,7 @@ class LocationFragment : Fragment() {
                     coroutineScope.launch {
                         navigateToLocationPermissions()
                     }
-                }
+                },
             )
             LocationEventDisplay(state.value, locationToggled = locationToggled)
             CachedEventList(state.value.locationEvents, clearLocationList)
@@ -198,7 +197,7 @@ class LocationFragment : Fragment() {
                 snackbarHostState.showSnackbar(
                     // Message In the snackbar
                     message = "Snack Bar",
-                    actionLabel = "Dismiss"
+                    actionLabel = "Dismiss",
                 )
             ) {
                 SnackbarResult.Dismissed -> {

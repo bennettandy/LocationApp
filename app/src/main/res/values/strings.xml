@@ -3,7 +3,7 @@
     <string name="title_activity_main">MainActivity</string>
 
     <string name="title_activity_home">HomeActivity</string>
-    <string name="title_home">Home</string>
+    <string name="title_welcome">Welcome</string>
     <string name="title_location">Location Events</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_space_launches">Launches</string>

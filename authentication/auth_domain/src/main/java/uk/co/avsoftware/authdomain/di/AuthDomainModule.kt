@@ -1,15 +1,15 @@
 package uk.co.avsoftware.authdomain.di
 
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.internal.InternalAuthProvider
-import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import uk.co.avsoftware.authdomain.repository.AuthenticationRepository
+import uk.co.avsoftware.authdomain.repository.impl.AuthenticationRepositoryImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class AuthDomainModule {
-    @Binds
-    abstract fun bindsInternalAuthProvider(firebaseAuth: FirebaseAuth): InternalAuthProvider
+class AuthDomainModule {
+    @Provides
+    internal fun provideAuthenticationRepository(authenticationRepositoryImpl: AuthenticationRepositoryImpl): AuthenticationRepository = authenticationRepositoryImpl
 }

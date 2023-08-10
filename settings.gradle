@@ -15,6 +15,15 @@ dependencyResolutionManagement {
 rootProject.name = "Location App"
 include ':app'
 
+include ':common'
+include ':common-test'
+include ':common-ui'
+
+include ':authentication'
+include ':authentication:auth_data'
+include ':authentication:auth_presentation'
+include ':authentication:auth_domain'
+
 include ':location:location_data'
 include ':location:location_domain'
 include ':location:location_presentation'
@@ -22,11 +31,3 @@ include ':location:location_presentation'
 include ':spacelaunch:spacelaunch_data'
 include ':spacelaunch:spacelaunch_domain'
 include ':spacelaunch:spacelaunch_presentation'
-
-include ':common'
-include ':common-test'
-include ':common-ui'
-include ':authentication'
-include ':authentication:auth_data'
-include ':authentication:auth_presentation'
-include ':authentication:auth_domain'
