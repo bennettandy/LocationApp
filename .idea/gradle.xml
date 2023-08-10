@@ -11,22 +11,22 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/app/authentication" />
-            <option value="$PROJECT_DIR$/app/authentication/auth_data" />
-            <option value="$PROJECT_DIR$/app/authentication/auth_domain" />
-            <option value="$PROJECT_DIR$/app/authentication/auth_presentation" />
-            <option value="$PROJECT_DIR$/app/common" />
-            <option value="$PROJECT_DIR$/app/common-test" />
-            <option value="$PROJECT_DIR$/app/common-ui" />
-            <option value="$PROJECT_DIR$/app/location" />
-            <option value="$PROJECT_DIR$/app/location/location_data" />
-            <option value="$PROJECT_DIR$/app/location/location_domain" />
-            <option value="$PROJECT_DIR$/app/location/location_presentation" />
-            <option value="$PROJECT_DIR$/app/spacelaunch" />
-            <option value="$PROJECT_DIR$/app/spacelaunch/spacelaunch_data" />
-            <option value="$PROJECT_DIR$/app/spacelaunch/spacelaunch_domain" />
-            <option value="$PROJECT_DIR$/app/spacelaunch/spacelaunch_presentation" />
+            <option value="$PROJECT_DIR$/authentication" />
+            <option value="$PROJECT_DIR$/authentication/auth_data" />
+            <option value="$PROJECT_DIR$/authentication/auth_domain" />
+            <option value="$PROJECT_DIR$/authentication/auth_presentation" />
             <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/common-test" />
+            <option value="$PROJECT_DIR$/common-ui" />
+            <option value="$PROJECT_DIR$/location" />
+            <option value="$PROJECT_DIR$/location/location_data" />
+            <option value="$PROJECT_DIR$/location/location_domain" />
+            <option value="$PROJECT_DIR$/location/location_presentation" />
+            <option value="$PROJECT_DIR$/spacelaunch" />
+            <option value="$PROJECT_DIR$/spacelaunch/spacelaunch_data" />
+            <option value="$PROJECT_DIR$/spacelaunch/spacelaunch_domain" />
+            <option value="$PROJECT_DIR$/spacelaunch/spacelaunch_presentation" />
           </set>
         </option>
       </GradleProjectSettings>
