@@ -8,6 +8,8 @@ Unidirectional data flow
 
 MviViewModel
 
+Dagger Hilt, Room and Apollo GraphQL
+
 Modular application utilising Roboelectric Unit tests to test Composable UI components.
 
 App Module containing 2 Feature Modules.
