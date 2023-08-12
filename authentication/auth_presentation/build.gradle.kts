@@ -47,6 +47,7 @@ dependencies {
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)
     implementation(MaterialDesign.material)
+    implementation(Navigation.navigationCompose)
 
     // Firebase
     implementation(Firebase.authentication)
@@ -65,8 +66,6 @@ dependencies {
     testImplementation(Testing.junitAndroidExt)
     androidTestImplementation(Testing.espressoCore)
 
-    // Compose ?
-//    implementation(MaterialDesign.material)
     implementation(MaterialDesign.material3)
     implementation(Compose.lifecycleRuntime)
     implementation(Compose.activityCompose)
