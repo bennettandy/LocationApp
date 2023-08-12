@@ -12,6 +12,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import database.AuthenticationDatabase
 import uk.co.avsoftware.authdata.dao.AuthenticationDao
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -21,6 +22,7 @@ class AuthenticationModule {
     fun provideFirebaseAuth(): FirebaseAuth = Firebase.auth
 
     @Provides
+    @Singleton
     fun provideLocationDatabase(@ApplicationContext applicationContext: Context): AuthenticationDatabase =
         Room.databaseBuilder(
             applicationContext,
@@ -29,5 +31,6 @@ class AuthenticationModule {
         ).build()
 
     @Provides
+    @Singleton
     fun provideLocationDao(authenticationDatabase: AuthenticationDatabase): AuthenticationDao = authenticationDatabase.authenticationDao
 }
