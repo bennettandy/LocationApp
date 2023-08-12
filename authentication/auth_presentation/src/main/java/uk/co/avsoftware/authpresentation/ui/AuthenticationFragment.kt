@@ -14,9 +14,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
+import uk.co.avsoftware.common.domain.preferences.Preferences
 import uk.co.avsoftware.common.navigation.Route
 import uk.co.avsoftware.commonui.navigation.navigate
 import uk.co.avsoftware.commonui.theme.LocationAppTheme
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
@@ -25,6 +27,10 @@ import uk.co.avsoftware.commonui.theme.LocationAppTheme
  */
 @AndroidEntryPoint
 class AuthenticationFragment : Fragment() {
+
+    @Inject
+    lateinit var preferences: Preferences
+
     // TODO: Rename and change types of parameters
 //    private var param1: String? = null
 //    private var param2: String? = null
@@ -54,7 +60,7 @@ class AuthenticationFragment : Fragment() {
                             WelcomeScreen(navController::navigate)
                         }
                         composable(Route.AGE) {
-                            Column(modifier = Modifier.fillMaxSize()){
+                            Column(modifier = Modifier.fillMaxSize()) {
                                 Text(text = "AGE PLACE HOLDER")
                             }
                         }
