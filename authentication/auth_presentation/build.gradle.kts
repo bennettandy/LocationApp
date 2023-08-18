@@ -66,6 +66,7 @@ dependencies {
     testImplementation(Testing.junitAndroidExt)
     androidTestImplementation(Testing.espressoCore)
 
+    // Compose
     implementation(MaterialDesign.material3)
     implementation(Compose.lifecycleRuntime)
     implementation(Compose.activityCompose)

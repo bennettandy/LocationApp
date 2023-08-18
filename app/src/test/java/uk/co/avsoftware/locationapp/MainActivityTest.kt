@@ -10,6 +10,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowLog
+import uk.co.avsoftware.locationapp.ui.home.HomeActivity
 import uk.co.avsoftware.locationpresentation.screens.BottomBar
 
 @RunWith(RobolectricTestRunner::class)
@@ -36,9 +37,9 @@ class MainActivityTest {
 
     @Test
     fun `activity composable test`() {
-        ActivityScenario.launch(MainActivity::class.java)
+        ActivityScenario.launch(HomeActivity::class.java)
             .use { scenario ->
-                scenario.onActivity { activity: MainActivity ->
+                scenario.onActivity { activity: HomeActivity ->
 
                     composeTestRule.onNodeWithTag("Floating Button").assertIsDisplayed()
 

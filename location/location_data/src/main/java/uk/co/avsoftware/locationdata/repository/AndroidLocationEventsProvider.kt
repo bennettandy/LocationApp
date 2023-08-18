@@ -20,7 +20,7 @@ class AndroidLocationEventsProvider @Inject constructor(
             LocationManager.GPS_PROVIDER,
             UPDATE_INTERVAL_MS,
             MIN_DISTANCE_BETWEEN_UPDATES_M,
-            locationListener
+            locationListener,
         )
         awaitClose {
             locationManager.removeUpdates(locationListener)

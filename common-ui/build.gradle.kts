@@ -38,16 +38,17 @@ dependencies {
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)
     implementation(MaterialDesign.material)
-    implementation(Compose.lifecycleRuntime)
-    implementation(Compose.activityCompose)
     implementation(Compose.ui)
     implementation(Compose.uiGraphics)
     implementation(Compose.uiToolingPreview)
     implementation(Compose.compiler)
     implementation(Compose.hiltNavigationCompose)
     implementation(Compose.runtime)
-    implementation(MaterialDesign.material3)
     implementation(Timber.timber)
+
+    implementation(MaterialDesign.material3)
+    implementation(Compose.lifecycleRuntime)
+    implementation(Compose.activityCompose)
 
     // Hilt
     implementation(DaggerHilt.hiltAndroid)
