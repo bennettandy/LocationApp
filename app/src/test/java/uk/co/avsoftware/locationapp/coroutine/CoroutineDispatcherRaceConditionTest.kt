@@ -2,7 +2,9 @@ package uk.co.avsoftware.locationapp.coroutine
 
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -11,18 +13,21 @@ import kotlinx.coroutines.withContext
 import org.junit.Test
 import kotlin.coroutines.CoroutineContext
 
-class CoroutineDispatcherExampleTest {
+class CoroutineDispatcherRaceConditionTest {
 
     @Test
-    fun testUsingStandardTestDispatcher() = runTest {
+    fun testRaceConditionInternalCoroutine() = runTest {
         val repository = NameRepository(
             database = NameDatabase(),
             // use the same coroutine dispatcher using same testScheduler
             dispatcher = StandardTestDispatcher(testScheduler),
         )
 
+        // this creates the race condition,
+        // launches coroutine internally and must complete
+        // before other functions are called
         repository.initialise()
-        // advance time until coroutines have completed, database is initialised
+        // fixes race condition, advances time until coroutines have completed
         testScheduler.advanceUntilIdle()
 
         launch {
@@ -34,6 +39,34 @@ class CoroutineDispatcherExampleTest {
         launch {
             val names = repository.readNames()
             assertThat(names).hasSize(2)
+            assertThat(names).isEqualTo(listOf("John", "Smith"))
+            repository.readNames().forEach {
+                println("Read name $it")
+            }
+        }
+    }
+
+    @Test
+    fun testRaceConditionDeferredInitialiser() = runTest {
+        val repository = NameRepository(
+            database = NameDatabase(),
+            // use the same coroutine dispatcher using same testScheduler
+            dispatcher = StandardTestDispatcher(testScheduler),
+        )
+
+        // await for the Deferred initialise result
+        repository.deferredInitialise().await()
+
+        launch {
+            repository.insertName("John")
+        }
+        launch {
+            repository.insertName("Smith")
+        }
+        launch {
+            val names = repository.readNames()
+            assertThat(names).hasSize(2)
+            assertThat(names).isEqualTo(listOf("John", "Smith"))
             repository.readNames().forEach {
                 println("Read name $it")
             }
@@ -52,6 +85,10 @@ class NameRepository(
             // it needs to complete before any insert or read is called
             database.init()
         }
+    }
+
+    fun deferredInitialise(): Deferred<Unit> = scope.async {
+        database.init()
     }
 
     suspend fun insertName(name: String) = withContext(dispatcher) {
