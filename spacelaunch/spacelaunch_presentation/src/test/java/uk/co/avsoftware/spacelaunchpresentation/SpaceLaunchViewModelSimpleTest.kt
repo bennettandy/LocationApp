@@ -6,10 +6,16 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Test
-import uk.co.avsoftware.commontest.coroutines.UnitTestDispatcherProvider
 import uk.co.avsoftware.spacelaunchdomain.interactor.BookLaunchInteractor
 import uk.co.avsoftware.spacelaunchdomain.interactor.CancelLaunchBookingInteractor
 import uk.co.avsoftware.spacelaunchdomain.interactor.GetLaunchDetailsInteractor
@@ -21,42 +27,34 @@ import uk.co.avsoftware.spacelaunchpresentation.viewmodel.SpaceLaunchAction
 import uk.co.avsoftware.spacelaunchpresentation.viewmodel.SpaceLaunchViewModel
 import uk.co.avsoftware.spacelaunchpresentation.viewmodel.SpaceLaunchViewState
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class SpaceLaunchViewModelSimpleTest {
 
-    val bookedTripsRepository: BookedTripsRepository = mockk()
+    private val bookedTripsRepository: BookedTripsRepository = mockk()
 
     // mock
     val launchListInteractor: GetLaunchListInteractor = mockk()
 
-    val loginInteractor: SpaceLaunchLoginInteractor = mockk()
+    private val loginInteractor: SpaceLaunchLoginInteractor = mockk()
 
-    val launchDetailsInteractor: GetLaunchDetailsInteractor = mockk()
+    private val launchDetailsInteractor: GetLaunchDetailsInteractor = mockk()
 
-    val bookLaunchInteractor: BookLaunchInteractor = mockk()
+    private val bookLaunchInteractor: BookLaunchInteractor = mockk()
 
-    val cancelLaunchBookingInteractor: CancelLaunchBookingInteractor = mockk()
+    private val cancelLaunchBookingInteractor: CancelLaunchBookingInteractor = mockk()
 
-    val appId: String = "testId"
+    private val appId: String = "testId"
 
-//    lateinit var viewModel: SpaceLaunchViewModel
-
-//    @Before
-//    fun setUp() {
-//        viewModel = SpaceLaunchViewModel(
-//            bookedTripsRepository = bookedTripsRepository,
-//            launchListInteractor = launchListInteractor,
-//            loginInteractor = loginInteractor,
-//            launchDetailsInteractor = launchDetailsInteractor,
-//            bookLaunchInteractor = bookLaunchInteractor,
-//            cancelLaunchBookingInteractor = cancelLaunchBookingInteractor,
-//            savedStateHandle = SavedStateHandle(),
-//            applicationId = appId,
-//            dispatcherProvider = UnitTestDispatcherProvider(),
-//        )
-//    }
+    @After
+    fun cleanUp() {
+        Dispatchers.resetMain()
+    }
 
     @Test
-    fun `when RefreshLaunches received launchListInteractor is invoked`() {
+    fun `when RefreshLaunches received launchListInteractor is invoked`() = runTest {
+        val testDispatcher = UnconfinedTestDispatcher(testScheduler)
+        Dispatchers.setMain(testDispatcher)
+
         coEvery { launchListInteractor.invoke() } returns null
 
         val viewModel = buildViewModel()
@@ -102,7 +100,7 @@ class SpaceLaunchViewModelSimpleTest {
         val launches = Launches(
             cursor = null,
             launches = emptyList(),
-            hasMore = false
+            hasMore = false,
         )
         coEvery { launchListInteractor.invoke() } returns launches
         coEvery { bookedTripsRepository.bookedTripsFlow() } coAnswers { emptyFlow() }
@@ -136,6 +134,5 @@ class SpaceLaunchViewModelSimpleTest {
         cancelLaunchBookingInteractor = cancelLaunchBookingInteractor,
         savedStateHandle = SavedStateHandle(),
         applicationId = appId,
-        dispatcherProvider = UnitTestDispatcherProvider()
     )
 }

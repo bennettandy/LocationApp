@@ -45,6 +45,7 @@ dependencies {
     implementation(project(Modules.commonUi))
     implementation(project(Modules.spacelaunchDomainModule))
     implementation AndroidX.coreKtx
+    implementation 'androidx.core:core-ktx:+'
     testImplementation(project(Modules.commonTest))
 
     implementation(AndroidX.coreKtx)
@@ -72,9 +73,13 @@ dependencies {
     testImplementation(Testing.hiltTesting)
     kaptTest(DaggerHilt.hiltCompiler)
 
-    testImplementation(Testing.junit4)
-    testImplementation(Testing.mockk)
-    testImplementation(Testing.turbine)
+    testImplementation Testing.junit4
+    testImplementation Testing.junitAndroidExt
+    testImplementation Testing.truth
+    testImplementation Testing.coroutines
+    testImplementation Testing.turbine
+    testImplementation Testing.composeUiTest
+    testImplementation Testing.mockk
 
     androidTestImplementation(Testing.junitAndroidExt)
     androidTestImplementation(Testing.espressoCore)

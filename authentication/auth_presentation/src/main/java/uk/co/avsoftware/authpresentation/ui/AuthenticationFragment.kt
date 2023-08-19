@@ -18,6 +18,8 @@ import uk.co.avsoftware.common.domain.preferences.Preferences
 import uk.co.avsoftware.common.navigation.Route
 import uk.co.avsoftware.commonui.navigation.navigate
 import uk.co.avsoftware.commonui.theme.LocationAppTheme
+import uk.co.avsoftware.onboardingpresentation.gender.GenderScreen
+import uk.co.avsoftware.onboardingpresentation.welcome.WelcomeScreen
 import javax.inject.Inject
 
 /**
@@ -57,7 +59,9 @@ class AuthenticationFragment : Fragment() {
                     // Navigation Host
                     NavHost(navController = navController, startDestination = Route.WELCOME) {
                         composable(Route.WELCOME) {
-                            WelcomeScreen(navController::navigate)
+                            WelcomeScreen(
+                                navController::navigate,
+                            )
                         }
                         composable(Route.AGE) {
                             Column(modifier = Modifier.fillMaxSize()) {
@@ -65,6 +69,7 @@ class AuthenticationFragment : Fragment() {
                             }
                         }
                         composable(Route.GENDER) {
+                            GenderScreen(onNavigate = navController::navigate )
                         }
                         composable(Route.HEIGHT) {
                         }

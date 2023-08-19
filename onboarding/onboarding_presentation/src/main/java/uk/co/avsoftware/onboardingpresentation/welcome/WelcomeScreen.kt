@@ -1,4 +1,4 @@
-package uk.co.avsoftware.authpresentation.ui
+package uk.co.avsoftware.onboardingpresentation.welcome
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,15 +13,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import uk.co.avsoftware.authpresentation.R
-import uk.co.avsoftware.authpresentation.ui.components.ActionButton
 import uk.co.avsoftware.common.navigation.Route
 import uk.co.avsoftware.common.util.UiEvent
 import uk.co.avsoftware.commonui.LocalSpacing
+import uk.co.avsoftware.onboardingpresentation.R
+import uk.co.avsoftware.onboardingpresentation.components.ActionButton
 
 @Composable
 fun WelcomeScreen(
-    onNavigate: (UiEvent.Navigate) -> Unit
+    onNavigate: (UiEvent.Navigate) -> Unit,
 ) {
     val dimensions = LocalSpacing.current
     Column(

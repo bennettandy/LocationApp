@@ -1,4 +1,4 @@
-package uk.co.avsoftware.authpresentation.ui.components
+package uk.co.avsoftware.onboardingpresentation.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape

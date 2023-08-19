@@ -28,7 +28,8 @@ dependencies {
 
     implementation Coroutines.coroutines
     implementation Testing.coroutines
-    implementation AndroidX.coreKtx // need UnconfinedTestDispatcher
+    implementation AndroidX.coreKtx
+    implementation 'androidx.core:core-ktx:+'// need UnconfinedTestDispatcher
 
     testImplementation Testing.junit4
     testImplementation Testing.junitAndroidExt
@@ -44,6 +45,7 @@ dependencies {
     androidTestImplementation Testing.truth
     androidTestImplementation Testing.coroutines
     androidTestImplementation Testing.turbine
+    androidTestImplementation AndroidX.coreKtx
     androidTestImplementation Testing.composeUiTest
     androidTestImplementation Testing.mockk
     androidTestImplementation Testing.mockWebServer

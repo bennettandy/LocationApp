@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = Modules.authPresentationModuleNamespace
+    namespace = Modules.onboardingPresentationModuleNamespace
     compileSdk = ProjectConfig.compileSdk
 
     defaultConfig {
@@ -44,8 +44,6 @@ dependencies {
     implementation(project(Modules.common))
     implementation(project(Modules.commonUi))
 
-    implementation(project(Modules.onboardingPresentationModule))
-
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)
     implementation(MaterialDesign.material)
@@ -56,6 +54,7 @@ dependencies {
 
     // Hilt
     implementation(DaggerHilt.hiltAndroid)
+    implementation(DaggerHilt.hiltNavigationCompose)
     kapt(DaggerHilt.hiltCompiler)
 
     // Room
@@ -69,6 +68,7 @@ dependencies {
     androidTestImplementation(Testing.espressoCore)
 
     // Compose
+    implementation(AndroidX.lifecycleViewmodelCompose)
     implementation(MaterialDesign.material3)
     implementation(Compose.lifecycleRuntime)
     implementation(Compose.activityCompose)

@@ -53,6 +53,7 @@ dependencies {
     // Hilt
     implementation(DaggerHilt.hiltAndroid)
     implementation(AndroidX.coreKtx)
+    implementation("androidx.core:core-ktx:+")
     kapt(DaggerHilt.hiltCompiler)
 
     testImplementation(Testing.junit4)

@@ -11,8 +11,6 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import uk.co.avsoftware.common.annotation.ApplicationId
-import uk.co.avsoftware.common.coroutines.DefaultDispatcherProvider
-import uk.co.avsoftware.common.coroutines.DispatcherProvider
 import uk.co.avsoftware.common.extensions.Reducer
 import uk.co.avsoftware.common.mvi.AbstractMviViewModel
 import uk.co.avsoftware.spacelaunchdomain.interactor.BookLaunchInteractor
@@ -35,17 +33,16 @@ class SpaceLaunchViewModel @Inject constructor(
     private val cancelLaunchBookingInteractor: CancelLaunchBookingInteractor,
     savedStateHandle: SavedStateHandle,
     @ApplicationId applicationId: String,
-    dispatcherProvider: DispatcherProvider = DefaultDispatcherProvider()
 ) : AbstractMviViewModel<SpaceLaunchAction, SpaceLaunchViewState, SpaceLaunchCommand>(
     SpaceLaunchViewState.default,
     savedStateHandle = savedStateHandle,
-    applicationId = applicationId
+    applicationId = applicationId,
 
 ) {
     val viewEvents: MutableStateFlow<SpaceLaunchEvent?> = MutableStateFlow(null)
 
     init {
-        viewModelScope.launch(context = dispatcherProvider.default()) {
+        viewModelScope.launch {
             bookedTripsRepository.bookedTripsFlow()
                 .onStart { Timber.d("Connected Booked Trips Flow") }
                 .onEach { Timber.d("Booked ${it?.tripsBooked} Trips") }
@@ -57,7 +54,7 @@ class SpaceLaunchViewModel @Inject constructor(
                             null -> SpaceLaunchEvent.SubscriptionError
                             1 -> SpaceLaunchEvent.TripBooked
                             else -> SpaceLaunchEvent.TripCancelled
-                        }
+                        },
                     )
                 }
         }
@@ -67,55 +64,55 @@ class SpaceLaunchViewModel @Inject constructor(
         get() = { action, state ->
             when (action) {
                 is SpaceLaunchAction.RefreshLaunches -> state.copy(
-                    isLoading = true
+                    isLoading = true,
                 ).then(
-                    SpaceLaunchCommand.LoadLaunchList(action.cursor)
+                    SpaceLaunchCommand.LoadLaunchList(action.cursor),
                 )
                 is SpaceLaunchAction.SetLoadingFlag -> state.copy(
-                    isLoading = action.isLoading
+                    isLoading = action.isLoading,
                 ).only()
                 is SpaceLaunchAction.HandleLaunches -> state.copy(
                     isLoading = false,
-                    launches = action.launches
+                    launches = action.launches,
                 ).only()
 
                 is SpaceLaunchAction.SetEmail -> state.copy(email = action.email).only()
                 is SpaceLaunchAction.Login -> state.copy(
-                    isLoading = true
+                    isLoading = true,
                 ).then(
-                    SpaceLaunchCommand.Login(state.email)
+                    SpaceLaunchCommand.Login(state.email),
                 )
 
                 is SpaceLaunchAction.SetLoggedIn -> state.copy(
                     isLoading = false,
-                    isLoggedIn = action.loggedIn
+                    isLoggedIn = action.loggedIn,
                 ).only()
                 is SpaceLaunchAction.LoadDetails -> state.copy(
-                    launchDetailsLoading = true
+                    launchDetailsLoading = true,
                 ).then(
-                    SpaceLaunchCommand.LoadLaunchDetails(action.launchId)
+                    SpaceLaunchCommand.LoadLaunchDetails(action.launchId),
                 )
                 is SpaceLaunchAction.BookLaunch -> state.copy(
-                    bookingInProgress = true
+                    bookingInProgress = true,
                 ).then(
                     SpaceLaunchCommand.BookLaunch(
-                        action.launchId
-                    )
+                        action.launchId,
+                    ),
                 )
                 is SpaceLaunchAction.CancelLaunch -> state.copy(
-                    bookingInProgress = true
+                    bookingInProgress = true,
                 ).then(
                     SpaceLaunchCommand.CancelLaunch(
-                        action.launchId
-                    )
+                        action.launchId,
+                    ),
                 )
                 is SpaceLaunchAction.UpdateBookingState -> state.copy(
                     bookingInProgress = false,
-                    launchDetails = state.launchDetails?.copy(isBooked = action.isBooked)
+                    launchDetails = state.launchDetails?.copy(isBooked = action.isBooked),
                 ).only()
                 is SpaceLaunchAction.HandleLaunchDetail -> state.copy(
                     launchDetailsLoading = false,
-                    launchDetails = action.launchDetail
+                    launchDetails = action.launchDetail,
                 ).only()
             }.also {
                     pair ->
@@ -148,11 +145,11 @@ class SpaceLaunchViewModel @Inject constructor(
                 viewModelScope.launch {
                     when (val result = launchDetailsInteractor.invoke(command.launchId)) {
                         is SpaceLaunchDetailResponse.Success -> receiveAction(
-                            SpaceLaunchAction.HandleLaunchDetail(result.launchDetails)
+                            SpaceLaunchAction.HandleLaunchDetail(result.launchDetails),
                         )
                         else -> {
                             viewEvents.tryEmit(
-                                SpaceLaunchEvent.LoadDetailsError
+                                SpaceLaunchEvent.LoadDetailsError,
                             )
                             receiveAction(SpaceLaunchAction.HandleLaunchDetail(null))
                         }
@@ -164,8 +161,8 @@ class SpaceLaunchViewModel @Inject constructor(
                     when (bookLaunchInteractor.invoke(command.launchId)) {
                         is LaunchBookingResponse.Success -> receiveAction(
                             SpaceLaunchAction.UpdateBookingState(
-                                isBooked = true
-                            )
+                                isBooked = true,
+                            ),
                         )
                         is LaunchBookingResponse.Error -> viewEvents.tryEmit(SpaceLaunchEvent.BookingFailed)
                         is LaunchBookingResponse.NotLoggedIn -> viewEvents.tryEmit(SpaceLaunchEvent.NavigateToLogin)
@@ -176,8 +173,8 @@ class SpaceLaunchViewModel @Inject constructor(
                     when (cancelLaunchBookingInteractor.invoke(command.launchId)) {
                         is LaunchBookingResponse.Success -> receiveAction(
                             SpaceLaunchAction.UpdateBookingState(
-                                isBooked = false
-                            )
+                                isBooked = false,
+                            ),
                         )
                         is LaunchBookingResponse.Error -> viewEvents.tryEmit(SpaceLaunchEvent.CancelFailed)
                         is LaunchBookingResponse.NotLoggedIn -> viewEvents.tryEmit(SpaceLaunchEvent.NavigateToLogin)

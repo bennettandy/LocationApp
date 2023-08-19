@@ -56,6 +56,7 @@ dependencies {
     implementation(project(Modules.locationPresentationModule))
     implementation(project(Modules.spacelaunchPresentationModule))
     implementation(project(Modules.authPresentationModule))
+    implementation(project(Modules.onboardingPresentationModule))
 
     implementation(platform(Compose.bom))
     implementation(AndroidX.coreKtx)
@@ -75,6 +76,7 @@ dependencies {
 
     implementation DaggerHilt.hiltAndroid
     implementation AndroidX.coreKtx
+    implementation 'androidx.core:core-ktx:+'
 
     kapt DaggerHilt.hiltCompiler
 
