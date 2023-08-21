@@ -45,10 +45,14 @@ class ViewModelMainDispatcherTest {
         val testDispatcher = UnconfinedTestDispatcher(testScheduler)
         Dispatchers.setMain(testDispatcher)
 
-        // "Module with the Main dispatcher had failed to initialize"
-        viewModel.loadMessage()
+        try {
+            // "Module with the Main dispatcher had failed to initialize"
+            viewModel.loadMessage()
 
-        assertEquals(viewModel.message.value, "Hello World!")
+            assertEquals(viewModel.message.value, "Hello World!")
+        } finally {
+            Dispatchers.resetMain()
+        }
     }
 
     @After

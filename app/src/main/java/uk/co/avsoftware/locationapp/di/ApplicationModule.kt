@@ -10,6 +10,7 @@ import dagger.hilt.components.SingletonComponent
 import uk.co.avsoftware.common.annotation.ApplicationId
 import uk.co.avsoftware.common.data.DefaultPreferences
 import uk.co.avsoftware.common.domain.preferences.Preferences
+import uk.co.avsoftware.common.domain.usecase.FilterOutDigits
 import uk.co.avsoftware.locationapp.BuildConfig
 import javax.inject.Singleton
 
@@ -28,4 +29,7 @@ class ApplicationModule {
 
     @Provides
     fun provideSharedPreferences(app: Application): SharedPreferences = app.getSharedPreferences("shared_pref", MODE_PRIVATE)
+    @Provides
+    @Singleton
+    fun provideFilterOutDigitsUseCase(): FilterOutDigits = FilterOutDigits()
 }

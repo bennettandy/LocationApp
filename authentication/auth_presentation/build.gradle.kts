@@ -44,6 +44,8 @@ dependencies {
     implementation(project(Modules.common))
     implementation(project(Modules.commonUi))
 
+    implementation(project(Modules.onboardingPresentationModule))
+
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)
     implementation(MaterialDesign.material)

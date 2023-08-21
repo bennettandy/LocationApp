@@ -44,6 +44,7 @@ dependencies {
 
     // Hilt
     implementation(DaggerHilt.hiltAndroid)
+    implementation("androidx.core:core-ktx:+")
     kapt(DaggerHilt.hiltCompiler)
 
     // Room

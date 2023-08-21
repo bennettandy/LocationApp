@@ -13,4 +13,7 @@ object AndroidX {
 
     private const val securityCryptoVersion = "1.1.0-alpha06"
     const val securityCrypto = "androidx.security:security-crypto:$securityCryptoVersion"
+
+    private const val lifecycleViewmodelComposeVersion = "2.6.1"
+    const val lifecycleViewmodelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleViewmodelComposeVersion"
 }

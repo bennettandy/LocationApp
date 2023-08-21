@@ -13,6 +13,10 @@ object Modules {
     const val commonTest = ":common-test"
     const val commonTestNamespace = "uk.co.avsoftware.commontest"
 
+    // Onboarding Modules
+    const val onboardingPresentationModule = ":onboarding:onboarding_presentation"
+    const val onboardingPresentationModuleNamespace = "uk.co.avsoftware.onboardingpresentation"
+
     // Location Feature Modules
     const val locationDataModule = ":location:location_data"
     const val locationDataModuleNamespace = "uk.co.avsoftware.locationdata"
