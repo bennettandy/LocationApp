@@ -22,7 +22,7 @@ fun UnitTextField(
     value: String,
     onValueChange: (String) -> Unit,
     unit: String,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     textStyle: TextStyle = TextStyle(
         color = MaterialTheme.colorScheme.primary,
         fontSize = 70.sp,

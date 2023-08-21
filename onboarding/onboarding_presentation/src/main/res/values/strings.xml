@@ -6,4 +6,8 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="next">Next</string>
+    <string name="error_age_cannot_be_empty">Age cannot be empty </string>
+    <string name="whats_your_age">What\'s your age?</string>
+    <string name="years">years</string>
+
 </resources>

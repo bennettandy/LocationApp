@@ -69,6 +69,7 @@ dependencies {
 
     // Compose
     implementation(AndroidX.lifecycleViewmodelCompose)
+    implementation(MaterialDesign.material)
     implementation(MaterialDesign.material3)
     implementation(Compose.lifecycleRuntime)
     implementation(Compose.activityCompose)
