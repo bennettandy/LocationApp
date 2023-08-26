@@ -1,5 +1,6 @@
 package uk.co.avsoftware.authpresentation.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +24,8 @@ import uk.co.avsoftware.commonui.navigation.navigate
 import uk.co.avsoftware.commonui.theme.LocationAppTheme
 import uk.co.avsoftware.onboardingpresentation.age.AgeScreen
 import uk.co.avsoftware.onboardingpresentation.gender.GenderScreen
+import uk.co.avsoftware.onboardingpresentation.height.HeightScreen
+import uk.co.avsoftware.onboardingpresentation.weight.WeightScreen
 import uk.co.avsoftware.onboardingpresentation.welcome.WelcomeScreen
 import javax.inject.Inject
 
@@ -37,18 +40,7 @@ class AuthenticationFragment : Fragment() {
     @Inject
     lateinit var preferences: Preferences
 
-    // TODO: Rename and change types of parameters
-//    private var param1: String? = null
-//    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-//            param1 = it.getString(ARG_PARAM1)
-//            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -66,7 +58,7 @@ class AuthenticationFragment : Fragment() {
                     Scaffold(
                         modifier = Modifier.fillMaxSize(),
                         snackbarHost = { SnackbarHost(snackbarHostState) },
-                    ) {
+                    ) { padding ->
                         // Navigation Host
                         NavHost(navController = navController, startDestination = Route.WELCOME) {
                             composable(Route.WELCOME) {
@@ -84,8 +76,16 @@ class AuthenticationFragment : Fragment() {
                                 GenderScreen(onNavigate = navController::navigate)
                             }
                             composable(Route.HEIGHT) {
+                                HeightScreen(
+                                    onNavigate = navController::navigate,
+                                    snackbarHostState = snackbarHostState,
+                                )
                             }
                             composable(Route.WEIGHT) {
+                                WeightScreen(
+                                    onNavigate = navController::navigate,
+                                    snackbarHostState = snackbarHostState,
+                                )
                             }
                             composable(Route.NUTRIENT_GOAL) {
                             }
